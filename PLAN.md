@@ -179,19 +179,19 @@ crowdlight/
 - [x] Phone handles `cmd` by waiting until `executeAt` (use `requestAnimationFrame` loop, not just `setTimeout`)
 - [x] Server sets `executeAt = now + SYNC_BUFFER_MS` (from `config.js`) on every command
 
-**Test:** two phones (one on WiFi, one on mobile data) side by side change color visibly together.
+- [x] **Test:** two phones (one on WiFi, one on mobile data) side by side change color visibly together.
 
 ---
 
 ### PHASE 4 — Controller page
-- [ ] Controller page asks for PIN, sends it in `hello`
-- [ ] Server rejects wrong PIN (`error`) and ignores `cmd` from non-controllers
-- [ ] Grid of preset color buttons
-- [ ] Custom color picker
-- [ ] BLACKOUT button
-- [ ] Live "connected phones" counter (updates via `stats`)
-- [ ] "Currently Running" status box showing the active effect name and color (easy to forget in a dark room)
-- [ ] Layout works on a laptop and a tablet
+- [x] Controller page asks for PIN, sends it in `hello`
+- [x] Server rejects wrong PIN (`error`) and ignores `cmd` from non-controllers
+- [x] Grid of preset color buttons
+- [x] Custom color picker
+- [x] BLACKOUT button
+- [x] Live "connected phones" counter (updates via `stats`)
+- [x] "Currently Running" status box showing the active effect name and color (easy to forget in a dark room)
+- [x] Layout works on a laptop and a tablet
 
 **Test:** a wrong PIN fails. A correct PIN can change all connected phones. A phone cannot send `cmd` and have it work.
 
@@ -319,3 +319,5 @@ Add one line per finished task. Format: `YYYY-MM-DD | Phase X | what was done | 
 | 2026-11-22 | Phase 2 | Audience page built with Wake Lock, fullscreen, dynamic WS, hello/welcome, COLOR/BLACKOUT handling | Total size: 8.24 KB (HTML: 1.04 KB, CSS: 2.68 KB, JS: 4.53 KB) |
 | 2026-11-22 | Phase 2 | Manual test passed | Verified by user |
 | 2026-11-22 | Phase 3 | Clock sync (5-ping burst, RTT outlier filtering, 30s re-sync) & scheduled executeAt using requestAnimationFrame | Audience size: 12.5 KB (well below 100 KB target) |
+| 2026-11-22 | Phase 3 | Manual test passed | Verified by user |
+| 2026-11-22 | Phase 4 | Built PIN-protected Controller dashboard with presets, custom picker, blackout, phone counter & running status | Non-controller commands rejected |

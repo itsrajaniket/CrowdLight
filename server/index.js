@@ -25,7 +25,37 @@ const MIME_TYPES = {
 };
 
 /**
- * Broadcast a command object to all connected audience clients and record in state.
+ * Returns count of currently connected audience clients.
+ */
+function getAudienceCount() {
+  let count = 0;
+  wss.clients.forEach((c) => {
+    if (c.readyState === 1 && c.role === 'audience') {
+      count++;
+    }
+  });
+  return count;
+}
+
+/**
+ * Broadcasts audience statistics to all authenticated controllers.
+ */
+function broadcastStatsToControllers() {
+  const count = getAudienceCount();
+  const payload = JSON.stringify({
+    type: 'stats',
+    count: count
+  });
+
+  wss.clients.forEach((client) => {
+    if (client.readyState === 1 && client.role === 'controller' && client.authenticated) {
+      client.send(payload);
+    }
+  });
+}
+
+/**
+ * Broadcast a command object to all connected audience clients AND authenticated controllers.
  */
 function broadcastCommand(cmd) {
   const executeAt = cmd.executeAt || (Date.now() + config.SYNC_BUFFER_MS);
@@ -35,6 +65,7 @@ function broadcastCommand(cmd) {
     executeAt: executeAt
   };
 
+  // Save current active command in show state
   state.setCurrentState(broadcastCmd);
 
   const payload = JSON.stringify({
@@ -44,15 +75,23 @@ function broadcastCommand(cmd) {
     executeAt: broadcastCmd.executeAt
   });
 
-  let sentCount = 0;
+  let audienceSent = 0;
+  let controllerSent = 0;
+
   wss.clients.forEach((client) => {
-    if (client.readyState === 1 && client.role === 'audience') { // 1 = OPEN
-      client.send(payload);
-      sentCount++;
+    if (client.readyState === 1) { // 1 = OPEN
+      if (client.role === 'audience') {
+        client.send(payload);
+        audienceSent++;
+      } else if (client.role === 'controller' && client.authenticated) {
+        // Echo command to controllers so their "Currently Running" UI stays in sync
+        client.send(payload);
+        controllerSent++;
+      }
     }
   });
 
-  console.log(`[Broadcast] Command "${broadcastCmd.name}" sent to ${sentCount} audience client(s) with executeAt: ${executeAt} (+${config.SYNC_BUFFER_MS}ms).`);
+  console.log(`[Broadcast] "${broadcastCmd.name}" -> ${audienceSent} audience & ${controllerSent} controller client(s). executeAt: ${executeAt} (+${config.SYNC_BUFFER_MS}ms)`);
 }
 
 /**
@@ -64,7 +103,7 @@ const server = http.createServer((req, res) => {
 
   // Manual test HTTP endpoint for triggering colors
   if (reqPath === '/api/test-color') {
-    const hex = urlObj.searchParams.get('hex') || '#e11d48'; // Default rose red
+    const hex = urlObj.searchParams.get('hex') || '#e11d48';
     broadcastCommand({
       name: 'COLOR',
       params: { hex: hex.startsWith('#') ? hex : `#${hex}` }
@@ -133,8 +172,9 @@ wss.on('connection', (ws, req) => {
 
   ws.clientId = clientId;
   ws.role = 'unknown';
+  ws.authenticated = false;
 
-  console.log(`[WebSocket] Client #${clientId} connected from ${ip}. Total connected: ${wss.clients.size}`);
+  console.log(`[WebSocket] Client #${clientId} connected from ${ip}. Total connections: ${wss.clients.size}`);
 
   ws.on('message', (data) => {
     let msg;
@@ -145,7 +185,7 @@ wss.on('connection', (ws, req) => {
       return;
     }
 
-    // Handle clock-sync ping from phone
+    // 1. Clock-sync ping from audience phone
     if (msg.type === 'ping') {
       ws.send(JSON.stringify({
         type: 'pong',
@@ -155,36 +195,88 @@ wss.on('connection', (ws, req) => {
       return;
     }
 
-    // Handle handshake hello from phone / audience
+    // 2. Handshake hello
     if (msg.type === 'hello') {
       if (msg.role === 'audience') {
         ws.role = 'audience';
         ws.joinNumber = ++joinNumberCounter;
         console.log(`[Audience] Client #${clientId} registered as Audience #${ws.joinNumber}`);
 
-        // 1. Reply welcome
+        // Send welcome
         ws.send(JSON.stringify({
           type: 'welcome',
           id: clientId,
           joinNumber: ws.joinNumber
         }));
 
-        // 2. Send current state so client catches up
+        // Send current show state so late joiner catches up
         const curState = state.getCurrentState();
         ws.send(JSON.stringify({
           type: 'state',
           cmd: curState.cmd
         }));
+
+        // Update controllers with new audience count
+        broadcastStatsToControllers();
       } else if (msg.role === 'controller') {
-        // Will be expanded in Phase 4
         ws.role = 'controller';
-        console.log(`[Controller] Client #${clientId} connected.`);
+
+        // Validate PIN
+        if (String(msg.pin) === String(config.CONTROLLER_PIN)) {
+          ws.authenticated = true;
+          console.log(`[Controller] Client #${clientId} authenticated successfully.`);
+
+          // Send welcome
+          ws.send(JSON.stringify({
+            type: 'welcome',
+            id: clientId
+          }));
+
+          // Send live audience stats
+          ws.send(JSON.stringify({
+            type: 'stats',
+            count: getAudienceCount()
+          }));
+
+          // Send current show state
+          ws.send(JSON.stringify({
+            type: 'state',
+            cmd: state.getCurrentState().cmd
+          }));
+        } else {
+          ws.authenticated = false;
+          console.warn(`[Controller] Client #${clientId} failed PIN authentication.`);
+          ws.send(JSON.stringify({
+            type: 'error',
+            message: 'Invalid PIN. Access denied.'
+          }));
+        }
       }
+      return;
+    }
+
+    // 3. Command execution request (Phase 4 Security: Only authenticated controllers)
+    if (msg.type === 'cmd') {
+      if (ws.role !== 'controller' || !ws.authenticated) {
+        console.warn(`[Security] Client #${clientId} (role: ${ws.role}) unauthorized attempt to send cmd "${msg.name}". Ignored.`);
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'Unauthorized: only authenticated controllers can trigger commands.'
+        }));
+        return;
+      }
+
+      console.log(`[Controller] Command received from Client #${clientId}:`, msg.name, msg.params);
+      broadcastCommand(msg);
+      return;
     }
   });
 
   ws.on('close', () => {
-    console.log(`[WebSocket] Client #${clientId} (${ws.role || 'unknown'}) disconnected. Total connected: ${wss.clients.size}`);
+    console.log(`[WebSocket] Client #${clientId} (${ws.role}) disconnected. Total connections: ${wss.clients.size}`);
+    if (ws.role === 'audience') {
+      broadcastStatsToControllers();
+    }
   });
 
   ws.on('error', (err) => {
@@ -198,13 +290,8 @@ server.listen(config.PORT, () => {
   console.log(`CrowdLight Server started on port ${config.PORT}`);
   console.log(`Audience URL:   http://localhost:${config.PORT}/audience/`);
   console.log(`Controller URL: http://localhost:${config.PORT}/controller/`);
+  console.log(`Controller PIN: ${config.CONTROLLER_PIN}`);
   console.log(`Sync Buffer:    ${config.SYNC_BUFFER_MS}ms`);
-  console.log(`-----------------------------------------`);
-  console.log(`Interactive test commands in terminal:`);
-  console.log(`  Press Enter or type 'c' / 'color' to broadcast next color`);
-  console.log(`  Type 'color #hex' to set specific color`);
-  console.log(`  Type 'b' or 'blackout' for blackout`);
-  console.log(`Or visit: http://localhost:${config.PORT}/api/test-color?hex=%23ff0000`);
   console.log(`=========================================`);
 });
 
@@ -215,7 +302,7 @@ if (process.stdin.isTTY) {
     output: process.stdout
   });
 
-  const testColors = ['#e11d48', '#2563eb', '#16a34a', '#f59e0b', '#9333ea', '#ffffff'];
+  const testColors = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#a855f7', '#ffffff'];
   let testColorIdx = 0;
 
   rl.on('line', (line) => {

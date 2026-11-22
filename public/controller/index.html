@@ -2,13 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CrowdLight — Controller</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CrowdLight Controller</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>CrowdLight Controller</h1>
-  <p>Controller Page (Phase 1 Setup)</p>
+  <!-- PIN Authentication Screen -->
+  <div id="pin-screen">
+    <div class="pin-card">
+      <div class="pin-badge">🔒 Restricted Controller</div>
+      <h2 class="pin-title">CrowdLight Showpad</h2>
+      <p class="pin-subtitle">Enter the controller PIN to manage the crowd light show.</p>
+      
+      <form id="pin-form">
+        <input 
+          id="pin-input" 
+          type="password" 
+          inputmode="numeric" 
+          pattern="[0-9]*" 
+          maxlength="8" 
+          placeholder="Enter PIN" 
+          autocomplete="off" 
+          required 
+          autofocus
+        >
+        <button id="unlock-btn" type="submit">Unlock Controller</button>
+      </form>
+      <div id="pin-error" class="error-msg"></div>
+    </div>
+  </div>
+
+  <!-- Main Controller Dashboard -->
+  <div id="dashboard" class="hidden">
+    <!-- Header -->
+    <header class="controller-header">
+      <div class="header-left">
+        <h1 class="logo-title">✨ CrowdLight <span class="badge-tag">Controller</span></h1>
+        <div class="conn-status">
+          <span id="conn-dot" class="dot connected"></span>
+          <span id="conn-label">Connected</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="audience-badge">
+          <span class="icon">👥</span>
+          <span id="audience-count" class="count">0</span>
+          <span class="label">Phones Online</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="controller-main">
+      <!-- Currently Running Status Box -->
+      <section class="status-panel">
+        <div class="panel-header">Currently Running on Audience Phones</div>
+        <div class="status-box">
+          <div id="status-color-swatch" class="status-swatch"></div>
+          <div class="status-info">
+            <div id="status-effect-name" class="status-effect">STANDBY</div>
+            <div id="status-effect-details" class="status-details">Waiting for first command...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blackout Quick Action -->
+      <section class="blackout-section">
+        <button id="blackout-btn" class="btn-blackout" type="button">
+          <span class="blackout-icon">⬛</span>
+          <span class="blackout-text">BLACKOUT (ALL PHONES OFF)</span>
+        </button>
+      </section>
+
+      <!-- Preset Colors Grid -->
+      <section class="section-card">
+        <div class="section-title">Solid Colors</div>
+        <div class="color-grid">
+          <button class="color-btn" data-hex="#ef4444" style="--c: #ef4444">
+            <span class="c-swatch"></span>
+            <span class="c-label">Red</span>
+          </button>
+          <button class="color-btn" data-hex="#f97316" style="--c: #f97316">
+            <span class="c-swatch"></span>
+            <span class="c-label">Orange</span>
+          </button>
+          <button class="color-btn" data-hex="#eab308" style="--c: #eab308">
+            <span class="c-swatch"></span>
+            <span class="c-label">Yellow</span>
+          </button>
+          <button class="color-btn" data-hex="#22c55e" style="--c: #22c55e">
+            <span class="c-swatch"></span>
+            <span class="c-label">Green</span>
+          </button>
+          <button class="color-btn" data-hex="#06b6d4" style="--c: #06b6d4">
+            <span class="c-swatch"></span>
+            <span class="c-label">Cyan</span>
+          </button>
+          <button class="color-btn" data-hex="#3b82f6" style="--c: #3b82f6">
+            <span class="c-swatch"></span>
+            <span class="c-label">Blue</span>
+          </button>
+          <button class="color-btn" data-hex="#a855f7" style="--c: #a855f7">
+            <span class="c-swatch"></span>
+            <span class="c-label">Purple</span>
+          </button>
+          <button class="color-btn" data-hex="#ec4899" style="--c: #ec4899">
+            <span class="c-swatch"></span>
+            <span class="c-label">Pink</span>
+          </button>
+          <button class="color-btn" data-hex="#ffffff" style="--c: #ffffff">
+            <span class="c-swatch white"></span>
+            <span class="c-label">White</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Custom Color Picker -->
+      <section class="section-card">
+        <div class="section-title">Custom Color</div>
+        <div class="custom-color-row">
+          <input type="color" id="custom-color-input" value="#6366f1">
+          <span id="custom-color-hex" class="hex-display">#6366f1</span>
+          <button id="custom-color-btn" type="button" class="btn-custom-color">Send Custom Color</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
