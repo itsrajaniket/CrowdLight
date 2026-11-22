@@ -173,6 +173,12 @@ wss.on('connection', (ws, req) => {
   ws.clientId = clientId;
   ws.role = 'unknown';
   ws.authenticated = false;
+  ws.isAlive = true;
+
+  // Heartbeat pong listener
+  ws.on('pong', () => {
+    ws.isAlive = true;
+  });
 
   console.log(`[WebSocket] Client #${clientId} connected from ${ip}. Total connections: ${wss.clients.size}`);
 
@@ -282,6 +288,24 @@ wss.on('connection', (ws, req) => {
   ws.on('error', (err) => {
     console.error(`[WebSocket] Client #${clientId} error:`, err.message);
   });
+});
+
+// Periodic server heartbeat to detect and terminate dead connections
+const HEARTBEAT_INTERVAL = 30000;
+const heartbeatTimer = setInterval(() => {
+  wss.clients.forEach((ws) => {
+    if (ws.isAlive === false) {
+      console.log(`[Heartbeat] Terminating inactive connection Client #${ws.clientId} (${ws.role})`);
+      ws.terminate();
+      return;
+    }
+    ws.isAlive = false;
+    ws.ping();
+  });
+}, HEARTBEAT_INTERVAL);
+
+wss.on('close', () => {
+  clearInterval(heartbeatTimer);
 });
 
 // Start listening

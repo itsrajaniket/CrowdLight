@@ -207,17 +207,17 @@ crowdlight/
 - [x] Animated effects computed as a function of server time (not accumulated timers), so a lagging phone snaps back into sync
 - [x] Controller buttons for every effect
 
-**Test:** run each effect with 3+ devices and confirm they stay in step for 2+ minutes.
+- [x] **Test:** run each effect with 3+ devices and confirm they stay in step for 2+ minutes.
 
 ---
 
 ### PHASE 6 — Resilience
-- [ ] Server stores the current active effect in `state.js`
-- [ ] On join/reconnect, server sends `state` and the phone jumps into the running effect at the right moment
-- [ ] Phone auto-reconnect with exponential backoff + random jitter
-- [ ] Server heartbeat to remove dead connections
-- [ ] Server pre-serializes broadcast messages once (not once per client)
-- [ ] Standby/Blackout stops the animation loop to save battery
+- [x] Server stores the current active effect in `state.js`
+- [x] On join/reconnect, server sends `state` and the phone jumps into the running effect at the right moment
+- [x] Phone auto-reconnect with exponential backoff + random jitter
+- [x] Server heartbeat to remove dead connections
+- [x] Server pre-serializes broadcast messages once (not once per client)
+- [x] Standby/Blackout stops the animation loop to save battery
 
 **Test:** turn a phone's WiFi off and on mid-show. It reconnects and rejoins the current effect without a manual refresh.
 
@@ -323,3 +323,5 @@ Add one line per finished task. Format: `YYYY-MM-DD | Phase X | what was done | 
 | 2026-11-22 | Phase 4 | Built PIN-protected Controller dashboard with presets, custom picker, blackout, phone counter & running status | Non-controller commands rejected |
 | 2026-11-22 | Phase 4 | Manual test passed | Verified by user |
 | 2026-11-22 | Phase 5 | Implemented all 8 effects (STROBE, FADE, PULSE + Tap-Tempo, 10-step WAVE ripple, COUNTDOWN, TEXT) as pure functions of server time | Audience page size: 17.2 KB (< 100 KB target) |
+| 2026-11-22 | Phase 5 | Manual test passed | Confirmed by user |
+| 2026-11-22 | Phase 6 | Added state persistence, exponential backoff + jitter reconnect, 30s server heartbeat, pre-serialization, & animation halt on blackout | Audience page size: 18.9 KB (< 100 KB target) |

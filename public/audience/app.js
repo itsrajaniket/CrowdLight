@@ -1,6 +1,7 @@
 // CrowdLight — Audience Page Application
 // Plain JavaScript, no frameworks, zero external dependencies.
-// Frame-accurate synchronized effects computed as pure functions of server time.
+// Features: Frame-accurate effects, NTP-style clock sync, Wake Lock,
+// and resilient auto-reconnect with exponential backoff & jitter.
 
 // DOM Elements
 const lightScreen = document.getElementById('light-screen');
@@ -15,6 +16,10 @@ let myId = null;
 let myJoinNumber = 0;
 let wakeLock = null;
 let socket = null;
+
+// Reconnect State (Phase 6: Exponential Backoff + Jitter)
+let reconnectAttempts = 0;
+let reconnectTimerId = null;
 
 // Clock Synchronization State (Phase 3)
 // serverTime = performance.now() + clockOffset
@@ -37,7 +42,7 @@ function getServerTime() {
 }
 
 // ==========================================
-// 1. Color Interpolation & Manipulation Helpers
+// 1. Color Helpers
 // ==========================================
 function hexToRgb(hex) {
   let clean = (hex || '#000000').replace('#', '');
@@ -163,7 +168,7 @@ function scheduleCommand(cmd) {
 function startCommandExecution(cmd) {
   currentCommand = cmd;
 
-  // Stop any active animated effect loop
+  // Stop any active animated effect loop to prevent duplicate frames & save battery
   if (activeAnimId) {
     cancelAnimationFrame(activeAnimId);
     activeAnimId = null;
@@ -177,10 +182,12 @@ function startCommandExecution(cmd) {
 
   switch (cmd.name) {
     case 'COLOR':
+      // Static color: no animation loop needed (saves battery)
       lightScreen.style.backgroundColor = params.hex || '#ffffff';
       break;
 
     case 'BLACKOUT':
+      // Blackout: completely stops animation loop (saves battery)
       lightScreen.style.backgroundColor = '#000000';
       break;
 
@@ -212,7 +219,8 @@ function startCommandExecution(cmd) {
         if (progress < 1) {
           activeAnimId = requestAnimationFrame(renderFade);
         } else {
-          activeAnimId = null; // Reached target color, stop animation loop to save battery
+          // Reached target color: cancel loop to save battery
+          activeAnimId = null;
         }
       }
       activeAnimId = requestAnimationFrame(renderFade);
@@ -274,7 +282,6 @@ function startCommandExecution(cmd) {
         if (count > 0) {
           textOverlay.textContent = count;
           textOverlay.style.color = '#ffffff';
-          // Background flashes on each second tick
           const flash = Math.max(0, 1 - subSec * 3);
           lightScreen.style.backgroundColor = scaleBrightness('#dc2626', 0.2 + 0.8 * flash);
           activeAnimId = requestAnimationFrame(renderCountdown);
@@ -288,7 +295,7 @@ function startCommandExecution(cmd) {
           lightScreen.style.backgroundColor = '#ffffff';
           activeAnimId = requestAnimationFrame(renderCountdown);
         } else {
-          // Finished countdown
+          // Finished: stop loop to save battery
           textOverlay.textContent = '';
           lightScreen.style.backgroundColor = '#000000';
           activeAnimId = null;
@@ -299,6 +306,7 @@ function startCommandExecution(cmd) {
     }
 
     case 'TEXT': {
+      // Static text banner: no animation loop needed
       const text = params.text || '';
       const hex = params.hex || '#ffffff';
       const bgHex = params.bgHex || '#000000';
@@ -365,7 +373,41 @@ setInterval(() => {
 }, 30000);
 
 // ==========================================
-// 7. WebSocket Connection (Rule 11: Dynamic URL)
+// 7. Auto-Reconnect with Exponential Backoff + Jitter
+// ==========================================
+function scheduleReconnect() {
+  if (reconnectTimerId) return;
+
+  reconnectAttempts++;
+  // Exponential backoff: 1s, 1.5s, 2.25s, 3.4s, up to 12s
+  const baseDelay = Math.min(12000, 1000 * Math.pow(1.5, reconnectAttempts - 1));
+  // Random jitter (0 to 600ms) to prevent synchronization spikes from hundreds of phones
+  const jitter = Math.random() * 600;
+  const delay = Math.round(baseDelay + jitter);
+
+  console.log(`[Audience] Reconnecting in ${(delay / 1000).toFixed(1)}s (attempt #${reconnectAttempts})...`);
+  statusText.textContent = `Disconnected. Reconnecting in ${(delay / 1000).toFixed(0)}s...`;
+
+  reconnectTimerId = setTimeout(() => {
+    reconnectTimerId = null;
+    connectWebSocket();
+  }, delay);
+}
+
+// Instant reconnect as soon as network interface is back online
+window.addEventListener('online', () => {
+  console.log('[Network] Device came back online. Connecting immediately...');
+  if (reconnectTimerId) {
+    clearTimeout(reconnectTimerId);
+    reconnectTimerId = null;
+  }
+  if (!socket || socket.readyState === WebSocket.CLOSED) {
+    connectWebSocket();
+  }
+});
+
+// ==========================================
+// 8. WebSocket Connection (Rule 11: Dynamic URL)
 // ==========================================
 function connectWebSocket() {
   const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -377,6 +419,9 @@ function connectWebSocket() {
   socket.addEventListener('open', () => {
     console.log('[Audience] WebSocket open. Sending hello...');
     statusText.textContent = 'Connected. Syncing clock...';
+
+    // Clear reconnect counter on successful open
+    reconnectAttempts = 0;
 
     socket.send(JSON.stringify({
       type: 'hello',
@@ -409,9 +454,13 @@ function connectWebSocket() {
         break;
 
       case 'state':
+        // Late-joiner or reconnecting phone catch-up
         if (msg.cmd) {
-          console.log('[Audience] Catching up to state:', msg.cmd);
+          console.log('[Audience] Catching up to current show state:', msg.cmd);
           scheduleCommand(msg.cmd);
+        } else {
+          // If no command has run yet, ensure screen is clean blackout
+          lightScreen.style.backgroundColor = '#000000';
         }
         break;
 
@@ -425,11 +474,10 @@ function connectWebSocket() {
   });
 
   socket.addEventListener('close', () => {
-    console.log('[Audience] Connection closed. Reconnecting in 2s...');
-    statusText.textContent = 'Disconnected. Reconnecting...';
+    console.log('[Audience] Connection closed.');
     socket = null;
     isSynced = false;
-    setTimeout(connectWebSocket, 2000);
+    scheduleReconnect();
   });
 
   socket.addEventListener('error', (err) => {
