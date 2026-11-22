@@ -308,11 +308,26 @@ wss.on('close', () => {
   clearInterval(heartbeatTimer);
 });
 
+function getLocalIp() {
+  const os = require('os');
+  const nets = os.networkInterfaces();
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      if (net.family === 'IPv4' && !net.internal) {
+        return net.address;
+      }
+    }
+  }
+  return 'localhost';
+}
+
 // Start listening
 server.listen(config.PORT, () => {
+  const localIp = getLocalIp();
   console.log(`=========================================`);
   console.log(`CrowdLight Server started on port ${config.PORT}`);
-  console.log(`Audience URL:   http://localhost:${config.PORT}/audience/`);
+  console.log(`Local PC URL:   http://localhost:${config.PORT}/audience/`);
+  console.log(`Phone WiFi URL: http://${localIp}:${config.PORT}/audience/`);
   console.log(`Controller URL: http://localhost:${config.PORT}/controller/`);
   console.log(`Controller PIN: ${config.CONTROLLER_PIN}`);
   console.log(`Sync Buffer:    ${config.SYNC_BUFFER_MS}ms`);

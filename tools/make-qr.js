@@ -5,8 +5,22 @@
 const QRCode = require('qrcode');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
-const defaultUrl = 'http://localhost:3000/audience/';
+function getLocalIp() {
+  const nets = os.networkInterfaces();
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      if (net.family === 'IPv4' && !net.internal) {
+        return net.address;
+      }
+    }
+  }
+  return 'localhost';
+}
+
+const localIp = getLocalIp();
+const defaultUrl = `http://${localIp}:3000/audience/`;
 const targetUrl = process.argv[2] || process.env.AUDIENCE_URL || defaultUrl;
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
