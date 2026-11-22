@@ -20,8 +20,8 @@ function getLocalIp() {
 }
 
 const localIp = getLocalIp();
-const defaultUrl = `http://${localIp}:3000/audience/`;
-const targetUrl = process.argv[2] || process.env.AUDIENCE_URL || defaultUrl;
+const defaultUrl = process.env.AUDIENCE_URL || 'https://crowdlight-4u52.onrender.com/audience/';
+const targetUrl = process.argv[2] || defaultUrl;
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 const AUDIENCE_DIR = path.join(PUBLIC_DIR, 'audience');

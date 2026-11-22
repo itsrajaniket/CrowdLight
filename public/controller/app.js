@@ -397,3 +397,51 @@ function connectWebSocket() {
 
 // Start connection on load
 connectWebSocket();
+
+// ==========================================
+// 12. Fullscreen Projector QR Modal Handlers
+// ==========================================
+const qrModal = document.getElementById('qr-modal');
+const closeQrModalBtn = document.getElementById('close-qr-modal-btn');
+const pinShowQrBtn = document.getElementById('pin-show-qr-btn');
+const headerQrBtn = document.getElementById('header-qr-btn');
+const cardShowQrBtn = document.getElementById('card-show-qr-btn');
+const modalQrUrl = document.getElementById('modal-qr-url');
+
+function openQrModal() {
+  const currentAudienceUrl = `${window.location.protocol}//${window.location.host}/audience/`;
+  if (modalQrUrl) {
+    modalQrUrl.textContent = currentAudienceUrl;
+  }
+  if (qrModal) {
+    qrModal.classList.remove('hidden');
+  }
+}
+
+function closeQrModal() {
+  if (qrModal) {
+    qrModal.classList.add('hidden');
+  }
+}
+
+if (pinShowQrBtn) pinShowQrBtn.addEventListener('click', openQrModal);
+if (headerQrBtn) headerQrBtn.addEventListener('click', openQrModal);
+if (cardShowQrBtn) cardShowQrBtn.addEventListener('click', openQrModal);
+if (closeQrModalBtn) closeQrModalBtn.addEventListener('click', closeQrModal);
+
+if (qrModal) {
+  // Close on background click
+  qrModal.addEventListener('click', (e) => {
+    if (e.target === qrModal) {
+      closeQrModal();
+    }
+  });
+}
+
+// Close on ESC key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && qrModal && !qrModal.classList.contains('hidden')) {
+    closeQrModal();
+  }
+});
+

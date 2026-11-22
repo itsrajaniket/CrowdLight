@@ -4,6 +4,15 @@ CrowdLight is a web-based crowd screen system. Audiences scan a single QR code t
 
 ---
 
+## 🌐 Live Production Deployment
+
+CrowdLight is live and accessible globally:
+- **Audience Display (for phones):** [https://crowdlight-4u52.onrender.com/audience/](https://crowdlight-4u52.onrender.com/audience/)
+- **Controller Showpad (for you):** [https://crowdlight-4u52.onrender.com/controller/](https://crowdlight-4u52.onrender.com/controller/)
+- **High-Res Venue QR Code:** [https://crowdlight-4u52.onrender.com/qr.png](https://crowdlight-4u52.onrender.com/qr.png)
+
+---
+
 ## 🚀 Quick Start (Local)
 
 ### 1. Requirements

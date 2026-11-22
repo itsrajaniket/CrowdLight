@@ -7,6 +7,26 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Fullscreen Projector QR Code Modal (Accessible anytime) -->
+  <div id="qr-modal" class="qr-modal hidden">
+    <div class="qr-modal-content">
+      <button id="close-qr-modal-btn" class="btn-close-modal" type="button">✕ Close</button>
+      <div class="qr-modal-header">
+        <h2 class="qr-modal-title">✨ Join the Light Show</h2>
+        <p class="qr-modal-subtitle">Point your phone camera at the code below</p>
+      </div>
+      <div class="qr-modal-image-wrapper">
+        <img id="modal-qr-img" src="/qr.png" alt="Audience Join QR Code" class="modal-qr-image">
+      </div>
+      <div class="qr-modal-link-box">
+        <span class="qr-modal-url" id="modal-qr-url">https://crowdlight-4u52.onrender.com/audience/</span>
+      </div>
+      <div class="qr-modal-reminder">
+        <span>☀️ Tip: Set your screen brightness to 100% after joining</span>
+      </div>
+    </div>
+  </div>
+
   <!-- PIN Authentication Screen -->
   <div id="pin-screen">
     <div class="pin-card">
@@ -29,6 +49,15 @@
         <button id="unlock-btn" type="submit">Unlock Controller</button>
       </form>
       <div id="pin-error" class="error-msg"></div>
+
+      <!-- Pre-Login QR Code Access (Ideal for projecting before unlocking) -->
+      <div class="pin-qr-section">
+        <div class="pin-qr-divider"><span>OR PROJECT QR CODE</span></div>
+        <button id="pin-show-qr-btn" type="button" class="btn-pin-qr">
+          <span class="icon">📺</span>
+          <span>Project Audience QR Code</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -44,11 +73,18 @@
         </div>
       </div>
       <div class="header-right">
+        <!-- Live Audience Count -->
         <div class="audience-badge">
           <span class="icon">👥</span>
           <span id="audience-count" class="count">0</span>
           <span class="label">Phones Online</span>
         </div>
+
+        <!-- Projector QR Trigger -->
+        <button id="header-qr-btn" class="btn-header-qr" type="button">
+          <span class="icon">📺</span>
+          <span>Show QR</span>
+        </button>
       </div>
     </header>
 
@@ -198,6 +234,28 @@
           </div>
         </section>
       </div>
+
+      <!-- Dedicated Audience QR Section Card Inside Show -->
+      <section class="section-card qr-section-card">
+        <div class="section-title">📱 Audience Join QR Code</div>
+        <div class="qr-card-content">
+          <div class="qr-thumbnail-box">
+            <img src="/qr.png" alt="Audience QR Code" class="qr-thumbnail">
+          </div>
+          <div class="qr-card-info">
+            <div class="qr-card-headline">Project or share with your audience</div>
+            <div class="qr-card-sub">Audience scans to join instantly without installing an app.</div>
+            <div class="qr-card-actions">
+              <button id="card-show-qr-btn" class="btn-project-large" type="button">
+                <span class="icon">📺</span> Project Fullscreen QR
+              </button>
+              <a href="/qr.png" download="crowdlight-qr.png" class="btn-download-qr">
+                <span class="icon">📥</span> Download PNG
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
