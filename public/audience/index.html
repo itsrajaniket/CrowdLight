@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CrowdLight</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Full-screen light display -->
+  <div id="light-screen"></div>
+
+  <!-- Initial Join overlay screen -->
+  <div id="join-screen">
+    <div class="card">
+      <div class="logo">✨</div>
+      <h1 class="title">CrowdLight</h1>
+      <p class="subtitle">Turn your phone into part of the crowd light show</p>
+
+      <div class="brightness-box">
+        <span class="icon">☀️</span>
+        <div class="text">
+          <strong>Set brightness to 100%</strong>
+          <span>Turn off Low Power Mode for best effect</span>
+        </div>
+      </div>
+
+      <button id="join-btn" type="button">JOIN SHOW</button>
+
+      <div id="status-text" class="status">Connecting to show...</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
