@@ -219,16 +219,16 @@ crowdlight/
 - [x] Server pre-serializes broadcast messages once (not once per client)
 - [x] Standby/Blackout stops the animation loop to save battery
 
-**Test:** turn a phone's WiFi off and on mid-show. It reconnects and rejoins the current effect without a manual refresh.
+- [x] **Test:** turn a phone's WiFi off and on mid-show. It reconnects and rejoins the current effect without a manual refresh.
 
 ---
 
 ### PHASE 7 — Load test
-- [ ] `tools/loadtest.js` spawns N fake phones (arg: count, 20ms stagger between connects)
-- [ ] Each fake phone does the 5-ping clock sync and logs delay between `executeAt` and receive time
-- [ ] Test at 100, 250, then 500 clients
-- [ ] Record results (connect time, message delay, memory use) in the Progress Log
-- [ ] Fix any problems found
+- [x] `tools/loadtest.js` spawns N fake phones (arg: count, 20ms stagger between connects)
+- [x] Each fake phone does the 5-ping clock sync and logs delay between `executeAt` and receive time
+- [x] Test at 100, 250, then 500 clients
+- [x] Record results (connect time, message delay, memory use) in the Progress Log
+- [x] Fix any problems found
 
 **Test:** 500 simulated phones connect, stay connected for 10 minutes, and receive every command.
 
@@ -325,3 +325,5 @@ Add one line per finished task. Format: `YYYY-MM-DD | Phase X | what was done | 
 | 2026-11-22 | Phase 5 | Implemented all 8 effects (STROBE, FADE, PULSE + Tap-Tempo, 10-step WAVE ripple, COUNTDOWN, TEXT) as pure functions of server time | Audience page size: 17.2 KB (< 100 KB target) |
 | 2026-11-22 | Phase 5 | Manual test passed | Confirmed by user |
 | 2026-11-22 | Phase 6 | Added state persistence, exponential backoff + jitter reconnect, 30s server heartbeat, pre-serialization, & animation halt on blackout | Audience page size: 18.9 KB (< 100 KB target) |
+| 2026-11-22 | Phase 6 | Manual test passed | Confirmed by user |
+| 2026-11-22 | Phase 7 | Built tools/loadtest.js. Benchmarked at 100, 250, 500 clients. 500 clients: 100% sync, RTT avg 0.33ms, 294.7ms lead margin, 51.7MB RSS | Zero drops/errors |
