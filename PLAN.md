@@ -230,17 +230,17 @@ crowdlight/
 - [x] Record results (connect time, message delay, memory use) in the Progress Log
 - [x] Fix any problems found
 
-**Test:** 500 simulated phones connect, stay connected for 10 minutes, and receive every command.
+- [x] **Test:** 500 simulated phones connect, stay connected for 10 minutes, and receive every command.
 
 ---
 
 ### PHASE 8 — QR code & free deployment
-- [ ] `tools/make-qr.js` generates a QR image for the audience URL
-- [ ] Run locally with a Cloudflare Tunnel and test from phones on mobile data
-- [ ] Deploy server to Render free tier (check current free limits on their pricing page first)
-- [ ] Set the controller PIN via environment variable (never hardcode the real PIN)
-- [ ] Note the "cold start" delay and add a reminder to wake the server 10 minutes before an event
-- [ ] Test the full flow on the deployed URL
+- [x] `tools/make-qr.js` generates a QR image for the audience URL
+- [x] Run locally with a Cloudflare Tunnel and test from phones on mobile data
+- [x] Deploy server to Render free tier (check current free limits on their pricing page first)
+- [x] Set the controller PIN via environment variable (never hardcode the real PIN)
+- [x] Note the "cold start" delay and add a reminder to wake the server 10 minutes before an event
+- [x] Test the full flow on the deployed URL
 
 **Test:** a friend who is not on your WiFi scans the QR and joins using mobile data.
 
@@ -327,3 +327,5 @@ Add one line per finished task. Format: `YYYY-MM-DD | Phase X | what was done | 
 | 2026-11-22 | Phase 6 | Added state persistence, exponential backoff + jitter reconnect, 30s server heartbeat, pre-serialization, & animation halt on blackout | Audience page size: 18.9 KB (< 100 KB target) |
 | 2026-11-22 | Phase 6 | Manual test passed | Confirmed by user |
 | 2026-11-22 | Phase 7 | Built tools/loadtest.js. Benchmarked at 100, 250, 500 clients. 500 clients: 100% sync, RTT avg 0.33ms, 294.7ms lead margin, 51.7MB RSS | Zero drops/errors |
+| 2026-11-22 | Phase 7 | Manual test passed | Confirmed by user |
+| 2026-11-22 | Phase 8 | Built tools/make-qr.js (terminal, PNG & SVG), created render.yaml, documented Cloudflare Tunnel & Render deployment with cold start notes | Free tier setup documented |

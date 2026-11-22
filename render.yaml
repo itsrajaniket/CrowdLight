@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: crowdlight
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: CONTROLLER_PIN
+        value: "4829" # Replace with your private PIN in the Render Dashboard
+      - key: SYNC_BUFFER_MS
+        value: "400"  # Slightly higher buffer recommended for cellular networks
