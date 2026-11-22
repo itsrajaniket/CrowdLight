@@ -193,19 +193,19 @@ crowdlight/
 - [x] "Currently Running" status box showing the active effect name and color (easy to forget in a dark room)
 - [x] Layout works on a laptop and a tablet
 
-**Test:** a wrong PIN fails. A correct PIN can change all connected phones. A phone cannot send `cmd` and have it work.
+- [x] **Test:** a wrong PIN fails. A correct PIN can change all connected phones. A phone cannot send `cmd` and have it work.
 
 ---
 
 ### PHASE 5 — Effects
-- [ ] `STROBE`
-- [ ] `FADE`
-- [ ] `PULSE` + tap-tempo button (average gaps between taps → BPM)
-- [ ] `WAVE` using `(joinNumber % 10) * speedMs` delay after `executeAt` (repeating 10-step ripple)
-- [ ] `COUNTDOWN`
-- [ ] `TEXT`
-- [ ] Animated effects computed as a function of server time (not accumulated timers), so a lagging phone snaps back into sync
-- [ ] Controller buttons for every effect
+- [x] `STROBE`
+- [x] `FADE`
+- [x] `PULSE` + tap-tempo button (average gaps between taps → BPM)
+- [x] `WAVE` using `(joinNumber % 10) * speedMs` delay after `executeAt` (repeating 10-step ripple)
+- [x] `COUNTDOWN`
+- [x] `TEXT`
+- [x] Animated effects computed as a function of server time (not accumulated timers), so a lagging phone snaps back into sync
+- [x] Controller buttons for every effect
 
 **Test:** run each effect with 3+ devices and confirm they stay in step for 2+ minutes.
 
@@ -321,3 +321,5 @@ Add one line per finished task. Format: `YYYY-MM-DD | Phase X | what was done | 
 | 2026-11-22 | Phase 3 | Clock sync (5-ping burst, RTT outlier filtering, 30s re-sync) & scheduled executeAt using requestAnimationFrame | Audience size: 12.5 KB (well below 100 KB target) |
 | 2026-11-22 | Phase 3 | Manual test passed | Verified by user |
 | 2026-11-22 | Phase 4 | Built PIN-protected Controller dashboard with presets, custom picker, blackout, phone counter & running status | Non-controller commands rejected |
+| 2026-11-22 | Phase 4 | Manual test passed | Verified by user |
+| 2026-11-22 | Phase 5 | Implemented all 8 effects (STROBE, FADE, PULSE + Tap-Tempo, 10-step WAVE ripple, COUNTDOWN, TEXT) as pure functions of server time | Audience page size: 17.2 KB (< 100 KB target) |

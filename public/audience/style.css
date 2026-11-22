@@ -27,7 +27,29 @@ html, body {
   height: 100dvh;
   background-color: #000000;
   z-index: 1;
-  transition: background-color 0.08s ease-out;
+}
+
+/* Text & Countdown Overlay */
+#text-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  font-weight: 900;
+  pointer-events: none;
+  font-size: clamp(3.2rem, 18vw, 11rem);
+  line-height: 1.1;
+  word-break: break-word;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
 }
 
 /* Join screen overlay */

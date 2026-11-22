@@ -77,54 +77,127 @@
       <section class="section-card">
         <div class="section-title">Solid Colors</div>
         <div class="color-grid">
-          <button class="color-btn" data-hex="#ef4444" style="--c: #ef4444">
-            <span class="c-swatch"></span>
-            <span class="c-label">Red</span>
-          </button>
-          <button class="color-btn" data-hex="#f97316" style="--c: #f97316">
-            <span class="c-swatch"></span>
-            <span class="c-label">Orange</span>
-          </button>
-          <button class="color-btn" data-hex="#eab308" style="--c: #eab308">
-            <span class="c-swatch"></span>
-            <span class="c-label">Yellow</span>
-          </button>
-          <button class="color-btn" data-hex="#22c55e" style="--c: #22c55e">
-            <span class="c-swatch"></span>
-            <span class="c-label">Green</span>
-          </button>
-          <button class="color-btn" data-hex="#06b6d4" style="--c: #06b6d4">
-            <span class="c-swatch"></span>
-            <span class="c-label">Cyan</span>
-          </button>
-          <button class="color-btn" data-hex="#3b82f6" style="--c: #3b82f6">
-            <span class="c-swatch"></span>
-            <span class="c-label">Blue</span>
-          </button>
-          <button class="color-btn" data-hex="#a855f7" style="--c: #a855f7">
-            <span class="c-swatch"></span>
-            <span class="c-label">Purple</span>
-          </button>
-          <button class="color-btn" data-hex="#ec4899" style="--c: #ec4899">
-            <span class="c-swatch"></span>
-            <span class="c-label">Pink</span>
-          </button>
-          <button class="color-btn" data-hex="#ffffff" style="--c: #ffffff">
-            <span class="c-swatch white"></span>
-            <span class="c-label">White</span>
-          </button>
+          <button class="color-btn" data-hex="#ef4444" style="--c: #ef4444"><span class="c-swatch"></span><span class="c-label">Red</span></button>
+          <button class="color-btn" data-hex="#f97316" style="--c: #f97316"><span class="c-swatch"></span><span class="c-label">Orange</span></button>
+          <button class="color-btn" data-hex="#eab308" style="--c: #eab308"><span class="c-swatch"></span><span class="c-label">Yellow</span></button>
+          <button class="color-btn" data-hex="#22c55e" style="--c: #22c55e"><span class="c-swatch"></span><span class="c-label">Green</span></button>
+          <button class="color-btn" data-hex="#06b6d4" style="--c: #06b6d4"><span class="c-swatch"></span><span class="c-label">Cyan</span></button>
+          <button class="color-btn" data-hex="#3b82f6" style="--c: #3b82f6"><span class="c-swatch"></span><span class="c-label">Blue</span></button>
+          <button class="color-btn" data-hex="#a855f7" style="--c: #a855f7"><span class="c-swatch"></span><span class="c-label">Purple</span></button>
+          <button class="color-btn" data-hex="#ec4899" style="--c: #ec4899"><span class="c-swatch"></span><span class="c-label">Pink</span></button>
+          <button class="color-btn" data-hex="#ffffff" style="--c: #ffffff"><span class="c-swatch white"></span><span class="c-label">White</span></button>
         </div>
-      </section>
 
-      <!-- Custom Color Picker -->
-      <section class="section-card">
-        <div class="section-title">Custom Color</div>
-        <div class="custom-color-row">
+        <!-- Custom Color Row -->
+        <div class="custom-color-row" style="margin-top: 14px;">
           <input type="color" id="custom-color-input" value="#6366f1">
           <span id="custom-color-hex" class="hex-display">#6366f1</span>
           <button id="custom-color-btn" type="button" class="btn-custom-color">Send Custom Color</button>
         </div>
       </section>
+
+      <!-- Effects Section Grid -->
+      <div class="effects-grid">
+        <!-- 1. PULSE & TAP TEMPO -->
+        <section class="section-card effect-card">
+          <div class="section-title">🥁 Pulse & Tap-Tempo</div>
+          <div class="card-body">
+            <div class="tap-tempo-row">
+              <button id="tap-tempo-btn" type="button" class="btn-tap">
+                <span class="tap-title">TAP TEMPO</span>
+                <span id="tap-bpm-display" class="tap-bpm">120 BPM</span>
+              </button>
+              <div class="bpm-controls">
+                <label for="bpm-slider">Tempo: <span id="bpm-val">120</span> BPM</label>
+                <input type="range" id="bpm-slider" min="50" max="200" value="120">
+              </div>
+            </div>
+            <div class="btn-group" style="margin-top: 10px;">
+              <button class="btn-effect" id="pulse-btn">Start Pulse (Beat Sync)</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. STROBE -->
+        <section class="section-card effect-card">
+          <div class="section-title">⚡ Strobe</div>
+          <div class="card-body">
+            <div class="button-pills">
+              <button class="pill-btn active" data-strobe-speed="80">Fast (80ms)</button>
+              <button class="pill-btn" data-strobe-speed="140">Medium (140ms)</button>
+              <button class="pill-btn" data-strobe-speed="250">Slow (250ms)</button>
+            </div>
+            <div class="btn-group" style="margin-top: 12px;">
+              <button class="btn-effect" id="strobe-white-btn">Strobe (White)</button>
+              <button class="btn-effect" id="strobe-color-btn">Strobe (Current Color)</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. WAVE (RIPPLE) -->
+        <section class="section-card effect-card">
+          <div class="section-title">🌊 Crowd Wave</div>
+          <div class="card-body">
+            <p class="card-desc">10-step synchronized ripple sweeping across audience phones in join order.</p>
+            <div class="button-pills">
+              <button class="pill-btn active" data-wave-speed="120">Fast (120ms)</button>
+              <button class="pill-btn" data-wave-speed="180">Normal (180ms)</button>
+              <button class="pill-btn" data-wave-speed="300">Slow (300ms)</button>
+            </div>
+            <div class="btn-group" style="margin-top: 12px;">
+              <button class="btn-effect" id="wave-blue-btn">Blue Ocean Wave</button>
+              <button class="btn-effect" id="wave-custom-btn">Color Wave</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. FADE -->
+        <section class="section-card effect-card">
+          <div class="section-title">🌅 Smooth Fade</div>
+          <div class="card-body">
+            <div class="button-pills">
+              <button class="pill-btn active" data-fade-duration="1500">1.5s</button>
+              <button class="pill-btn" data-fade-duration="3000">3.0s</button>
+              <button class="pill-btn" data-fade-duration="5000">5.0s</button>
+            </div>
+            <div class="btn-group" style="margin-top: 12px;">
+              <button class="btn-effect" id="fade-black-to-red">Black → Red</button>
+              <button class="btn-effect" id="fade-blue-to-pink">Blue → Pink</button>
+              <button class="btn-effect" id="fade-to-black">Fade to Black</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. COUNTDOWN -->
+        <section class="section-card effect-card">
+          <div class="section-title">⏱️ Big Countdown</div>
+          <div class="card-body">
+            <p class="card-desc">Large synchronized numbers counting down across all screens to "GO!".</p>
+            <div class="countdown-buttons">
+              <button class="btn-countdown" data-from="3">3 SECONDS</button>
+              <button class="btn-countdown" data-from="5">5 SECONDS</button>
+              <button class="btn-countdown" data-from="10">10 SECONDS</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. TEXT BANNER -->
+        <section class="section-card effect-card">
+          <div class="section-title">💬 Text Banner</div>
+          <div class="card-body">
+            <div class="text-presets">
+              <button class="chip-btn" data-text="LOUDER!">LOUDER!</button>
+              <button class="chip-btn" data-text="DROP!">DROP!</button>
+              <button class="chip-btn" data-text="HANDS UP">HANDS UP</button>
+              <button class="chip-btn" data-text="ENCORE">ENCORE</button>
+            </div>
+            <div class="custom-text-row">
+              <input type="text" id="custom-text-input" placeholder="Type banner message..." maxlength="20">
+              <button id="send-text-btn" class="btn-effect">Send Text</button>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
   </div>
 

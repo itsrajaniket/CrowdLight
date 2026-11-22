@@ -1,10 +1,10 @@
 // CrowdLight — Audience Page Application
-// Plain JavaScript, no external libraries.
-// Features: Wake Lock, Fullscreen, Clock Sync (NTP-style offset estimation),
-// and frame-accurate scheduled command execution via requestAnimationFrame.
+// Plain JavaScript, no frameworks, zero external dependencies.
+// Frame-accurate synchronized effects computed as pure functions of server time.
 
 // DOM Elements
 const lightScreen = document.getElementById('light-screen');
+const textOverlay = document.getElementById('text-overlay');
 const joinScreen = document.getElementById('join-screen');
 const joinBtn = document.getElementById('join-btn');
 const statusText = document.getElementById('status-text');
@@ -12,37 +12,74 @@ const statusText = document.getElementById('status-text');
 // Client State
 let hasJoined = false;
 let myId = null;
-let myJoinNumber = null;
+let myJoinNumber = 0;
 let wakeLock = null;
 let socket = null;
 
 // Clock Synchronization State (Phase 3)
-// Formula: serverTime = performance.now() + clockOffset
+// serverTime = performance.now() + clockOffset
 let clockOffset = 0;
 let isSynced = false;
 let syncSamples = [];
 const TOTAL_SYNC_SAMPLES = 5;
 
-// Scheduling State
+// Scheduling & Animation State
 let pendingCommand = null;
-let animFrameId = null;
+let scheduleWaitId = null;
+let activeAnimId = null;
+let currentCommand = null;
 
 /**
- * Returns current estimated server Unix timestamp in milliseconds.
- * Always derived from performance.now() + clockOffset.
+ * Returns estimated server Unix timestamp in milliseconds.
  */
 function getServerTime() {
   return performance.now() + clockOffset;
 }
 
 // ==========================================
-// 1. Wake Lock Management
+// 1. Color Interpolation & Manipulation Helpers
+// ==========================================
+function hexToRgb(hex) {
+  let clean = (hex || '#000000').replace('#', '');
+  if (clean.length === 3) {
+    clean = clean.split('').map(c => c + c).join('');
+  }
+  const num = parseInt(clean, 16) || 0;
+  return {
+    r: (num >> 16) & 255,
+    g: (num >> 8) & 255,
+    b: num & 255
+  };
+}
+
+function rgbToHex(r, g, b) {
+  const clamp = (n) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0');
+  return `#${clamp(r)}${clamp(g)}${clamp(b)}`;
+}
+
+function lerpColor(hexA, hexB, t) {
+  const a = hexToRgb(hexA);
+  const b = hexToRgb(hexB);
+  return rgbToHex(
+    a.r + (b.r - a.r) * t,
+    a.g + (b.g - a.g) * t,
+    a.b + (b.b - a.b) * t
+  );
+}
+
+function scaleBrightness(hex, factor) {
+  const c = hexToRgb(hex);
+  return rgbToHex(c.r * factor, c.g * factor, c.b * factor);
+}
+
+// ==========================================
+// 2. Wake Lock Management
 // ==========================================
 async function requestWakeLock() {
   if ('wakeLock' in navigator) {
     try {
       wakeLock = await navigator.wakeLock.request('screen');
-      console.log('[WakeLock] Screen wake lock acquired');
+      console.log('[WakeLock] Screen wake lock active');
       wakeLock.addEventListener('release', () => {
         console.log('[WakeLock] Screen wake lock released');
         wakeLock = null;
@@ -53,7 +90,6 @@ async function requestWakeLock() {
   }
 }
 
-// Re-request wake lock when page becomes visible again
 document.addEventListener('visibilitychange', async () => {
   if (document.visibilityState === 'visible' && hasJoined && !wakeLock) {
     console.log('[WakeLock] Tab visible again, re-requesting wake lock');
@@ -62,12 +98,12 @@ document.addEventListener('visibilitychange', async () => {
 });
 
 // ==========================================
-// 2. JOIN Action Handler
+// 3. JOIN Button Handler
 // ==========================================
 joinBtn.addEventListener('click', async () => {
   hasJoined = true;
 
-  // Request native fullscreen on Android (silently ignored by iOS Safari)
+  // Request fullscreen on Android (safely ignored by iOS Safari)
   try {
     if (document.documentElement.requestFullscreen) {
       await document.documentElement.requestFullscreen().catch(() => {});
@@ -77,34 +113,29 @@ joinBtn.addEventListener('click', async () => {
   // Request screen Wake Lock so phone doesn't sleep
   await requestWakeLock();
 
-  // Hide join screen overlay and reveal full-screen light
+  // Hide join screen overlay
   joinScreen.classList.add('hidden');
 });
 
 // ==========================================
-// 3. Command Execution & Scheduling (Phase 3)
+// 4. Command Scheduler (Frame-Accurate)
 // ==========================================
-
-/**
- * Schedules a command to execute at its designated server time `executeAt`.
- * Uses requestAnimationFrame loop for frame-accurate execution.
- */
 function scheduleCommand(cmd) {
   if (!cmd || !cmd.name) return;
 
   const currentServerTime = getServerTime();
   const executeAt = cmd.executeAt || currentServerTime;
 
-  // If clock is not yet synced, or executeAt has already passed, run immediately
+  // If clock not synced or executeAt is already in the past, run immediately
   if (!isSynced || executeAt <= currentServerTime) {
-    executeCommandNow(cmd);
+    startCommandExecution(cmd);
     return;
   }
 
-  // Cancel any prior waiting check
-  if (animFrameId) {
-    cancelAnimationFrame(animFrameId);
-    animFrameId = null;
+  // Cancel prior pending schedule check
+  if (scheduleWaitId) {
+    cancelAnimationFrame(scheduleWaitId);
+    scheduleWaitId = null;
   }
 
   pendingCommand = cmd;
@@ -112,54 +143,179 @@ function scheduleCommand(cmd) {
   function waitLoop() {
     if (!pendingCommand) return;
 
-    const remainingMs = pendingCommand.executeAt - getServerTime();
-
-    if (remainingMs <= 0) {
-      // Reached the target execution time
+    const remaining = pendingCommand.executeAt - getServerTime();
+    if (remaining <= 0) {
       const toRun = pendingCommand;
       pendingCommand = null;
-      animFrameId = null;
-      executeCommandNow(toRun);
+      scheduleWaitId = null;
+      startCommandExecution(toRun);
     } else {
-      // Continue polling on each display refresh frame
-      animFrameId = requestAnimationFrame(waitLoop);
+      scheduleWaitId = requestAnimationFrame(waitLoop);
     }
   }
 
-  animFrameId = requestAnimationFrame(waitLoop);
+  scheduleWaitId = requestAnimationFrame(waitLoop);
 }
 
-/**
- * Applies the visual effect to the screen immediately.
- */
-function executeCommandNow(cmd) {
-  const currentServerTime = getServerTime();
-  const latencyDiff = (currentServerTime - (cmd.executeAt || currentServerTime)).toFixed(1);
-  console.log(`[Execute] ${cmd.name} at server time: ${currentServerTime.toFixed(1)}ms (diff: ${latencyDiff}ms)`);
+// ==========================================
+// 5. Effect Execution (Pure Server Time Functions)
+// ==========================================
+function startCommandExecution(cmd) {
+  currentCommand = cmd;
+
+  // Stop any active animated effect loop
+  if (activeAnimId) {
+    cancelAnimationFrame(activeAnimId);
+    activeAnimId = null;
+  }
+
+  // Reset text overlay by default
+  textOverlay.textContent = '';
+  textOverlay.style.color = '#ffffff';
+
+  const params = cmd.params || {};
 
   switch (cmd.name) {
     case 'COLOR':
-      if (cmd.params && cmd.params.hex) {
-        lightScreen.style.backgroundColor = cmd.params.hex;
-      }
+      lightScreen.style.backgroundColor = params.hex || '#ffffff';
       break;
 
     case 'BLACKOUT':
       lightScreen.style.backgroundColor = '#000000';
       break;
 
+    case 'STROBE': {
+      const hex = params.hex || '#ffffff';
+      const intervalMs = params.intervalMs || 120;
+
+      function renderStrobe() {
+        const elapsed = Math.max(0, getServerTime() - cmd.executeAt);
+        const phase = (elapsed % intervalMs) / intervalMs;
+        // On for first half of interval, off for second half
+        lightScreen.style.backgroundColor = (phase < 0.5) ? hex : '#000000';
+        activeAnimId = requestAnimationFrame(renderStrobe);
+      }
+      activeAnimId = requestAnimationFrame(renderStrobe);
+      break;
+    }
+
+    case 'FADE': {
+      const fromHex = params.fromHex || '#000000';
+      const toHex = params.toHex || '#ffffff';
+      const durationMs = params.durationMs || 2000;
+
+      function renderFade() {
+        const elapsed = Math.max(0, getServerTime() - cmd.executeAt);
+        const progress = Math.min(1, elapsed / durationMs);
+        lightScreen.style.backgroundColor = lerpColor(fromHex, toHex, progress);
+
+        if (progress < 1) {
+          activeAnimId = requestAnimationFrame(renderFade);
+        } else {
+          activeAnimId = null; // Reached target color, stop animation loop to save battery
+        }
+      }
+      activeAnimId = requestAnimationFrame(renderFade);
+      break;
+    }
+
+    case 'PULSE': {
+      const hex = params.hex || '#ffffff';
+      const bpm = params.bpm || 120;
+      const beatPeriodMs = 60000 / bpm;
+
+      function renderPulse() {
+        const elapsed = Math.max(0, getServerTime() - cmd.executeAt);
+        const phase = (elapsed % beatPeriodMs) / beatPeriodMs;
+        // Sharp beat drop at phase 0, exponential decay
+        const brightness = Math.pow(1 - phase, 2.2);
+        lightScreen.style.backgroundColor = scaleBrightness(hex, brightness);
+        activeAnimId = requestAnimationFrame(renderPulse);
+      }
+      activeAnimId = requestAnimationFrame(renderPulse);
+      break;
+    }
+
+    case 'WAVE': {
+      // Repeating 10-step ripple: Each phone delays by (joinNumber % 10) * speedMs
+      const hex = params.hex || '#3b82f6';
+      const speedMs = params.speedMs || 180;
+      const totalCycle = 10 * speedMs;
+      const stepIndex = myJoinNumber % 10;
+      const myOffset = stepIndex * speedMs;
+      const waveSpan = speedMs * 1.5;
+
+      function renderWave() {
+        const elapsed = Math.max(0, getServerTime() - cmd.executeAt);
+        const cyclePos = elapsed % totalCycle;
+        const diff = (cyclePos - myOffset + totalCycle) % totalCycle;
+
+        if (diff < waveSpan) {
+          const intensity = 1 - (diff / waveSpan);
+          lightScreen.style.backgroundColor = scaleBrightness(hex, intensity);
+        } else {
+          lightScreen.style.backgroundColor = '#000000';
+        }
+        activeAnimId = requestAnimationFrame(renderWave);
+      }
+      activeAnimId = requestAnimationFrame(renderWave);
+      break;
+    }
+
+    case 'COUNTDOWN': {
+      const from = parseInt(params.from, 10) || 5;
+
+      function renderCountdown() {
+        const elapsed = Math.max(0, getServerTime() - cmd.executeAt);
+        const secondsPassed = Math.floor(elapsed / 1000);
+        const count = from - secondsPassed;
+        const subSec = (elapsed % 1000) / 1000;
+
+        if (count > 0) {
+          textOverlay.textContent = count;
+          textOverlay.style.color = '#ffffff';
+          // Background flashes on each second tick
+          const flash = Math.max(0, 1 - subSec * 3);
+          lightScreen.style.backgroundColor = scaleBrightness('#dc2626', 0.2 + 0.8 * flash);
+          activeAnimId = requestAnimationFrame(renderCountdown);
+        } else if (count === 0) {
+          textOverlay.textContent = 'GO!';
+          textOverlay.style.color = '#000000';
+          lightScreen.style.backgroundColor = '#ffffff';
+          activeAnimId = requestAnimationFrame(renderCountdown);
+        } else if (count >= -1) {
+          textOverlay.textContent = '🔥';
+          lightScreen.style.backgroundColor = '#ffffff';
+          activeAnimId = requestAnimationFrame(renderCountdown);
+        } else {
+          // Finished countdown
+          textOverlay.textContent = '';
+          lightScreen.style.backgroundColor = '#000000';
+          activeAnimId = null;
+        }
+      }
+      activeAnimId = requestAnimationFrame(renderCountdown);
+      break;
+    }
+
+    case 'TEXT': {
+      const text = params.text || '';
+      const hex = params.hex || '#ffffff';
+      const bgHex = params.bgHex || '#000000';
+      lightScreen.style.backgroundColor = bgHex;
+      textOverlay.textContent = text;
+      textOverlay.style.color = hex;
+      break;
+    }
+
     default:
-      console.log('[Execute] Unhandled command:', cmd.name);
+      console.warn('[Command] Unknown effect name:', cmd.name);
   }
 }
 
 // ==========================================
-// 4. Clock Synchronization (NTP-Style)
+// 6. Clock Synchronization (NTP-Style)
 // ==========================================
-
-/**
- * Initiates a burst of 5 pings with randomized spacing.
- */
 function startClockSync() {
   syncSamples = [];
   sendPing();
@@ -167,8 +323,6 @@ function startClockSync() {
 
 function sendPing() {
   if (!socket || socket.readyState !== WebSocket.OPEN) return;
-
-  // t0 is measured strictly with performance.now()
   const t0 = performance.now();
   socket.send(JSON.stringify({ type: 'ping', t0 }));
 }
@@ -176,42 +330,33 @@ function sendPing() {
 function handlePong(msg) {
   const t1 = performance.now();
   const t0 = msg.t0;
-  const ts = msg.ts; // Server Unix timestamp (Date.now())
+  const ts = msg.ts; // Server Unix timestamp
 
-  // Round Trip Time
   const rtt = t1 - t0;
-  // Offset maps performance.now() to server Unix timestamp
-  // offset = ts - (t0 + RTT / 2)
   const sampleOffset = ts - (t0 + (rtt / 2));
-
   syncSamples.push({ rtt, offset: sampleOffset });
 
   if (syncSamples.length < TOTAL_SYNC_SAMPLES) {
-    // Small random delay (30ms - 80ms) between pings to avoid network bunching
     const delay = 30 + Math.random() * 50;
     setTimeout(sendPing, delay);
   } else {
-    // 1. Sort samples by RTT ascending (packets with smallest RTT have least network jitter)
+    // Sort by lowest RTT (least network jitter)
     syncSamples.sort((a, b) => a.rtt - b.rtt);
-
-    // 2. Take the best 3 samples with the lowest RTT
     const bestSamples = syncSamples.slice(0, 3);
     const avgOffset = bestSamples.reduce((sum, s) => sum + s.offset, 0) / bestSamples.length;
 
     clockOffset = avgOffset;
     isSynced = true;
 
-    const minRtt = bestSamples[0].rtt.toFixed(1);
-    console.log(`[ClockSync] Synced! Best RTT: ${minRtt}ms | Offset: ${clockOffset.toFixed(1)}ms`);
+    console.log(`[ClockSync] Synced! Best RTT: ${bestSamples[0].rtt.toFixed(1)}ms | Offset: ${clockOffset.toFixed(1)}ms`);
 
-    // Update join screen status text if still visible
     if (!hasJoined && myJoinNumber) {
       statusText.textContent = `Connected (Device #${myJoinNumber}) • Sync: ±${(bestSamples[0].rtt / 2).toFixed(0)}ms`;
     }
   }
 }
 
-// Re-synchronize clock every 30 seconds
+// Re-sync every 30 seconds
 setInterval(() => {
   if (socket && socket.readyState === WebSocket.OPEN) {
     console.log('[ClockSync] Periodic 30s re-sync starting...');
@@ -220,7 +365,7 @@ setInterval(() => {
 }, 30000);
 
 // ==========================================
-// 5. WebSocket Connection (Rule 11: Dynamic URL)
+// 7. WebSocket Connection (Rule 11: Dynamic URL)
 // ==========================================
 function connectWebSocket() {
   const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -230,17 +375,15 @@ function connectWebSocket() {
   socket = new WebSocket(wsUrl);
 
   socket.addEventListener('open', () => {
-    console.log('[Audience] WebSocket connected. Starting hello & clock sync...');
+    console.log('[Audience] WebSocket open. Sending hello...');
     statusText.textContent = 'Connected. Syncing clock...';
 
-    // 1. Send hello handshake (Protocol Section 4)
     socket.send(JSON.stringify({
       type: 'hello',
       role: 'audience',
       group: 0
     }));
 
-    // 2. Start initial 5-ping clock synchronization
     startClockSync();
   });
 
@@ -260,13 +403,12 @@ function connectWebSocket() {
 
       case 'welcome':
         myId = msg.id;
-        myJoinNumber = msg.joinNumber;
+        myJoinNumber = msg.joinNumber || 0;
         console.log(`[Audience] Welcome received. ID: ${myId}, Join #: ${myJoinNumber}`);
         statusText.textContent = `Connected (Device #${myJoinNumber})`;
         break;
 
       case 'state':
-        // If there is an active command when joining, schedule or catch up to it
         if (msg.cmd) {
           console.log('[Audience] Catching up to state:', msg.cmd);
           scheduleCommand(msg.cmd);
@@ -278,7 +420,7 @@ function connectWebSocket() {
         break;
 
       default:
-        console.log('[Audience] Message:', msg.type);
+        console.log('[Audience] Received message:', msg.type);
     }
   });
 
@@ -295,5 +437,5 @@ function connectWebSocket() {
   });
 }
 
-// Start connection on page load
+// Start connection on load
 connectWebSocket();
