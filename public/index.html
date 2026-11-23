@@ -219,35 +219,38 @@
 
           <!-- Stadium Amphitheater Grid (100 Devices viewed from Stage) -->
           <div class="stadium-arena">
-            <!-- Top-Left Stage Wing: Production Audio & Synthesizer Monitor (Balances Stage) -->
-            <div class="stage-left-wing" id="stage-left-wing">
-              <button class="stage-wing-btn sound-toggle-btn" id="btn-stage-sound" type="button" title="Toggle concert audio synthesizer (808 kicks & wave sweeps)">
-                <span class="wing-sound-icon" id="sound-status-icon">🔇</span>
-                <span class="wing-btn-text" id="sound-status-text">Sound: Off</span>
-              </button>
-            </div>
+            <!-- Stage Wings Bar (Top Controls: Audio Synth + QR Live Link) -->
+            <div class="stage-wings-bar">
+              <!-- Top-Left Stage Wing: Production Audio & Synthesizer Monitor (Balances Stage) -->
+              <div class="stage-left-wing" id="stage-left-wing">
+                <button class="stage-wing-btn sound-toggle-btn" id="btn-stage-sound" type="button" title="Toggle concert audio synthesizer (808 kicks & wave sweeps)">
+                  <span class="wing-sound-icon" id="sound-status-icon">🔇</span>
+                  <span class="wing-btn-text" id="sound-status-text">Sound: Off</span>
+                </button>
+              </div>
 
-            <!-- Top-Right Stage Wing: Sleek Expandable QR Dock (Side Only Popdown) -->
-            <div class="stage-wing-dock" id="stage-wing-dock">
-              <button class="stage-wing-btn" id="stage-wing-toggle" type="button" aria-expanded="false" title="Connect physical phone to arena">
-                <span class="dock-live-dot" id="dock-status-dot"></span>
-                <span class="wing-btn-text" id="dock-status-title">Connect Real Phone</span>
-                <span class="wing-chevron">▾</span>
-              </button>
+              <!-- Top-Right Stage Wing: Sleek Expandable QR Dock (Side Only Popdown) -->
+              <div class="stage-wing-dock" id="stage-wing-dock">
+                <button class="stage-wing-btn" id="stage-wing-toggle" type="button" aria-expanded="false" title="Connect physical phone to arena">
+                  <span class="dock-live-dot" id="dock-status-dot"></span>
+                  <span class="wing-btn-text" id="dock-status-title">Connect Real Phone</span>
+                  <span class="wing-chevron">▾</span>
+                </button>
 
-              <!-- Popdown Card: Smoothly expands on the side only (Never full screen) -->
-              <div class="stage-wing-popdown" id="live-phone-dock" hidden>
-                <div class="wing-popdown-header">
-                  <span class="wing-popdown-title">📱 Live Stage Link</span>
-                  <button class="wing-close-btn" id="btn-close-wing" type="button" title="Close QR Card">✕</button>
+                <!-- Popdown Card: Smoothly expands on the side only (Never full screen) -->
+                <div class="stage-wing-popdown" id="live-phone-dock" hidden>
+                  <div class="wing-popdown-header">
+                    <span class="wing-popdown-title">📱 Live Stage Link</span>
+                    <button class="wing-close-btn" id="btn-close-wing" type="button" title="Close QR Card">✕</button>
+                  </div>
+                  <div class="wing-qr-frame">
+                    <img src="/qr.png" alt="Scan QR to Join Arena" class="dock-qr-img">
+                  </div>
+                  <div class="wing-popdown-sub" id="dock-status-sub">Scan with camera to light up in Row 1!</div>
+                  <a href="/audience/" target="_blank" rel="noopener noreferrer" class="dock-mobile-link" title="Open audience screen in a new tab">
+                    <span>Open on this device</span> <span>↗</span>
+                  </a>
                 </div>
-                <div class="wing-qr-frame">
-                  <img src="/qr.png" alt="Scan QR to Join Arena" class="dock-qr-img">
-                </div>
-                <div class="wing-popdown-sub" id="dock-status-sub">Scan with camera to light up in Row 1!</div>
-                <a href="/audience/" target="_blank" rel="noopener noreferrer" class="dock-mobile-link" title="Open audience screen in a new tab">
-                  <span>Open on this device</span> <span>↗</span>
-                </a>
               </div>
             </div>
 

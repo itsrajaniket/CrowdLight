@@ -1136,12 +1136,24 @@ body {
   pointer-events: none;
 }
 
-/* Top-Left Stage Wing: Production Audio & Synth Toggle (Balances Stage Wings) */
-.stage-left-wing {
+/* Stage Wings Bar (Top Controls: Audio Synth + QR Live Link) */
+.stage-wings-bar {
+  width: 100%;
   position: absolute;
   top: 0;
-  left: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 12px;
+  pointer-events: none;
   z-index: 45;
+}
+
+.stage-left-wing {
+  pointer-events: auto;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1159,20 +1171,10 @@ body {
   line-height: 1;
 }
 
-@media (max-width: 768px) {
-  .stage-left-wing {
-    position: static;
-    margin: 2px auto 4px;
-    align-items: center;
-  }
-}
-
 /* Top-Right Stage Wing QR Dock (Compact Badge + Smooth Side Popdown) */
 .stage-wing-dock {
-  position: absolute;
-  top: 0;
-  right: 12px;
-  z-index: 45;
+  pointer-events: auto;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -1339,16 +1341,6 @@ body {
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
-  .stage-wing-dock {
-    position: static;
-    margin: 4px auto 6px;
-    align-items: center;
-  }
-  .stage-wing-popdown {
-    right: auto;
-  }
-}
 
 /* Arena Bottom Deck (Cleanly Below Crowd) */
 .arena-bottom-deck {
@@ -3142,56 +3134,578 @@ body {
 @media (max-width: 860px) {
   .arena-stage-deck {
     flex-direction: column;
-    gap: 12px;
-  }
-  .live-phone-dock {
+    gap: 8px;
     width: 100%;
-    max-width: 340px;
-    flex-direction: row;
-    text-align: left;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 14px;
-    gap: 12px;
   }
-  .dock-qr-frame {
-    width: 58px;
-    height: 58px;
-    margin-bottom: 0;
-    flex-shrink: 0;
+  .stage-wings-bar {
+    position: static;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 8px;
+    padding: 0 8px;
+    pointer-events: auto;
+  }
+  .stage-left-wing {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 0;
+  }
+  .stage-wing-dock {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 0;
+  }
+  .stage-wing-popdown {
+    right: 0;
+    left: auto;
   }
 }
 
 @media (max-width: 640px) {
+  /* Layout & Header */
+  body {
+    overflow-x: hidden;
+  }
   .hero {
-    padding: 50px 16px 40px;
+    padding: 42px 14px 32px;
+  }
+  .hero-spotlight {
+    width: 340px;
+    height: 220px;
+    top: -80px;
   }
   .nav-container {
-    padding: 12px 16px;
+    padding: 10px 14px;
+  }
+  .nav-brand {
+    gap: 8px;
+  }
+  .brand-tag {
+    display: none;
   }
   .nav-demo-btn,
   .nav-demo-link,
   .btn-secondary-nav {
     display: none;
   }
+  .nav-cta-btn {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+  }
+
+  /* Hero Section */
+  .hero-title {
+    font-size: clamp(1.85rem, 7.5vw, 2.35rem);
+    letter-spacing: -0.8px;
+    margin-bottom: 12px;
+    line-height: 1.15;
+  }
+  .hero-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin: 0 auto 24px;
+    padding: 0 4px;
+  }
+  .hero-telemetry-hud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 10px;
+    padding: 6px 12px;
+    font-size: 0.65rem;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    max-width: 360px;
+  }
+  .hero-telemetry-hud .hud-sep {
+    display: none;
+  }
+  .hero-action-deck {
+    flex-direction: column;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto 32px;
+    gap: 10px;
+  }
+  .btn-hero-primary,
+  .btn-hero-secondary,
+  .btn-hero-tertiary {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+  .hero-tour-specs {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 14px;
+    border-radius: 14px;
+  }
+  .tour-spec-item {
+    gap: 10px;
+  }
+  .tour-spec-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+  .tour-spec-title {
+    font-size: 0.92rem;
+  }
+  .tour-spec-desc {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  /* Simulator Section */
+  .simulator-section {
+    padding: 16px 8px 12px;
+    min-height: auto;
+  }
+  .section-header-compact {
+    margin-bottom: 6px;
+  }
+  .section-header-compact .section-title {
+    font-size: 1.25rem;
+    letter-spacing: -0.3px;
+  }
+  .section-header-compact .section-desc {
+    font-size: 0.72rem;
+    padding: 0 8px;
+    margin-bottom: 8px;
+  }
+
+  /* Simulator Main Toolbar */
+  .sim-main-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 8px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 8px;
+  }
+  .sim-show-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    gap: 4px;
+  }
+  .sim-main-btn {
+    padding: 6px 2px;
+    font-size: 0.68rem;
+    text-align: center;
+    justify-content: center;
+  }
+  .sim-swatches-strip {
+    padding: 2px 6px;
+    gap: 4px;
+  }
+  .color-swatch {
+    width: 15px;
+    height: 15px;
+  }
+  .swatches-label {
+    display: none;
+  }
+  .sim-blackout-btn {
+    padding: 5px 8px;
+    font-size: 0.68rem;
+  }
+  .sim-more-toggle {
+    padding: 5px 8px;
+    font-size: 0.68rem;
+  }
+
+  /* Expandable Pro Drawer */
+  .sim-more-inline-drawer {
+    width: 100%;
+    max-width: 350px;
+    padding: 8px 10px;
+  }
+  .sim-drawer-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .sim-text-input-wrap {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+  #sim-text-input {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
+  .btn-text-action {
+    padding: 4px 8px;
+    font-size: 0.72rem;
+  }
+  .sim-text-chips {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .text-chip {
+    padding: 2px 7px;
+    font-size: 0.65rem;
+  }
+  .sim-aux-drawer-group {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .sim-aux-btn {
+    padding: 4px 8px;
+    font-size: 0.68rem;
+  }
+
+  /* Stage Wings Bar */
+  .stage-wings-bar {
+    position: static;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto 6px;
+    padding: 0 4px;
+    pointer-events: auto;
+  }
+  .stage-left-wing {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 0;
+  }
+  .stage-wing-dock {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 0;
+  }
+  .stage-wing-btn {
+    padding: 4px 8px;
+    font-size: 0.68rem;
+    gap: 4px;
+  }
+  .stage-wing-popdown {
+    width: 160px;
+    padding: 8px;
+    right: 0;
+    left: auto;
+  }
+  .wing-qr-frame {
+    width: 86px;
+    height: 86px;
+  }
+
+  /* Stage LED Wall */
+  .stage-led-wall {
+    width: clamp(260px, 92vw, 350px);
+    margin-bottom: 4px;
+  }
+  .led-wall-screen {
+    height: 48px;
+    border-radius: 6px;
+  }
+  .led-main-text {
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+  }
+  .led-sub-text {
+    font-size: 0.5rem;
+    letter-spacing: 1px;
+  }
+  .led-badge,
+  .led-sync-badge {
+    font-size: 0.45rem;
+  }
+  .stage-floor-beam {
+    height: 1.5px;
+  }
+  .stage-apron-wash {
+    height: 10px;
+  }
+
+  /* Stadium Amphitheater (100 Phones Arc) */
+  .stadium-arena {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    perspective: 500px;
+    gap: 2.5px;
+  }
+  .stadium-tier {
+    margin-bottom: 1px;
+  }
+  .tier-section {
+    gap: 1.5px;
+  }
+  .stadium-aisle {
+    width: clamp(8px, 2.2vw, 14px);
+  }
+  .aisle-guide-light {
+    width: 2px;
+    height: 2px;
+  }
+  .crowd-phone {
+    width: clamp(10px, 3.2vw, 14px);
+    height: clamp(18px, 5.6vw, 25px);
+    border-width: 1px;
+    border-radius: 3px;
+    padding: 0.8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  .crowd-notch {
+    height: 1px;
+    margin-bottom: 0.5px;
+  }
+  .crowd-screen {
+    border-radius: 2px;
+    box-shadow: 0 0 3px var(--glow-color, rgba(239, 68, 68, 0.7)),
+                0 0 7px var(--glow-soft, rgba(239, 68, 68, 0.3));
+  }
+  .crowd-text {
+    display: none;
+  }
+  .you-text {
+    font-size: 0.45rem;
+    padding: 1px 3px;
+  }
+
+  /* Bottom Deck Status Bar */
+  .arena-footer-bar {
+    gap: 4px 6px;
+    font-size: 0.62rem;
+    max-width: 340px;
+  }
+  .arena-status-pill {
+    padding: 2px 7px;
+    border-radius: 8px;
+  }
+
+  /* Other Sections on Mobile */
+  .pipeline-section,
+  .comparison-section,
+  .features-section,
+  .architecture-section,
+  .faq-section,
+  .contact-section {
+    padding: 50px 14px;
+  }
+  .section-title {
+    font-size: 1.75rem;
+    letter-spacing: -0.6px;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+  .flow-node {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+  .rider-card {
+    padding: 22px 16px;
+    border-radius: 14px;
+  }
+  .rider-title {
+    font-size: 1.15rem;
+  }
+  .rider-specs-list li {
+    font-size: 0.82rem;
+    gap: 6px;
+  }
+  .calc-box {
+    padding: 20px 14px;
+    border-radius: 14px;
+  }
+  .calc-card {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+  .calc-card-val {
+    font-size: 1.6rem;
+  }
+  .calc-card-lbl {
+    font-size: 0.82rem;
+  }
   .features-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .feature-card {
+    padding: 18px 14px;
+    border-radius: 14px;
   }
   .tech-metrics-bar {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 18px 12px;
+    border-radius: 14px;
+  }
+  .tech-metric-val {
+    font-size: 1.55rem;
+  }
+  .tech-metric-lbl {
+    font-size: 0.72rem;
+  }
+  .tech-metric-sub {
+    font-size: 0.68rem;
+  }
+  .arch-card {
+    padding: 20px 14px;
+    border-radius: 14px;
+  }
+  .code-snippet {
+    font-size: 0.74rem;
+    padding: 8px 10px;
+    overflow-x: auto;
+  }
+  .faq-summary {
+    padding: 14px 14px;
+    font-size: 0.92rem;
+  }
+  .faq-answer-body {
+    padding: 0 14px 16px;
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
   .creator-card {
-    padding: 24px 20px;
+    padding: 20px 14px;
+    border-radius: 14px;
   }
   .creator-header {
     flex-direction: column;
     text-align: center;
+    gap: 10px;
+  }
+  .creator-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
+    margin: 0 auto;
+  }
+  .creator-name {
+    font-size: 1.35rem;
+  }
+  .creator-role {
+    font-size: 0.85rem;
+  }
+  .creator-bio {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .creator-quote {
+    font-size: 0.88rem;
+    padding: 10px 12px;
   }
   .creator-links {
     flex-direction: column;
+    gap: 8px;
   }
   .btn-creator-link {
     width: 100%;
     justify-content: center;
+    box-sizing: border-box;
+  }
+  .contact-box {
+    padding: 20px 14px;
+    border-radius: 14px;
+  }
+  .contact-info-title {
+    font-size: 1.25rem;
+  }
+  .contact-info-text {
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+  }
+  .contact-item {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .footer-container {
+    flex-direction: column;
+    gap: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .creator-badge-hero .creator-arrow {
+    display: none;
+  }
+  .hero-telemetry-hud {
+    font-size: 0.62rem;
+    padding: 5px 8px;
+    gap: 3px 6px;
+  }
+  .btn-hero-primary,
+  .btn-hero-secondary,
+  .btn-hero-tertiary {
+    font-size: 0.86rem;
+    padding: 11px 14px;
+  }
+  .stage-wings-bar {
+    max-width: 320px;
+  }
+  .stage-wing-btn {
+    padding: 3px 7px;
+    font-size: 0.64rem;
+  }
+  .sim-main-bar {
+    max-width: 330px;
+    padding: 5px 6px;
+  }
+}
+
+@media (max-width: 380px) {
+  .tier-section {
+    gap: 1px;
+  }
+  .stadium-aisle {
+    width: 6px;
+  }
+  .crowd-phone {
+    width: 9.2px;
+    height: 16px;
+    padding: 0.5px;
+    border-radius: 2px;
+  }
+  .stage-led-wall {
+    width: 250px;
+  }
+  .led-main-text {
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+  }
+  .sim-main-btn {
+    padding: 5px 1px;
+    font-size: 0.62rem;
+  }
+  .sim-blackout-btn,
+  .sim-more-toggle {
+    padding: 4px 6px;
+    font-size: 0.62rem;
+  }
+  .calc-card-val {
+    font-size: 1.4rem;
   }
 }
