@@ -220,6 +220,30 @@
 
           <!-- Stadium Amphitheater Grid (100 Devices viewed from Stage) -->
           <div class="stadium-arena">
+            <!-- Top-Right Stage Wing: Sleek Expandable QR Dock (Side Only Popdown) -->
+            <div class="stage-wing-dock" id="stage-wing-dock">
+              <button class="stage-wing-btn" id="stage-wing-toggle" type="button" aria-expanded="false" title="Connect physical phone to arena">
+                <span class="dock-live-dot" id="dock-status-dot"></span>
+                <span class="wing-btn-text" id="dock-status-title">Connect Real Phone</span>
+                <span class="wing-chevron">▾</span>
+              </button>
+
+              <!-- Popdown Card: Smoothly expands on the side only (Never full screen) -->
+              <div class="stage-wing-popdown" id="live-phone-dock" hidden>
+                <div class="wing-popdown-header">
+                  <span class="wing-popdown-title">📱 Live Stage Link</span>
+                  <button class="wing-close-btn" id="btn-close-wing" type="button" title="Close QR Card">✕</button>
+                </div>
+                <div class="wing-qr-frame">
+                  <img src="/qr.png" alt="Scan QR to Join Arena" class="dock-qr-img">
+                </div>
+                <div class="wing-popdown-sub" id="dock-status-sub">Scan with camera to light up in Row 1!</div>
+                <a href="/audience/" target="_blank" rel="noopener noreferrer" class="dock-mobile-link" title="Open audience screen in a new tab">
+                  <span>Open on this device</span> <span>↗</span>
+                </a>
+              </div>
+            </div>
+
             <!-- Concert Stadium LED Wall / Backdrop Stage -->
             <div class="stage-led-wall" id="stage-led-wall">
               <!-- Overhead Stage Truss & Moving Head Spotlights -->
@@ -405,9 +429,8 @@
           </div>
         </div>
 
-        <!-- Arena Bottom Control & Status Deck (Cleanly Below Crowd, Zero Overlap) -->
+        <!-- Arena Bottom Status Deck (Cleanly Centered Below Crowd) -->
         <div class="arena-bottom-deck">
-          <!-- Status Telemetry Pills -->
           <div class="arena-footer-bar">
             <div class="arena-status-pill" id="arena-virtual-pill">
               <span class="ticker-dot live"></span>
@@ -422,23 +445,6 @@
             </div>
             <div class="arena-status-pill highlight">
               <span>CUE: <strong id="sim-active-cue-label">STADIUM WAVE</strong></span>
-            </div>
-          </div>
-
-          <!-- Real Phone Live Connect Dock (Horizontal Concert Pass Card, Below Crowd) -->
-          <div class="live-phone-pass" id="live-phone-dock">
-            <div class="pass-qr-frame">
-              <img src="/qr.png" alt="Scan QR to Join Arena" class="dock-qr-img">
-            </div>
-            <div class="pass-content">
-              <div class="pass-header">
-                <span class="dock-live-dot" id="dock-status-dot"></span>
-                <span class="dock-title" id="dock-status-title">Connect Real Phone</span>
-              </div>
-              <p class="pass-desc" id="dock-status-sub">Scan QR to light up as a real glowing device in this stadium matrix!</p>
-              <a href="/audience/" target="_blank" rel="noopener noreferrer" class="dock-mobile-link" title="Open audience screen in a new tab">
-                <span>Open on this device</span> <span>↗</span>
-              </a>
             </div>
           </div>
         </div>

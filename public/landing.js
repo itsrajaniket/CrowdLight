@@ -583,6 +583,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Stage Wing QR Dock Toggle (Smooth Side Popdown) ---
+  const stageWingToggle = document.getElementById('stage-wing-toggle');
+  const stageWingPopdown = document.getElementById('live-phone-dock');
+  const btnCloseWing = document.getElementById('btn-close-wing');
+
+  if (stageWingToggle && stageWingPopdown) {
+    stageWingToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = stageWingPopdown.hasAttribute('hidden');
+      if (isHidden) {
+        stageWingPopdown.removeAttribute('hidden');
+        stageWingToggle.classList.add('open');
+        stageWingToggle.setAttribute('aria-expanded', 'true');
+      } else {
+        stageWingPopdown.setAttribute('hidden', '');
+        stageWingToggle.classList.remove('open');
+        stageWingToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    if (btnCloseWing) {
+      btnCloseWing.addEventListener('click', (e) => {
+        e.stopPropagation();
+        stageWingPopdown.setAttribute('hidden', '');
+        stageWingToggle.classList.remove('open');
+        stageWingToggle.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    // Dismiss popdown when clicking anywhere outside
+    document.addEventListener('click', (e) => {
+      if (!stageWingPopdown.hasAttribute('hidden')) {
+        if (!stageWingPopdown.contains(e.target) && !stageWingToggle.contains(e.target)) {
+          stageWingPopdown.setAttribute('hidden', '');
+          stageWingToggle.classList.remove('open');
+          stageWingToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
+  }
+
   // --- Tap Tempo Calculator ---
   const btnTapTempo = document.getElementById('btn-tap-tempo');
   const bpmDisplay = document.getElementById('sim-bpm-val');
