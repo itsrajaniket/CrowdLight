@@ -62,7 +62,8 @@ function broadcastCommand(cmd) {
   const broadcastCmd = {
     name: cmd.name,
     params: cmd.params || {},
-    executeAt: executeAt
+    executeAt: executeAt,
+    sender: cmd.sender || null
   };
 
   // Save current active command in show state
@@ -72,7 +73,8 @@ function broadcastCommand(cmd) {
     type: 'cmd',
     name: broadcastCmd.name,
     params: broadcastCmd.params,
-    executeAt: broadcastCmd.executeAt
+    executeAt: broadcastCmd.executeAt,
+    sender: broadcastCmd.sender
   });
 
   let audienceSent = 0;

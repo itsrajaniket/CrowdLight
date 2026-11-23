@@ -227,6 +227,18 @@ function startCommandExecution(cmd) {
       break;
     }
 
+    case 'RAINBOW': {
+      const speed = params.speed || 0.14;
+      function renderRainbow() {
+        const elapsed = Math.max(0, getServerTime() - cmd.executeAt);
+        const hue = Math.round((myJoinNumber * 25 + elapsed * speed) % 360);
+        lightScreen.style.backgroundColor = `hsl(${hue}, 95%, 50%)`;
+        activeAnimId = requestAnimationFrame(renderRainbow);
+      }
+      activeAnimId = requestAnimationFrame(renderRainbow);
+      break;
+    }
+
     case 'PULSE': {
       const hex = params.hex || '#ffffff';
       const bpm = params.bpm || 120;

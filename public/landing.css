@@ -657,12 +657,26 @@ body {
   transition: all 0.15s ease;
   white-space: nowrap;
   flex-shrink: 0;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .sim-main-btn:hover {
   background: #232a3d;
   border-color: #6366f1;
   color: #ffffff;
+}
+
+.sim-main-btn:active,
+.sim-blackout-btn:active,
+.sim-more-toggle:active,
+.color-swatch:active,
+.btn-text-action:active,
+.text-chip:active,
+.sim-aux-btn:active,
+.stage-wing-btn:active {
+  transform: scale(0.94) translateY(1px) !important;
+  filter: brightness(1.2);
 }
 
 .sim-main-btn.active {

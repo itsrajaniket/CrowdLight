@@ -542,7 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendLiveCommand('WAVE', { speedMs: 180, hex: '#38bdf8' });
       } else if (simType === 'rainbow') {
         applyRainbow();
-        sendLiveCommand('COLOR', { hex: '#6366f1' });
+        sendLiveCommand('RAINBOW');
       } else if (simType === 'pulse') {
         applyPulse();
         sendLiveCommand('PULSE', { bpm: currentBpm, hex: '#ec4899' });
@@ -579,6 +579,17 @@ document.addEventListener('DOMContentLoaded', () => {
         simMorePanel.setAttribute('hidden', '');
         btnToggleMore.classList.remove('open');
         btnToggleMore.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Dismiss More panel when clicking anywhere outside
+    document.addEventListener('click', (e) => {
+      if (!simMorePanel.hasAttribute('hidden')) {
+        if (!simMorePanel.contains(e.target) && !btnToggleMore.contains(e.target)) {
+          simMorePanel.setAttribute('hidden', '');
+          btnToggleMore.classList.remove('open');
+          btnToggleMore.setAttribute('aria-expanded', 'false');
+        }
       }
     });
   }
@@ -836,6 +847,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let socketReconnectTimer = null;
   let realPhoneCount = 0;
 
+  // Unique session identifier to eliminate self-echo loops
+  const myClientId = 'sim_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36);
+  let lastLocalCommandTime = 0;
+  let lastLocalCommandName = null;
+
   function initSimulatorWebSocket() {
     try {
       const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -859,6 +875,13 @@ document.addEventListener('DOMContentLoaded', () => {
           if (msg.type === 'stats') {
             updateRealPhonePresence(msg.count);
           } else if (msg.type === 'cmd') {
+            // Guard against self-echo loop:
+            // 1. Direct sender match
+            if (msg.sender && msg.sender === myClientId) return;
+            // 2. Fallback timing guard: ignore commands sent by this tab within last 1200ms
+            if (msg.name === lastLocalCommandName && (performance.now() - lastLocalCommandTime) < 1200) {
+              return;
+            }
             syncRemoteCueToSimulator(msg);
           }
         } catch (err) {
@@ -886,11 +909,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function sendLiveCommand(name, params = {}) {
+    lastLocalCommandName = name;
+    lastLocalCommandTime = performance.now();
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({
         type: 'cmd',
         name: name,
-        params: params
+        params: params,
+        sender: myClientId
       }));
     }
   }
@@ -930,17 +956,29 @@ document.addEventListener('DOMContentLoaded', () => {
   function syncRemoteCueToSimulator(cmd) {
     if (!cmd || !cmd.name) return;
     const p = cmd.params || {};
+    clearActiveTriggers();
     if (cmd.name === 'COLOR') {
-      applyColor(p.hex || '#ffffff', 'LIVE COLOR');
+      const matchSwatch = Array.from(document.querySelectorAll('.color-swatch')).find(s => s.dataset.color?.toLowerCase() === p.hex?.toLowerCase());
+      if (matchSwatch) matchSwatch.classList.add('active');
+      const label = p.hex ? `SOLID ${p.hex.toUpperCase()}` : 'LIVE COLOR';
+      applyColor(p.hex || '#ffffff', label);
     } else if (cmd.name === 'BLACKOUT') {
+      document.querySelector('[data-sim="blackout"]')?.classList.add('active');
       applyBlackout();
     } else if (cmd.name === 'STROBE') {
+      document.querySelector('[data-sim="strobe"]')?.classList.add('active');
       applyStrobe();
     } else if (cmd.name === 'PULSE') {
+      document.querySelector('[data-sim="pulse"]')?.classList.add('active');
       applyPulse();
     } else if (cmd.name === 'WAVE') {
+      document.querySelector('[data-sim="wave"]')?.classList.add('active');
       applyWave(false);
+    } else if (cmd.name === 'RAINBOW') {
+      document.querySelector('[data-sim="rainbow"]')?.classList.add('active');
+      applyRainbow();
     } else if (cmd.name === 'COUNTDOWN') {
+      document.querySelector('[data-sim="countdown"]')?.classList.add('active');
       applyCountdown();
     } else if (cmd.name === 'TEXT') {
       applyTextFlash(p.text || 'LIGHTS');
