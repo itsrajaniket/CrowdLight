@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const activeCueLabel = document.getElementById('sim-active-cue-label');
   const tickerOffset = document.getElementById('sim-ticker-offset');
   const crowdHaze = document.getElementById('crowd-haze');
+  const ledWallScreen = document.getElementById('led-wall-screen');
+  const ledStageText = document.getElementById('led-stage-text');
+  const ledStageSub = document.getElementById('led-stage-sub');
 
   function clearActiveTriggers() {
     document.querySelectorAll('[data-sim]').forEach(b => b.classList.remove('active'));
@@ -67,6 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setCueLabel(label) {
     if (activeCueLabel) activeCueLabel.textContent = label.toUpperCase();
+    if (ledStageText && currentActiveSim !== 'text-flash') {
+      ledStageText.textContent = label.toUpperCase();
+    }
+    if (ledStageSub) {
+      ledStageSub.textContent = `100 PHONES IN SYNC • ${currentBpm} BPM`;
+    }
     if (tickerOffset) {
       const randomOffset = (0.12 + Math.random() * 0.2).toFixed(2);
       tickerOffset.textContent = `${randomOffset} ms`;
@@ -84,6 +93,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     currentTimers.forEach(id => clearTimeout(id));
     currentTimers = [];
+
+    if (ledWallScreen) {
+      ledWallScreen.style.transform = '';
+      ledWallScreen.style.backgroundColor = '#060810';
+      ledWallScreen.style.boxShadow = '';
+      ledWallScreen.style.borderColor = '';
+    }
+    if (ledStageText) {
+      ledStageText.style.color = '#ffffff';
+    }
 
     // Clear text and reset phone bounce/shadows
     crowdPhones.forEach(p => {
@@ -107,11 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
       crowdHaze.style.setProperty('--haze-c', `${hex}33`);
     }
 
+    if (ledWallScreen) {
+      ledWallScreen.style.setProperty('--led-glow', hex);
+      ledWallScreen.style.setProperty('--led-wash', `${hex}44`);
+      ledWallScreen.style.borderColor = hex;
+    }
+
     crowdPhones.forEach(p => {
       if (p.screenEl) {
         p.screenEl.style.setProperty('--screen-c', hex);
         p.screenEl.style.backgroundColor = hex;
-        p.screenEl.style.boxShadow = `0 0 6px ${hex}, 0 0 16px ${hex}88`;
+        p.screenEl.style.boxShadow = `0 0 8px ${hex}, 0 0 20px ${hex}88`;
       }
     });
   }
@@ -126,6 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (crowdHaze) {
       crowdHaze.style.setProperty('--haze-c', 'rgba(6, 182, 212, 0.22)');
+    }
+
+    if (ledWallScreen) {
+      ledWallScreen.style.setProperty('--led-glow', '#06b6d4');
+      ledWallScreen.style.setProperty('--led-wash', 'rgba(6, 182, 212, 0.35)');
+      ledWallScreen.style.borderColor = '#06b6d4';
     }
 
     function loop(now) {
@@ -172,8 +203,20 @@ document.addEventListener('DOMContentLoaded', () => {
       crowdHaze.style.setProperty('--haze-c', 'rgba(168, 85, 247, 0.22)');
     }
 
+    if (ledWallScreen) {
+      ledWallScreen.style.setProperty('--led-glow', '#a855f7');
+      ledWallScreen.style.setProperty('--led-wash', 'rgba(168, 85, 247, 0.35)');
+      ledWallScreen.style.borderColor = '#a855f7';
+    }
+
     function loop(now) {
       const elapsed = now - startTime;
+
+      if (ledWallScreen) {
+        const stageHue = Math.round((elapsed * 0.12) % 360);
+        ledWallScreen.style.borderColor = `hsl(${stageHue}, 90%, 60%)`;
+        ledWallScreen.style.boxShadow = `0 0 24px hsl(${stageHue}, 90%, 50%), inset 0 0 16px hsl(${stageHue}, 90%, 25%)`;
+      }
 
       crowdPhones.forEach(p => {
         if (!p.screenEl) return;
@@ -205,6 +248,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (crowdHaze) {
         crowdHaze.style.setProperty('--haze-c', isPeak ? 'rgba(236, 72, 153, 0.35)' : 'rgba(236, 72, 153, 0.05)');
+      }
+
+      if (ledWallScreen) {
+        ledWallScreen.style.transform = isPeak ? 'scale(1.025)' : 'scale(1.0)';
+        ledWallScreen.style.boxShadow = isPeak ? '0 0 32px #ec4899, inset 0 0 16px rgba(236,72,153,0.4)' : '0 0 12px rgba(236,72,153,0.3)';
+        ledWallScreen.style.borderColor = isPeak ? '#ec4899' : 'rgba(236,72,153,0.3)';
       }
 
       if (isPeak) {
@@ -240,6 +289,15 @@ document.addEventListener('DOMContentLoaded', () => {
         crowdHaze.style.setProperty('--haze-c', state ? 'rgba(255, 255, 255, 0.35)' : 'transparent');
       }
 
+      if (ledWallScreen) {
+        ledWallScreen.style.backgroundColor = state ? '#ffffff' : '#000000';
+        ledWallScreen.style.boxShadow = state ? '0 0 44px #ffffff, inset 0 0 20px #ffffff' : 'none';
+        ledWallScreen.style.borderColor = state ? '#ffffff' : '#111420';
+      }
+      if (ledStageText) {
+        ledStageText.style.color = state ? '#000000' : '#ffffff';
+      }
+
       if (state) playSynth(800, 'square', 0.02, 0.08);
 
       crowdPhones.forEach(p => {
@@ -269,6 +327,16 @@ document.addEventListener('DOMContentLoaded', () => {
       steps.forEach((step, idx) => {
         const timer = setTimeout(() => {
           playSynth(step.freq, 'sine', 0.25, 0.3);
+
+          if (ledStageText) {
+            ledStageText.textContent = step.num;
+          }
+          if (ledWallScreen) {
+            ledWallScreen.style.borderColor = step.bg;
+            ledWallScreen.style.boxShadow = step.shadow;
+            ledWallScreen.style.transform = 'scale(1.04)';
+            setTimeout(() => { if (ledWallScreen) ledWallScreen.style.transform = ''; }, 140);
+          }
 
           crowdPhones.forEach(p => {
             if (!p.screenEl) return;
@@ -302,12 +370,30 @@ document.addEventListener('DOMContentLoaded', () => {
     setCueLabel(`TEXT FLASH: "${text}"`);
     playSynth(520, 'sine', 0.2, 0.35);
 
+    if (ledStageText) {
+      ledStageText.textContent = text;
+    }
+    if (ledStageSub) {
+      ledStageSub.textContent = `FLASH BROADCAST • ALL 100 PHONES`;
+    }
+
     let isFlash = false;
     function cycleFlash() {
       isFlash = !isFlash;
       const bg = isFlash ? '#6366f1' : '#101320';
       const shadow = isFlash ? '0 0 16px rgba(99, 102, 241, 0.9)' : 'none';
       const scale = isFlash ? 'scale(1.06)' : 'scale(1.0)';
+
+      if (ledWallScreen) {
+        ledWallScreen.style.backgroundColor = isFlash ? '#4f46e5' : '#060810';
+        ledWallScreen.style.boxShadow = isFlash ? '0 0 36px rgba(99, 102, 241, 0.95), inset 0 0 18px rgba(255, 255, 255, 0.4)' : 'none';
+        ledWallScreen.style.borderColor = isFlash ? '#818cf8' : '#222538';
+        ledWallScreen.style.transform = isFlash ? 'scale(1.03)' : 'scale(1.0)';
+      }
+      if (ledStageText) {
+        ledStageText.style.color = isFlash ? '#ffffff' : '#818cf8';
+        ledStageText.textContent = text;
+      }
 
       // Display the full word on EVERY single phone in lockstep unison!
       crowdPhones.forEach(p => {
@@ -334,6 +420,13 @@ document.addEventListener('DOMContentLoaded', () => {
     stopAllEffects();
     currentActiveSim = 'marquee';
     setCueLabel(`MARQUEE: "${text.trim()}"`);
+
+    if (ledStageText) {
+      ledStageText.textContent = (rawText || 'LIGHTS').trim().toUpperCase();
+    }
+    if (ledStageSub) {
+      ledStageSub.textContent = 'STADIUM RIBBON MARQUEE';
+    }
 
     let scrollPos = 0;
     const tier3 = crowdPhones.filter(p => p.row === 2);
@@ -372,6 +465,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (crowdHaze) {
       crowdHaze.style.setProperty('--haze-c', 'transparent');
+    }
+
+    if (ledWallScreen) {
+      ledWallScreen.style.backgroundColor = '#000000';
+      ledWallScreen.style.boxShadow = 'none';
+      ledWallScreen.style.borderColor = '#111420';
+    }
+    if (ledStageText) {
+      ledStageText.textContent = 'BLACKOUT';
+      ledStageText.style.color = '#333b50';
+    }
+    if (ledStageSub) {
+      ledStageSub.textContent = 'ALL 100 CHANNELS OFF';
     }
 
     crowdPhones.forEach(p => {

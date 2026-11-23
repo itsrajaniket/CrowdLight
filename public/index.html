@@ -222,21 +222,41 @@
 
           <!-- Stadium Amphitheater Grid (100 Devices viewed from Stage) -->
           <div class="stadium-arena">
-            <!-- Stage at Top of Stadium -->
-            <div class="stadium-stage-top">
-              <div class="stage-platform">
-                <span class="stage-star">★</span>
-                <span class="stage-label">MAIN STAGE</span>
-                <span class="stage-star">★</span>
+            <!-- Concert Stadium LED Wall / Backdrop Stage -->
+            <div class="stage-led-wall" id="stage-led-wall">
+              <!-- Overhead Stage Truss & Moving Head Spotlights -->
+              <div class="led-wall-truss">
+                <span class="truss-beam"></span>
+                <div class="moving-heads">
+                  <span class="head-light"></span>
+                  <span class="head-light"></span>
+                  <span class="head-light"></span>
+                  <span class="head-light"></span>
+                  <span class="head-light"></span>
+                  <span class="head-light"></span>
+                  <span class="head-light"></span>
+                </div>
               </div>
-              <div class="stage-spotlight-rig">
-                <span class="rig-light"></span>
-                <span class="rig-light"></span>
-                <span class="rig-light"></span>
-                <span class="rig-light"></span>
-                <span class="rig-light"></span>
+
+              <!-- Main LED Screen Display -->
+              <div class="led-wall-screen" id="led-wall-screen">
+                <div class="led-scanlines"></div>
+                <div class="led-content">
+                  <div class="led-header-strip">
+                    <span class="led-badge">STAGE LED • CH-01</span>
+                    <span class="led-status-dot"></span>
+                    <span class="led-sync-badge">NTP SYNCED</span>
+                  </div>
+                  <div class="led-main-text" id="led-stage-text">STADIUM WAVE</div>
+                  <div class="led-sub-text" id="led-stage-sub">100 PHONES IN SYNC • 128 BPM</div>
+                </div>
               </div>
-              <div class="stage-glow-beam"></div>
+
+              <!-- Stage Deck Floor & Ground Light Wash -->
+              <div class="stage-deck-floor">
+                <div class="stage-floor-beam"></div>
+                <div class="stage-apron-wash"></div>
+              </div>
             </div>
 
             <!-- Sweeping Stadium Stage Spotlights -->

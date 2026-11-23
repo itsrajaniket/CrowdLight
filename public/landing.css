@@ -505,14 +505,8 @@ body {
 }
 
 /* ==========================================
-   Interactive Simulator Section
+   Interactive Simulator Section (Full-Bleed Viewport)
    ========================================== */
-.simulator-section {
-  padding: 80px 24px;
-  background: #0b0d14;
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-}
 
 .section-container {
   max-width: 1100px;
@@ -552,15 +546,29 @@ body {
    Compact Interactive Live Simulator
    (Single-Screen Laptop Viewport Optimized)
    ========================================== */
+/* ==========================================
+   Full-Screen Edge-to-Edge Stadium Experience
+   (100svh / 100dvh Viewport Centered)
+   ========================================== */
 .simulator-section {
-  padding: 16px 16px 12px;
-  background: #090b12;
+  min-height: calc(100vh - 76px);
+  min-height: calc(100svh - 76px);
+  min-height: calc(100dvh - 76px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px 6px;
+  background: radial-gradient(ellipse at 50% 25%, #0e1426 0%, #060812 60%, #030408 100%);
   position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .section-header-compact {
   text-align: center;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .section-header-compact .section-badge {
@@ -574,43 +582,58 @@ body {
   border: 1px solid rgba(99, 102, 241, 0.25);
   padding: 1px 8px;
   border-radius: 10px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .section-header-compact .section-title {
-  font-size: clamp(1.25rem, 2.1vw, 1.65rem);
+  font-size: clamp(1.2rem, 2.0vw, 1.6rem);
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 2px;
 }
 
 .section-header-compact .section-desc {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--text-muted);
   max-width: 580px;
   margin: 0 auto;
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
+/* Full-bleed Unboxed Container */
 .simulator-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 10px 14px 8px;
-  max-width: 960px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Main Show Control Bar (Slim Single Row) */
+/* Floating Glass Pill Toolbar */
 .sim-main-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 6px;
-  flex-wrap: nowrap;
+  gap: 10px;
+  margin-bottom: 8px;
+  background: rgba(14, 18, 28, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  padding: 4px 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 16px rgba(99, 102, 241, 0.15);
+  width: auto;
+  max-width: 880px;
   position: relative;
+  z-index: 50;
+  flex-wrap: nowrap;
 }
 
 /* 4 Big Main Feature Buttons */
@@ -936,15 +959,15 @@ body {
 }
 
 /* ==========================================
-   Stadium Amphitheater Arena (100 Devices)
+   Full-Bleed Stadium Amphitheater Arena (100 Devices)
    ========================================== */
 .arena-stage-deck {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 2px auto 0;
-  max-width: 960px;
+  margin: 0 auto;
+  max-width: 1360px;
   position: relative;
   width: 100%;
 }
@@ -952,12 +975,12 @@ body {
 /* Atmospheric Crowd Light Haze */
 .crowd-atmospheric-haze {
   position: absolute;
-  inset: -10px -20px -14px -20px;
-  border-radius: 18px;
+  inset: -20px -40px -30px -40px;
+  border-radius: 30px;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 55%, var(--haze-c, rgba(239, 68, 68, 0.22)) 0%, rgba(99, 102, 241, 0.08) 50%, transparent 80%);
-  filter: blur(28px);
-  opacity: 0.9;
+  background: radial-gradient(ellipse at 50% 50%, var(--haze-c, rgba(239, 68, 68, 0.25)) 0%, rgba(99, 102, 241, 0.08) 55%, transparent 80%);
+  filter: blur(40px);
+  opacity: 0.95;
   z-index: 1;
   transition: background 0.35s ease, opacity 0.3s ease;
 }
@@ -968,73 +991,171 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  width: 100%;
-  max-width: 920px;
-  padding: 2px 4px;
+  gap: 5px;
+  width: 94%;
+  max-width: 1260px;
+  padding: 2px 8px;
   user-select: none;
   position: relative;
   z-index: 2;
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
-/* Stage at Top of Arena */
-.stadium-stage-top {
-  width: 100%;
-  max-width: 440px;
+/* Wide Concert Stadium LED Wall / Backdrop Stage */
+.stage-led-wall {
+  width: clamp(340px, 50vw, 660px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   position: relative;
-  z-index: 5;
+  z-index: 10;
 }
 
-.stage-platform {
+.led-wall-truss {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.truss-beam {
+  width: 96%;
+  height: 3px;
+  background: linear-gradient(90deg, #1e2538 0%, #475569 50%, #1e2538 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.moving-heads {
+  display: flex;
+  justify-content: space-around;
+  width: 88%;
+  margin-top: 1px;
+}
+
+.head-light {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #818cf8;
+  box-shadow: 0 0 8px #818cf8, 0 0 16px rgba(129, 140, 248, 0.7);
+}
+
+.led-wall-screen {
+  width: 100%;
+  height: clamp(52px, 6.8vw, 76px);
+  background: #060810;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 24px var(--led-glow, rgba(99, 102, 241, 0.45)), inset 0 0 20px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.led-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.28) 0px, rgba(0, 0, 0, 0.28) 1px, transparent 1px, transparent 3px);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.6;
+}
+
+.led-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2px 12px;
+}
+
+.led-header-strip {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 2px 14px;
-  background: linear-gradient(180deg, #1b2034 0%, #0d101a 100%);
-  border: 1px solid rgba(129, 140, 248, 0.35);
-  border-bottom: 2px solid #818cf8;
-  border-radius: 6px 6px 0 0;
-  box-shadow: 0 0 14px rgba(129, 140, 248, 0.35);
+  margin-bottom: 2px;
 }
 
-.stage-label {
-  font-size: 0.62rem;
+.led-badge {
+  font-size: 0.52rem;
   font-weight: 800;
-  letter-spacing: 2px;
-  color: #e0e7ff;
-  text-shadow: 0 0 8px rgba(129, 140, 248, 0.8);
+  letter-spacing: 1.2px;
+  color: #94a3b8;
 }
 
-.stage-star {
-  font-size: 0.58rem;
-  color: #f59e0b;
-}
-
-.stage-spotlight-rig {
-  display: flex;
-  gap: 14px;
-  margin-top: 1px;
-}
-
-.rig-light {
+.led-status-dot {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #818cf8;
-  box-shadow: 0 0 8px #818cf8;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+  animation: liveBlink 1.2s infinite;
 }
 
-.stage-glow-beam {
+.led-sync-badge {
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.15);
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.led-main-text {
+  font-family: monospace;
+  font-weight: 900;
+  font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+  letter-spacing: clamp(2px, 0.5vw, 6px);
+  color: #ffffff;
+  text-shadow: 0 0 16px var(--led-glow, #818cf8), 0 0 32px var(--led-glow, #818cf8);
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+.led-sub-text {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #cbd5e1;
+  opacity: 0.75;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+.stage-deck-floor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.stage-floor-beam {
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(129, 140, 248, 0.85) 50%, transparent 100%);
-  box-shadow: 0 0 10px rgba(129, 140, 248, 0.75);
-  margin-top: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--led-glow, #818cf8);
+}
+
+.stage-apron-wash {
+  width: 90%;
+  height: 16px;
+  background: linear-gradient(180deg, var(--led-wash, rgba(99, 102, 241, 0.25)) 0%, transparent 100%);
+  filter: blur(6px);
+  pointer-events: none;
 }
 
 /* Floating Real Phone QR Dock (Corner Card) */
@@ -1158,11 +1279,11 @@ body {
 .tier-section {
   display: flex;
   align-items: center;
-  gap: clamp(2px, 0.42vw, 5px);
+  gap: clamp(3px, 0.55vw, 8px);
 }
 
 .stadium-aisle {
-  width: clamp(14px, 2.2vw, 26px);
+  width: clamp(20px, 3.0vw, 42px);
   height: 100%;
   display: flex;
   align-items: center;
@@ -1215,17 +1336,17 @@ body {
   z-index: 2;
 }
 
-/* Curved Arc Crowd Phones with Organic Jitter */
+/* Curved Arc Crowd Phones (Viewport-Scaled to ~85% Width) */
 .crowd-phone {
-  width: clamp(13px, 1.7vw, 21px);
-  height: clamp(24px, 2.75vw, 35px);
+  width: clamp(16px, 2.2vw, 30px);
+  height: clamp(28px, 3.6vw, 50px);
   background: #11141e;
   border: 1.5px solid #232a3c;
   border-radius: 5px;
   padding: 1.5px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
   position: relative;
   flex-shrink: 0;
   cursor: pointer;
