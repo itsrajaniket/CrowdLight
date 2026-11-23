@@ -8,7 +8,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Aniket Raj <itsrajaniket@gmail.com> (https://www.rajaniket.com/)",
+  "homepage": "https://www.rajaniket.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsrajaniket/CrowdLight.git"
+  },
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {

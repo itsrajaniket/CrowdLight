@@ -540,6 +540,17 @@ Contributions to CrowdLight are welcome. Whether improving synchronization preci
 
 ---
 
+## Author & Connect
+
+**Aniket Raj** — *Full-Stack Developer (MERN + Next.js) & Real-Time Systems Specialist*
+- **Portfolio:** [rajaniket.com](https://www.rajaniket.com/)
+- **LinkedIn:** [ANIKET RAJ](https://www.linkedin.com/in/itsaniketraj/)
+- **GitHub:** [@itsrajaniket](https://github.com/itsrajaniket)
+- **Repository:** [CrowdLight on GitHub](https://github.com/itsrajaniket/CrowdLight)
+- **Email:** [itsrajaniket@gmail.com](mailto:itsrajaniket@gmail.com)
+
+---
+
 ## License
 
 This project is licensed under the **ISC License**.
