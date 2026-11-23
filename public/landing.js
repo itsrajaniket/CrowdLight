@@ -405,20 +405,27 @@ document.addEventListener('DOMContentLoaded', () => {
       const simType = btn.dataset.sim;
       if (simType === 'wave') {
         applyWave(false);
+        sendLiveCommand('WAVE', { speedMs: 180, hex: '#38bdf8' });
       } else if (simType === 'rainbow') {
         applyRainbow();
+        sendLiveCommand('COLOR', { hex: '#6366f1' });
       } else if (simType === 'pulse') {
         applyPulse();
+        sendLiveCommand('PULSE', { bpm: currentBpm, hex: '#ec4899' });
       } else if (simType === 'strobe') {
         applyStrobe();
+        sendLiveCommand('STROBE', { hex: '#ffffff', intervalMs: 100 });
       } else if (simType === 'countdown') {
         applyCountdown();
+        sendLiveCommand('COUNTDOWN', { from: 3 });
       } else if (simType === 'blackout') {
         applyBlackout();
+        sendLiveCommand('BLACKOUT');
       } else if (simType === 'color') {
         const color = btn.dataset.color || '#ef4444';
         const label = btn.title ? `SOLID ${btn.title.toUpperCase()}` : 'SOLID COLOR';
         applyColor(color, label);
+        sendLiveCommand('COLOR', { hex: color });
       }
     });
   });
@@ -503,6 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clearActiveTriggers();
       const text = textInput?.value || 'LIGHTS';
       applyTextFlash(text);
+      sendLiveCommand('TEXT', { text: text, hex: '#ffffff', bgHex: '#6366f1' });
     });
   }
 
@@ -513,6 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clearActiveTriggers();
       const text = textInput?.value || 'LIGHTS';
       applyTextMarquee(text);
+      sendLiveCommand('TEXT', { text: text, hex: '#ffffff', bgHex: '#0284c7' });
     });
   }
 
@@ -525,6 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (textInput) textInput.value = word;
       clearActiveTriggers();
       applyTextFlash(word);
+      sendLiveCommand('TEXT', { text: word, hex: '#ffffff', bgHex: '#6366f1' });
     });
   });
 
@@ -626,7 +636,124 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Live WebSocket Matrix Hub (Synchronizes Real Phones) ---
+  let socket = null;
+  let socketReconnectTimer = null;
+  let realPhoneCount = 0;
+
+  function initSimulatorWebSocket() {
+    try {
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsHost = window.location.host;
+      if (!wsHost) return;
+
+      socket = new WebSocket(`${wsProtocol}//${wsHost}`);
+
+      socket.addEventListener('open', () => {
+        console.log('[Simulator Hub] Connected. Authenticating with sandbox PIN...');
+        socket.send(JSON.stringify({
+          type: 'hello',
+          role: 'controller',
+          pin: '1234'
+        }));
+      });
+
+      socket.addEventListener('message', (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type === 'stats') {
+            updateRealPhonePresence(msg.count);
+          } else if (msg.type === 'cmd') {
+            syncRemoteCueToSimulator(msg);
+          }
+        } catch (err) {
+          console.warn('[Simulator Hub] Message error:', err);
+        }
+      });
+
+      socket.addEventListener('close', () => {
+        scheduleReconnect();
+      });
+
+      socket.addEventListener('error', () => {
+        try { socket.close(); } catch (e) {}
+      });
+    } catch (err) {
+      scheduleReconnect();
+    }
+  }
+
+  function scheduleReconnect() {
+    if (socketReconnectTimer) clearTimeout(socketReconnectTimer);
+    socketReconnectTimer = setTimeout(() => {
+      initSimulatorWebSocket();
+    }, 4000);
+  }
+
+  function sendLiveCommand(name, params = {}) {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({
+        type: 'cmd',
+        name: name,
+        params: params
+      }));
+    }
+  }
+
+  function updateRealPhonePresence(count) {
+    realPhoneCount = Math.max(0, parseInt(count, 10) || 0);
+    const phoneAnchor = document.getElementById('phone-real-anchor');
+    const realPill = document.getElementById('arena-real-pill');
+    const realLabel = document.getElementById('real-phones-label');
+    const virtualLabel = document.getElementById('arena-count-label');
+    const dockDot = document.getElementById('dock-status-dot');
+    const dockTitle = document.getElementById('dock-status-title');
+    const dockSub = document.getElementById('dock-status-sub');
+    const liveDock = document.getElementById('live-phone-dock');
+
+    if (realPhoneCount > 0) {
+      if (phoneAnchor) phoneAnchor.classList.add('real-device-active');
+      if (liveDock) liveDock.classList.add('connected');
+      if (dockDot) dockDot.classList.add('active');
+      if (dockTitle) dockTitle.textContent = `🟢 Phone Linked (${realPhoneCount} Live)`;
+      if (dockSub) dockSub.textContent = `Your real phone is receiving all stadium cues in live lockstep!`;
+      if (realPill) realPill.classList.add('active');
+      if (realLabel) realLabel.textContent = `${realPhoneCount} REAL PHONE${realPhoneCount > 1 ? 'S' : ''} CONNECTED (LIVE)`;
+      if (virtualLabel) virtualLabel.textContent = `24 SIMULATED + ${realPhoneCount} REAL`;
+    } else {
+      if (phoneAnchor) phoneAnchor.classList.remove('real-device-active');
+      if (liveDock) liveDock.classList.remove('connected');
+      if (dockDot) dockDot.classList.remove('active');
+      if (dockTitle) dockTitle.textContent = 'Connect Real Phone';
+      if (dockSub) dockSub.textContent = 'Scan with your phone to light up as a real device in this matrix!';
+      if (realPill) realPill.classList.remove('active');
+      if (realLabel) realLabel.textContent = '0 REAL PHONES CONNECTED';
+      if (virtualLabel) virtualLabel.textContent = '24 SIMULATED PHONES';
+    }
+  }
+
+  function syncRemoteCueToSimulator(cmd) {
+    if (!cmd || !cmd.name) return;
+    const p = cmd.params || {};
+    if (cmd.name === 'COLOR') {
+      applyColor(p.hex || '#ffffff', 'LIVE COLOR');
+    } else if (cmd.name === 'BLACKOUT') {
+      applyBlackout();
+    } else if (cmd.name === 'STROBE') {
+      applyStrobe();
+    } else if (cmd.name === 'PULSE') {
+      applyPulse();
+    } else if (cmd.name === 'WAVE') {
+      applyWave(false);
+    } else if (cmd.name === 'COUNTDOWN') {
+      applyCountdown();
+    } else if (cmd.name === 'TEXT') {
+      applyTextFlash(p.text || 'LIGHTS');
+    }
+  }
+
   // Start it alive: slow looping ambient wave on page load
   applyWave(true);
+  initSimulatorWebSocket();
   if (attendeeSlider) updateCalculator(attendeeSlider.value);
 });
