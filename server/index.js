@@ -123,9 +123,9 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Root redirect/landing
+  // Root landing page
   if (reqPath === '/' || reqPath === '') {
-    reqPath = '/audience/index.html';
+    reqPath = '/index.html';
   }
 
   // Handle directory requests with trailing slash

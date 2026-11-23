@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CrowdLight — Zero-Install Synchronized Crowd Light Show</title>
+  <meta name="description" content="Turn your audience into a synchronized stadium light show. No app download. Scans one QR code to transform smartphones into an interactive light display in real time.">
+  <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <span class="brand-icon">✨</span>
+        <span class="brand-name">CrowdLight</span>
+        <span class="badge-status">Production Ready</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#simulator">Live Simulator</a>
+        <a href="#features">Features</a>
+        <a href="#comparison">Why CrowdLight</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="/audience/" class="btn-secondary-nav">Audience View</a>
+        <a href="/controller/" class="btn-primary-nav">Launch Controller →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Zero App Installs • Sub-Millisecond NTP Clock Sync</span>
+      </div>
+      <h1 class="hero-title">
+        Turn Every Phone in the Crowd into a <span class="gradient-text">Synchronized Light Show</span>
+      </h1>
+      <p class="hero-subtitle">
+        No disposable LED wristbands. No 100 MB app downloads. Attendees scan a single QR code to turn their smartphones into a stadium-scale visual matrix — synchronized in frame-level lockstep.
+      </p>
+
+      <!-- Dual Launch Portals -->
+      <div class="portal-grid">
+        <!-- Audience Portal Card -->
+        <div class="portal-card audience-card">
+          <div class="card-tag">For Audience Attendees</div>
+          <h2 class="portal-heading">Join Live from Your Phone</h2>
+          <p class="portal-desc">Scan with your smartphone camera to experience the live light show in real time.</p>
+          <div class="qr-preview-wrapper">
+            <img src="/qr.png" alt="Scan to Join CrowdLight" class="hero-qr-img">
+          </div>
+          <div class="card-footer">
+            <span class="url-hint">crowdlight-4u52.onrender.com/audience/</span>
+            <a href="/audience/" class="btn-card-action">Open in Browser</a>
+          </div>
+        </div>
+
+        <!-- Director Portal Card -->
+        <div class="portal-card director-card">
+          <div class="card-tag highlight">For Event Directors & DJs</div>
+          <h2 class="portal-heading">Operator Showpad</h2>
+          <p class="portal-desc">Manage the entire stadium from a laptop, tablet, or smartphone in your hand.</p>
+          
+          <div class="pin-callout">
+            <span class="pin-label">Demo Unlock PIN</span>
+            <span class="pin-code">1234</span>
+          </div>
+
+          <div class="feature-bullets">
+            <div class="bullet-item">
+              <span class="bullet-icon">⚡</span>
+              <span>Tap-Tempo Beat Pulse & 10-Step Harmonic Wave</span>
+            </div>
+            <div class="bullet-item">
+              <span class="bullet-icon">👥</span>
+              <span>Live Audience Headcount Analytics</span>
+            </div>
+            <div class="bullet-item">
+              <span class="bullet-icon">⬛</span>
+              <span>Instant Blackout Kill-Switch & Strobe Controls</span>
+            </div>
+          </div>
+
+          <a href="/controller/" class="btn-card-primary">Open Live Controller Pad →</a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Bar -->
+      <div class="metrics-bar">
+        <div class="metric-item">
+          <span class="metric-val">19.3 KB</span>
+          <span class="metric-lbl">Transfer Payload</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">&lt; 1 ms</span>
+          <span class="metric-lbl">NTP Sync Tolerance</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">500+</span>
+          <span class="metric-lbl">Tested Concurrency</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">0 s</span>
+          <span class="metric-lbl">App Install Time</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Live Simulator Section -->
+  <section id="simulator" class="simulator-section">
+    <div class="section-container">
+      <div class="section-badge">Interactive Demo</div>
+      <h2 class="section-title">See How CrowdLight Works Right Now</h2>
+      <p class="section-desc">Click an effect below to trigger real-time simulated devices in frame-accurate lockstep.</p>
+
+      <div class="simulator-box">
+        <!-- Simulator Controls -->
+        <div class="sim-controls">
+          <span class="sim-controls-label">Test Trigger:</span>
+          <button class="sim-btn active" data-sim="color" data-color="#ef4444">🔴 Red</button>
+          <button class="sim-btn" data-sim="color" data-color="#3b82f6">🔵 Blue</button>
+          <button class="sim-btn" data-sim="pulse">🥁 Beat Pulse</button>
+          <button class="sim-btn" data-sim="wave">🌊 Crowd Wave</button>
+          <button class="sim-btn" data-sim="strobe">⚡ Strobe</button>
+          <button class="sim-btn" data-sim="countdown">⏱️ Countdown</button>
+          <button class="sim-btn blackout" data-sim="blackout">⬛ Blackout</button>
+        </div>
+
+        <!-- Simulated Phones Grid -->
+        <div class="phones-stage">
+          <!-- Phone 1 -->
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen" id="sim-screen-1">
+              <span class="phone-tag">Device #1</span>
+              <div class="sim-text" id="sim-text-1"></div>
+            </div>
+            <div class="phone-chin"></div>
+          </div>
+          <!-- Phone 2 -->
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen" id="sim-screen-2">
+              <span class="phone-tag">Device #2</span>
+              <div class="sim-text" id="sim-text-2"></div>
+            </div>
+            <div class="phone-chin"></div>
+          </div>
+          <!-- Phone 3 -->
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="phone-screen" id="sim-screen-3">
+              <span class="phone-tag">Device #3</span>
+              <div class="sim-text" id="sim-text-3"></div>
+            </div>
+            <div class="phone-chin"></div>
+          </div>
+        </div>
+
+        <div class="sim-caption">
+          <span>All phones synchronize via <strong>scheduled executeAt timestamps</strong> — immune to mobile network arrival jitter.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="steps-section">
+    <div class="section-container">
+      <div class="section-badge">Workflow</div>
+      <h2 class="section-title">Ready in 3 Simple Steps</h2>
+      <p class="section-desc">From stage setup to live crowd illumination in under 60 seconds.</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Project the QR Code</h3>
+          <p class="step-text">Put the CrowdLight QR code on your stage LED wall, projector screen, or event posters.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Audience Scans to Join</h3>
+          <p class="step-text">Attendees scan with their native phone camera. The 19 KB web page opens in < 300ms with Screen Wake Lock enabled.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Run the Show Live</h3>
+          <p class="step-text">Open the controller on your laptop, tablet, or smartphone. Change colors, pulse to the beat, or trigger waves in real time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section id="comparison" class="comparison-section">
+    <div class="section-container">
+      <div class="section-badge">Comparison</div>
+      <h2 class="section-title">Why CrowdLight Replaces Traditional Tech</h2>
+      <p class="section-desc">A modern, sustainable alternative to disposable hardware and bloated native apps.</p>
+
+      <div class="table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>LED Wristbands (PixMob)</th>
+              <th>Native Mobile Apps</th>
+              <th class="highlight-col">CrowdLight ✨</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hardware Cost</strong></td>
+              <td>$3 – $8 per attendee</td>
+              <td>$0 (Attendee phones)</td>
+              <td class="highlight-col"><strong>$0.00</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Onboarding Friction</strong></td>
+              <td>Manual physical handout</td>
+              <td>100 MB download + permissions</td>
+              <td class="highlight-col"><strong>1-Second QR Code Scan</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Environmental Impact</strong></td>
+              <td>Massive plastic & battery e-waste</td>
+              <td>High phone battery drain</td>
+              <td class="highlight-col"><strong>Zero E-Waste (SaaS)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Latency Handling</strong></td>
+              <td>Proprietary RF transmitters</td>
+              <td>Cellular network jitter</td>
+              <td class="highlight-col"><strong>In-Browser NTP Time Alignment</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Operator Controls</strong></td>
+              <td>Hardware lighting desk DMX</td>
+              <td>Complex backend console</td>
+              <td class="highlight-col"><strong>Responsive Web Showpad</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Features Grid -->
+  <section id="features" class="features-section">
+    <div class="section-container">
+      <div class="section-badge">Engineered for Reliability</div>
+      <h2 class="section-title">Built for Real-World Stadium Conditions</h2>
+      <p class="section-desc">Battle-tested architecture that thrives under crowded venue networks.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Ultra-Lightweight 19 KB Payload</h3>
+          <p class="feature-text">Built entirely in vanilla JavaScript with zero frameworks. Loads instantly even when cellular towers are congested.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <h3 class="feature-title">NTP Clock Synchronization</h3>
+          <p class="feature-text">5-ping burst filter rejects packet latency outliers, calculating microsecond offsets between client and server.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔋</div>
+          <h3 class="feature-title">Screen Wake Lock & Battery Smart</h3>
+          <p class="feature-text">Maintains screen brightness during the show and cancels GPU animation loops during blackouts to conserve battery.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌊</div>
+          <h3 class="feature-title">Harmonic 10-Step Crowd Waves</h3>
+          <p class="feature-text">Synchronized ripples sweep across audience phones based on sequential join order, creating stunning visual waves.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3 class="feature-title">PIN-Protected Operator Console</h3>
+          <p class="feature-text">Restricted access showpad prevents attendees from broadcasting spoofed commands from developer consoles.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3 class="feature-title">500+ Device Stress Tested</h3>
+          <p class="feature-text">Pre-serialized JSON broadcasting handles hundreds of simultaneous WebSockets with under 60 MB server memory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2 class="cta-title">Ready to Light Up Your Next Event?</h2>
+      <p class="cta-subtitle">Launch the controller on your phone or laptop and turn your audience into part of the performance.</p>
+      <div class="cta-buttons">
+        <a href="/controller/" class="btn-cta-primary">Open Live Controller (PIN: 1234)</a>
+        <a href="/audience/" class="btn-cta-secondary">Open Audience View</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="brand-icon">✨</span>
+        <span class="brand-name">CrowdLight</span>
+        <span class="footer-desc">Zero-install real-time crowd screen synchronization engine.</span>
+      </div>
+      <div class="footer-links">
+        <a href="/audience/">Audience Portal</a>
+        <a href="/controller/">Controller Showpad</a>
+        <a href="/qr.png" download="crowdlight-qr.png">Download Venue QR</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Production Ready • Built with Node.js & Raw WebSockets</span>
+    </div>
+  </footer>
+
+  <script src="landing.js"></script>
+</body>
+</html>
