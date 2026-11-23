@@ -14,19 +14,23 @@
       <a href="/" class="brand">
         <span class="brand-icon">✨</span>
         <span class="brand-name">CrowdLight</span>
+        <span class="brand-live-pill"><span class="live-dot"></span>Live</span>
       </a>
       <nav class="nav-links">
         <a href="#how-it-works">How It Works</a>
         <a href="#simulator">Simulator</a>
-        <a href="#comparison">Why CrowdLight</a>
+        <a href="#comparison">Why Us</a>
         <a href="#calculator">Savings</a>
-        <a href="#architecture">Under the Hood</a>
+        <a href="#architecture" class="nav-link-extra">Architecture</a>
         <a href="#faq">FAQ</a>
         <a href="#creator">Creator</a>
       </nav>
       <div class="nav-actions">
-        <a href="/controller/" class="nav-demo-link" title="Test Operator Console">Console Demo (PIN: 1234)</a>
-        <a href="#contact" class="btn-primary-nav">Book a Demo</a>
+        <a href="/controller/" class="nav-demo-btn" title="Launch Director Console Sandbox">
+          <span class="nav-btn-icon">⚡</span>
+          <span>Console <strong class="nav-pin-tag">PIN: 1234</strong></span>
+        </a>
+        <a href="#contact" class="nav-cta-btn">Book a Demo</a>
       </div>
     </div>
   </header>
@@ -139,23 +143,25 @@
     </div>
   </section>
 
-  <!-- Interactive Live Simulator Section (Stadium Arena View) -->
+  <!-- Compact Interactive Live Simulator (Single-Screen Arena View) -->
   <section id="simulator" class="simulator-section">
     <div class="section-container">
-      <div class="section-badge">Live Arena Simulator</div>
-      <h2 class="section-title">See the Crowd Matrix in Action</h2>
-      <p class="section-desc">Test real-time lighting cues across a 24-phone stadium amphitheater seen from the stage.</p>
+      <div class="section-header-compact">
+        <span class="section-badge">Live Arena Simulator</span>
+        <h2 class="section-title">See the Crowd Matrix in Action</h2>
+        <p class="section-desc">Test real-time lighting cues and text broadcasts across a 24-phone stadium amphitheater seen from the stage.</p>
+      </div>
 
       <div class="simulator-box">
-        <!-- Simulator Controls Bar -->
-        <div class="sim-controls-wrapper">
+        <!-- Row 1: Stage Triggers & Aux Controls -->
+        <div class="sim-deck-row">
           <div class="sim-controls">
-            <span class="sim-controls-label">Stage Triggers:</span>
+            <span class="sim-controls-label">Triggers:</span>
             <button class="sim-btn active" data-sim="wave">🌊 Stadium Wave</button>
             <button class="sim-btn" data-sim="pulse">🥁 Beat Pulse (<span id="sim-bpm-val">128</span> BPM)</button>
-            <button class="sim-btn" data-sim="rainbow">🌈 Rainbow Aurora</button>
-            <button class="sim-btn" data-sim="strobe">⚡ Arena Strobe</button>
-            <button class="sim-btn" data-sim="countdown">⏱️ Countdown 3-2-1</button>
+            <button class="sim-btn" data-sim="rainbow">🌈 Rainbow</button>
+            <button class="sim-btn" data-sim="strobe">⚡ Strobe</button>
+            <button class="sim-btn" data-sim="countdown">⏱️ Countdown</button>
             <button class="sim-btn" data-sim="color" data-color="#ef4444">🔴 Red</button>
             <button class="sim-btn" data-sim="color" data-color="#06b6d4">🔵 Cyan</button>
             <button class="sim-btn" data-sim="color" data-color="#a855f7">🟣 Purple</button>
@@ -163,39 +169,37 @@
           </div>
 
           <div class="sim-aux-bar">
-            <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set custom tempo">🥁 Tap Tempo</button>
+            <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set tempo">🥁 Tap Tempo</button>
             <button class="sim-aux-btn" id="btn-sound-toggle" title="Toggle audio synthesizer">🔇 Sound: Off</button>
           </div>
         </div>
 
-        <!-- Live Text Broadcast Console -->
-        <div class="sim-text-console">
-          <div class="sim-text-input-group">
+        <!-- Row 2: Live Text Flash Bar & Quick Chips -->
+        <div class="sim-text-bar">
+          <div class="sim-text-input-wrap">
             <span class="sim-text-icon">💬</span>
             <input type="text" id="sim-text-input" placeholder="Type text to flash (e.g. COLDPLAY, DROP, GOOGLE)..." maxlength="12" value="COLDPLAY">
-            <button class="btn-text-action primary" id="btn-flash-text" title="Flash across all phones">⚡ Flash Text</button>
-            <button class="btn-text-action" id="btn-marquee-text" title="Scroll across stadium columns">⏩ Arena Marquee</button>
+            <button class="btn-text-action primary" id="btn-flash-text" title="Flash full text across every phone">⚡ Flash Text</button>
           </div>
           <div class="sim-text-chips">
-            <span class="chips-label">Quick Words:</span>
-            <button class="text-chip" data-word="COLDPLAY">🎸 COLDPLAY</button>
-            <button class="text-chip" data-word="DROP">🔥 DROP</button>
-            <button class="text-chip" data-word="LIGHTS">✨ LIGHTS</button>
-            <button class="text-chip" data-word="ANIKET">⚡ ANIKET</button>
-            <button class="text-chip" data-word="FIRE">💥 FIRE</button>
+            <span class="chips-label">Quick:</span>
+            <button class="text-chip" data-word="COLDPLAY">COLDPLAY</button>
+            <button class="text-chip" data-word="DROP">DROP</button>
+            <button class="text-chip" data-word="LIGHTS">LIGHTS</button>
+            <button class="text-chip" data-word="ANIKET">ANIKET</button>
+            <button class="text-chip" data-word="FIRE">FIRE</button>
           </div>
-        </div>
-
-        <!-- Interactive Touch Hint -->
-        <div class="sim-touch-hint">
-          <span class="touch-dot"></span>
-          <span><strong>Interactive Arena:</strong> Click or tap any phone in the crowd to trigger a radial shockwave ripple!</span>
+          <div class="sim-hint-inline">
+            <span class="touch-dot"></span>
+            <span>Click any phone for shockwave!</span>
+          </div>
         </div>
 
         <!-- Stadium Amphitheater Grid (24 Devices viewed from Stage) -->
         <div class="stadium-arena">
           <div class="stadium-spotlight beam-left"></div>
           <div class="stadium-spotlight beam-right"></div>
+
           <!-- Tier 3: Upper Bowl (9 Phones) -->
           <div class="stadium-tier tier-upper">
             <div class="crowd-phone" data-id="0" data-row="2" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
@@ -232,27 +236,24 @@
             <div class="crowd-phone" data-id="23" data-row="0" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
           </div>
 
-          <!-- Stage View Marker -->
+          <!-- Stage View Apron -->
           <div class="stadium-stage-apron">
             <div class="stage-spotlight-beam"></div>
-            <div class="stage-perspective-badge">
-              <span class="stage-icon">🎤</span>
-              <span>STAGE PERSPECTIVE • 24-DEVICE SYNCHRONIZED ARENA</span>
-            </div>
           </div>
         </div>
 
-        <!-- Live Arena Status Ticker -->
-        <div class="arena-live-ticker">
-          <div class="ticker-item"><span class="ticker-dot live"></span> <span>24 Simulated Devices (24,000 Fans)</span></div>
-          <div class="ticker-divider"></div>
-          <div class="ticker-item"><span>NTP Offset: <strong id="sim-ticker-offset">0.18 ms</strong></span></div>
-          <div class="ticker-divider"></div>
-          <div class="ticker-item"><span>Active Cue: <strong id="sim-active-cue-label">STADIUM WAVE</strong></span></div>
-        </div>
-
-        <div class="sim-caption">
-          <span>Every device stays in millisecond lockstep — regardless of mobile network latency or carrier jitter.</span>
+        <!-- Compact Bottom Arena Status Bar -->
+        <div class="arena-footer-bar">
+          <div class="arena-status-pill">
+            <span class="ticker-dot live"></span>
+            <span>24 PHONES (24,000 FANS)</span>
+          </div>
+          <div class="arena-status-pill">
+            <span>NTP OFFSET: <strong id="sim-ticker-offset">0.18 ms</strong></span>
+          </div>
+          <div class="arena-status-pill highlight">
+            <span>CUE: <strong id="sim-active-cue-label">STADIUM WAVE</strong></span>
+          </div>
         </div>
       </div>
     </div>

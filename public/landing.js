@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
     runSequence();
   }
 
-  // --- Effect: Live Text Flash across Stadium ---
+  // --- Effect: Live Text Flash across Stadium (Full word on every device) ---
   function applyTextFlash(rawText) {
     const text = (rawText || 'COLDPLAY').trim().toUpperCase().slice(0, 12);
     stopAllEffects();
@@ -273,36 +273,23 @@ document.addEventListener('DOMContentLoaded', () => {
     setCueLabel(`TEXT FLASH: "${text}"`);
     playSynth(520, 'sine', 0.2, 0.35);
 
-    // Tier 3 (Upper bowl, row 2) has 9 phones: index 0 to 8
-    const tier3 = crowdPhones.filter(p => p.row === 2);
-    const tier2 = crowdPhones.filter(p => p.row === 1);
-    const tier1 = crowdPhones.filter(p => p.row === 0);
-
     let isFlash = false;
     function cycleFlash() {
       isFlash = !isFlash;
-      const bg = isFlash ? '#6366f1' : '#141724';
-      const shadow = isFlash ? '0 0 16px rgba(99, 102, 241, 0.85)' : 'none';
+      const bg = isFlash ? '#6366f1' : '#101320';
+      const shadow = isFlash ? '0 0 16px rgba(99, 102, 241, 0.9)' : 'none';
+      const scale = isFlash ? 'scale(1.06)' : 'scale(1.0)';
 
-      // Distribute characters across Tier 3
-      tier3.forEach((p, idx) => {
-        p.screenEl.style.transition = 'background-color 0.08s ease';
-        p.screenEl.style.backgroundColor = isFlash ? '#3b82f6' : '#141724';
+      // Display the full word on EVERY single phone in lockstep unison!
+      crowdPhones.forEach(p => {
+        if (!p.screenEl) return;
+        p.screenEl.style.transition = 'background-color 0.08s ease, box-shadow 0.08s ease';
+        p.screenEl.style.backgroundColor = bg;
         p.screenEl.style.boxShadow = shadow;
+        p.phoneEl.style.transform = scale;
         if (p.textEl) {
-          // If word fits within 9 chars, center it across Tier 3
-          const offset = Math.max(0, Math.floor((9 - text.length) / 2));
-          const charIdx = idx - offset;
-          p.textEl.textContent = (isFlash && charIdx >= 0 && charIdx < text.length) ? text[charIdx] : '';
+          p.textEl.textContent = isFlash ? text : '';
         }
-      });
-
-      // Tier 2 and Tier 1 flash harmonized energetic beat colors
-      [...tier2, ...tier1].forEach(p => {
-        p.screenEl.style.transition = 'background-color 0.08s ease';
-        p.screenEl.style.backgroundColor = isFlash ? '#a855f7' : '#141724';
-        p.screenEl.style.boxShadow = shadow;
-        if (p.textEl) p.textEl.textContent = '';
       });
 
       if (isFlash) playSynth(440, 'triangle', 0.08, 0.2);
