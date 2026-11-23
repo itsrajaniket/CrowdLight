@@ -139,59 +139,78 @@
     </div>
   </section>
 
-  <!-- Interactive Live Simulator Section -->
+  <!-- Interactive Live Simulator Section (Stadium Arena View) -->
   <section id="simulator" class="simulator-section">
     <div class="section-container">
-      <div class="section-badge">Interactive Demo</div>
-      <h2 class="section-title">See How CrowdLight Works Right Now</h2>
-      <p class="section-desc">Click an effect below to trigger real-time simulated devices in frame-accurate lockstep.</p>
+      <div class="section-badge">Live Arena Simulator</div>
+      <h2 class="section-title">See the Crowd Matrix in Action</h2>
+      <p class="section-desc">Test real-time lighting cues across a 24-phone stadium amphitheater seen from the stage.</p>
 
       <div class="simulator-box">
         <!-- Simulator Controls -->
         <div class="sim-controls">
-          <span class="sim-controls-label">Test Trigger:</span>
-          <button class="sim-btn active" data-sim="color" data-color="#ef4444">🔴 Red</button>
-          <button class="sim-btn" data-sim="color" data-color="#3b82f6">🔵 Blue</button>
-          <button class="sim-btn" data-sim="pulse">🥁 Beat Pulse</button>
-          <button class="sim-btn" data-sim="wave">🌊 Crowd Wave</button>
-          <button class="sim-btn" data-sim="strobe">⚡ Strobe</button>
-          <button class="sim-btn" data-sim="countdown">⏱️ Countdown</button>
+          <span class="sim-controls-label">Stage Triggers:</span>
+          <button class="sim-btn active" data-sim="wave">🌊 Stadium Wave</button>
+          <button class="sim-btn" data-sim="pulse">🥁 Beat Pulse (128 BPM)</button>
+          <button class="sim-btn" data-sim="rainbow">🌈 Rainbow Aurora</button>
+          <button class="sim-btn" data-sim="strobe">⚡ Arena Strobe</button>
+          <button class="sim-btn" data-sim="countdown">⏱️ Countdown 3-2-1</button>
+          <button class="sim-btn" data-sim="color" data-color="#ef4444">🔴 Red</button>
+          <button class="sim-btn" data-sim="color" data-color="#06b6d4">🔵 Cyan</button>
+          <button class="sim-btn" data-sim="color" data-color="#a855f7">🟣 Purple</button>
           <button class="sim-btn blackout" data-sim="blackout">⬛ Blackout</button>
         </div>
 
-        <!-- Simulated Phones Grid -->
-        <div class="phones-stage">
-          <!-- Phone 1 -->
-          <div class="phone-mockup">
-            <div class="phone-notch"></div>
-            <div class="phone-screen" id="sim-screen-1">
-              <span class="phone-tag">Device #1</span>
-              <div class="sim-text" id="sim-text-1"></div>
-            </div>
-            <div class="phone-chin"></div>
+        <!-- Stadium Amphitheater Grid (24 Devices viewed from Stage) -->
+        <div class="stadium-arena">
+          <!-- Tier 3: Upper Bowl (9 Phones) -->
+          <div class="stadium-tier tier-upper">
+            <div class="crowd-phone" data-id="0" data-row="2" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="1" data-row="2" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="2" data-row="2" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="3" data-row="2" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="4" data-row="2" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="5" data-row="2" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="6" data-row="2" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="7" data-row="2" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="8" data-row="2" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
           </div>
-          <!-- Phone 2 -->
-          <div class="phone-mockup">
-            <div class="phone-notch"></div>
-            <div class="phone-screen" id="sim-screen-2">
-              <span class="phone-tag">Device #2</span>
-              <div class="sim-text" id="sim-text-2"></div>
-            </div>
-            <div class="phone-chin"></div>
+
+          <!-- Tier 2: Mid Bowl (8 Phones) -->
+          <div class="stadium-tier tier-mid">
+            <div class="crowd-phone" data-id="9" data-row="1" data-col="0.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="10" data-row="1" data-col="1.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="11" data-row="1" data-col="2.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="12" data-row="1" data-col="3.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="13" data-row="1" data-col="4.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="14" data-row="1" data-col="5.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="15" data-row="1" data-col="6.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="16" data-row="1" data-col="7.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
           </div>
-          <!-- Phone 3 -->
-          <div class="phone-mockup">
-            <div class="phone-notch"></div>
-            <div class="phone-screen" id="sim-screen-3">
-              <span class="phone-tag">Device #3</span>
-              <div class="sim-text" id="sim-text-3"></div>
+
+          <!-- Tier 1: Floor / Stage Front (7 Phones) -->
+          <div class="stadium-tier tier-floor">
+            <div class="crowd-phone" data-id="17" data-row="0" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="18" data-row="0" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="19" data-row="0" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="20" data-row="0" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="21" data-row="0" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="22" data-row="0" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <div class="crowd-phone" data-id="23" data-row="0" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+          </div>
+
+          <!-- Stage View Marker -->
+          <div class="stadium-stage-apron">
+            <div class="stage-spotlight-beam"></div>
+            <div class="stage-perspective-badge">
+              <span class="stage-icon">🎤</span>
+              <span>STAGE PERSPECTIVE • 24-DEVICE SYNCHRONIZED ARENA</span>
             </div>
-            <div class="phone-chin"></div>
           </div>
         </div>
 
         <div class="sim-caption">
-          <span>Every phone stays in frame-accurate sync — even when venue Wi-Fi and mobile networks are crowded.</span>
+          <span>Every device stays in millisecond lockstep — regardless of mobile network latency or carrier jitter.</span>
         </div>
       </div>
     </div>
