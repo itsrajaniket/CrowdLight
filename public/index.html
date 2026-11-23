@@ -19,12 +19,14 @@
       <nav class="nav-links">
         <a href="#how-it-works">How It Works</a>
         <a href="#simulator">Live Simulator</a>
-        <a href="#features">Features</a>
-        <a href="#comparison">Why CrowdLight</a>
+        <a href="#calculator">Savings Calculator</a>
+        <a href="#faq">FAQ</a>
+        <a href="#creator">Creator</a>
       </nav>
       <div class="nav-actions">
         <a href="/audience/" class="btn-secondary-nav">Audience View</a>
-        <a href="/controller/" class="btn-primary-nav">Launch Controller →</a>
+        <a href="/controller/" class="btn-secondary-nav" title="Recruiter Sandbox (PIN: 1234)">Sandbox PIN: 1234</a>
+        <a href="#contact" class="btn-primary-nav">Book a Demo →</a>
       </div>
     </div>
   </header>
@@ -36,6 +38,16 @@
         <span class="badge-dot"></span>
         <span>Zero App Installs • Sub-Millisecond NTP Clock Sync</span>
       </div>
+
+      <!-- Author Attribution Pill -->
+      <div class="creator-badge-hero">
+        <a href="#creator" class="creator-hero-link">
+          <span class="creator-avatar-mini">AR</span>
+          <span>Designed & Engineered by <strong>Aniket Raj</strong></span>
+          <span class="creator-arrow">→</span>
+        </a>
+      </div>
+
       <h1 class="hero-title">
         Turn Every Phone in the Crowd into a <span class="gradient-text">Synchronized Light Show</span>
       </h1>
@@ -55,18 +67,18 @@
           </div>
           <div class="card-footer">
             <span class="url-hint">crowdlight-4u52.onrender.com/audience/</span>
-            <a href="/audience/" class="btn-card-action">Open in Browser</a>
+            <a href="/audience/" class="btn-card-action">Open Audience Screen</a>
           </div>
         </div>
 
         <!-- Director Portal Card -->
         <div class="portal-card director-card">
-          <div class="card-tag highlight">For Event Directors & DJs</div>
-          <h2 class="portal-heading">Operator Showpad</h2>
+          <div class="card-tag highlight">Enterprise Showpad</div>
+          <h2 class="portal-heading">Operator Control Console</h2>
           <p class="portal-desc">Manage the entire stadium from a laptop, tablet, or smartphone in your hand.</p>
           
           <div class="pin-callout">
-            <span class="pin-label">Demo Unlock PIN</span>
+            <span class="pin-label">Recruiter Sandbox PIN</span>
             <span class="pin-code">1234</span>
           </div>
 
@@ -85,7 +97,10 @@
             </div>
           </div>
 
-          <a href="/controller/" class="btn-card-primary">Open Live Controller Pad →</a>
+          <div class="director-card-actions">
+            <a href="/controller/" class="btn-card-primary">Launch Sandbox Showpad →</a>
+            <a href="#contact" class="btn-card-secondary">Request Production Access</a>
+          </div>
         </div>
       </div>
 
@@ -253,6 +268,54 @@
     </div>
   </section>
 
+  <!-- Interactive Savings Calculator -->
+  <section id="calculator" class="calculator-section">
+    <div class="section-container">
+      <div class="section-badge">Business & Sustainability Impact</div>
+      <h2 class="section-title">Calculate Your Event Savings</h2>
+      <p class="section-desc">See how much budget and single-use plastic waste CrowdLight saves compared to physical LED wristbands.</p>
+
+      <div class="calc-box">
+        <div class="calc-control-group">
+          <label for="attendee-slider" class="calc-label">
+            <span>Expected Audience Size:</span>
+            <span id="calc-attendee-count" class="calc-count-display">10,000 attendees</span>
+          </label>
+          <input type="range" id="attendee-slider" min="1000" max="50000" step="1000" value="10000" class="calc-range">
+          <div class="calc-slider-markers">
+            <span>1,000</span>
+            <span>10,000</span>
+            <span>25,000</span>
+            <span>50,000</span>
+          </div>
+        </div>
+
+        <div class="calc-results-grid">
+          <div class="calc-card primary">
+            <span class="calc-card-icon">💰</span>
+            <span class="calc-card-val" id="calc-cost-saved">$50,000</span>
+            <span class="calc-card-lbl">Hardware Budget Saved</span>
+            <span class="calc-card-sub">At $5.00 avg. wristband cost</span>
+          </div>
+
+          <div class="calc-card">
+            <span class="calc-card-icon">♻️</span>
+            <span class="calc-card-val" id="calc-waste-prevented">10,000</span>
+            <span class="calc-card-lbl">Discarded Units Prevented</span>
+            <span class="calc-card-sub">Single-use plastic & lithium cells</span>
+          </div>
+
+          <div class="calc-card">
+            <span class="calc-card-icon">⏱️</span>
+            <span class="calc-card-val" id="calc-hours-saved">15 hrs</span>
+            <span class="calc-card-lbl">Crew Labor Saved</span>
+            <span class="calc-card-sub">No manual taping to stadium seats</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Core Features Grid -->
   <section id="features" class="features-section">
     <div class="section-container">
@@ -300,14 +363,191 @@
     </div>
   </section>
 
-  <!-- CTA Banner -->
-  <section class="cta-section">
-    <div class="cta-container">
-      <h2 class="cta-title">Ready to Light Up Your Next Event?</h2>
-      <p class="cta-subtitle">Launch the controller on your phone or laptop and turn your audience into part of the performance.</p>
-      <div class="cta-buttons">
-        <a href="/controller/" class="btn-cta-primary">Open Live Controller (PIN: 1234)</a>
-        <a href="/audience/" class="btn-cta-secondary">Open Audience View</a>
+  <!-- Honest Production FAQ Section -->
+  <section id="faq" class="faq-section">
+    <div class="section-container">
+      <div class="section-badge">Transparency</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-desc">Honest answers to the most common technical and operational questions.</p>
+
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h3 class="faq-q">📱 Do attendees need to download an app or sign up?</h3>
+          <p class="faq-a"><strong>No.</strong> Zero app store downloads, zero registrations, zero permissions beyond screen brightness. Attendees simply open their native phone camera, point it at the stage screen or banner QR code, and the web app loads in under 300ms in Safari, Chrome, or any mobile browser.</p>
+        </div>
+
+        <div class="faq-card">
+          <h3 class="faq-q">📶 Do phones need an active internet connection?</h3>
+          <p class="faq-a"><strong>Yes.</strong> Attendees connect via standard venue Wi-Fi or cellular data (4G/LTE/5G). Because the initial bundle is under 20 KB and ongoing WebSocket pings consume less than 1 KB per minute, CrowdLight stays connected even under congested stadium cell towers where heavy apps time out.</p>
+        </div>
+
+        <div class="faq-card">
+          <h3 class="faq-q">👥 How many people can it handle simultaneously?</h3>
+          <p class="faq-a"><strong>Honest benchmark:</strong> A single free Node.js core instance (like this live Render cloud demo) has been stress-tested to <strong>500+ simultaneous phones</strong> with zero dropped frames. In production for 20,000–80,000 seat stadiums, CrowdLight scales horizontally via Docker containers backed by a lightweight Redis Pub/Sub adapter.</p>
+        </div>
+
+        <div class="faq-card">
+          <h3 class="faq-q">🔋 Does keeping screens on drain phone batteries?</h3>
+          <p class="faq-a"><strong>Minimally.</strong> CrowdLight keeps the screen illuminated only during active musical cues via the Screen Wake Lock API. During pauses and blackouts, all GPU animation loops are instantly paused and the screen turns to pure OLED black (<code>#000000</code>), consuming up to 80% less power than typical concert video recording.</p>
+        </div>
+
+        <div class="faq-card">
+          <h3 class="faq-q">⏱️ What if an attendee's phone clock is wrong or network has lag?</h3>
+          <p class="faq-a"><strong>CrowdLight never relies on the user's phone clock.</strong> When an attendee joins, the app runs a 5-ping NTP clock synchronization burst that computes the exact server-client time offset and rejects latency spikes. All lighting commands are sent with a future <code>executeAt</code> timestamp, ensuring millisecond-level lockstep synchronization across iOS and Android alike.</p>
+        </div>
+
+        <div class="faq-card">
+          <h3 class="faq-q">🔒 Can audience members hijack or control the lights?</h3>
+          <p class="faq-a"><strong>No.</strong> The WebSocket server strictly enforces role-based authorization. Audience connections are assigned a read-only role. Only sessions that authenticate with the cryptographically verified controller PIN can broadcast lighting cues to the crowd.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Creator Section -->
+  <section id="creator" class="creator-section">
+    <div class="section-container">
+      <div class="section-badge">Behind the Project</div>
+      <h2 class="section-title">Meet the Creator</h2>
+      <p class="section-desc">Engineering resilient, low-latency distributed systems for the modern web.</p>
+
+      <div class="creator-card">
+        <div class="creator-header">
+          <div class="creator-avatar">AR</div>
+          <div class="creator-meta">
+            <h3 class="creator-name">Aniket Raj</h3>
+            <span class="creator-role">Full-Stack Engineer • Real-Time Systems Specialist</span>
+            <span class="creator-location">📍 Open to Full-Time Engineering Roles & Contracts</span>
+          </div>
+        </div>
+
+        <div class="creator-bio">
+          <p>
+            I engineered <strong>CrowdLight</strong> to solve two massive problems in live entertainment: the hundreds of thousands of dollars spent on disposable plastic LED wristbands (PixMob) that end up in landfills, and the friction of forcing concert attendees to download bloated 100 MB native apps over congested stadium networks.
+          </p>
+          <p>
+            By combining raw WebSockets, in-browser NTP clock offset synchronization, and a strict 19.3 KB transfer payload budget, CrowdLight proves that the modern open web can deliver stadium-scale interactive visual experiences with zero hardware waste and zero friction.
+          </p>
+        </div>
+
+        <div class="creator-skills-pills">
+          <span class="skill-pill">Node.js</span>
+          <span class="skill-pill">Raw WebSockets (ws)</span>
+          <span class="skill-pill">NTP Clock Synchronization</span>
+          <span class="skill-pill">Vanilla JavaScript (ES6+)</span>
+          <span class="skill-pill">High-Concurrency Benchmarking</span>
+          <span class="skill-pill">Screen Wake Lock API</span>
+          <span class="skill-pill">System Design</span>
+        </div>
+
+        <div class="creator-links">
+          <a href="https://github.com/itsrajaniket" target="_blank" rel="noopener noreferrer" class="btn-creator-link">
+            <span class="link-icon">🐙</span>
+            <span>GitHub Profile</span>
+          </a>
+          <a href="https://github.com/itsrajaniket/CrowdLight" target="_blank" rel="noopener noreferrer" class="btn-creator-link">
+            <span class="link-icon">⭐</span>
+            <span>Repository</span>
+          </a>
+          <a href="https://linkedin.com/in/itsrajaniket" target="_blank" rel="noopener noreferrer" class="btn-creator-link highlight">
+            <span class="link-icon">💼</span>
+            <span>LinkedIn Profile</span>
+          </a>
+          <a href="#contact" class="btn-creator-link">
+            <span class="link-icon">✉️</span>
+            <span>Contact Aniket</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Book a Demo / Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-container">
+      <div class="section-badge">Get in Touch</div>
+      <h2 class="section-title">Bring CrowdLight to Your Stage or Team</h2>
+      <p class="section-desc">Whether you are organizing a stadium concert, tour, festival, or looking for a talented engineer for your engineering team — let's connect.</p>
+
+      <div class="contact-box">
+        <div class="contact-grid">
+          <!-- Left: Direct Info -->
+          <div class="contact-info">
+            <h3 class="contact-info-title">Let's Build Something Memorable</h3>
+            <p class="contact-info-text">
+              Have an upcoming live event, corporate keynote, or an open engineering role? I'd love to chat about real-time distributed architecture, performance optimization, or deploying CrowdLight for your crowd.
+            </p>
+
+            <div class="direct-contact-items">
+              <div class="contact-item">
+                <span class="contact-item-icon">📧</span>
+                <div class="contact-item-text">
+                  <span class="contact-item-lbl">Email Address</span>
+                  <a href="mailto:itsrajaniket@gmail.com" class="contact-item-val">itsrajaniket@gmail.com</a>
+                </div>
+                <button class="btn-copy-email" id="btn-copy-email" title="Copy email address">📋 Copy</button>
+              </div>
+
+              <div class="contact-item">
+                <span class="contact-item-icon">💼</span>
+                <div class="contact-item-text">
+                  <span class="contact-item-lbl">LinkedIn</span>
+                  <a href="https://linkedin.com/in/itsrajaniket" target="_blank" rel="noopener noreferrer" class="contact-item-val">linkedin.com/in/itsrajaniket</a>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <span class="contact-item-icon">🐙</span>
+                <div class="contact-item-text">
+                  <span class="contact-item-lbl">GitHub</span>
+                  <a href="https://github.com/itsrajaniket" target="_blank" rel="noopener noreferrer" class="contact-item-val">github.com/itsrajaniket</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="sandbox-prompt-box">
+              <span class="sandbox-prompt-title">Evaluating for Hiring?</span>
+              <p class="sandbox-prompt-desc">You can test the fully operational director console immediately in the sandbox without waiting for an email reply.</p>
+              <a href="/controller/" class="btn-sandbox-link">Launch Sandbox Showpad (PIN: 1234) →</a>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Inquiry Form -->
+          <div class="contact-form-wrapper">
+            <form id="contact-form" class="inquiry-form">
+              <div class="form-group">
+                <label for="contact-name">Your Name</label>
+                <input type="text" id="contact-name" placeholder="e.g. Sarah Connor" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email">Your Email / LinkedIn</label>
+                <input type="text" id="contact-email" placeholder="e.g. sarah@company.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-purpose">Inquiry Purpose</label>
+                <select id="contact-purpose" required>
+                  <option value="Hiring / Software Engineering Role">Hiring / Software Engineering Role</option>
+                  <option value="Concert / Stadium Tour Production">Concert / Stadium Tour Production</option>
+                  <option value="Music Festival / DJ Show">Music Festival / DJ Show</option>
+                  <option value="Esports / Corporate Keynote">Esports / Corporate Keynote</option>
+                  <option value="Technical Collaboration / Open Source">Technical Collaboration / Open Source</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message">Message or Event Details</label>
+                <textarea id="contact-message" rows="4" placeholder="Tell me about your event date, crowd size, or engineering requirements..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit-inquiry">
+                <span>Send Inquiry via Email →</span>
+              </button>
+              <span class="form-hint">Opens your email client with your details pre-formatted.</span>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -319,17 +559,25 @@
         <span class="brand-icon">✨</span>
         <span class="brand-name">CrowdLight</span>
         <span class="footer-desc">Zero-install real-time crowd screen synchronization engine.</span>
+        <span class="footer-author">Created by <a href="#creator" class="footer-author-link">Aniket Raj</a> (<a href="https://github.com/itsrajaniket" target="_blank" rel="noopener noreferrer">@itsrajaniket</a>)</span>
       </div>
       <div class="footer-links">
         <a href="/audience/">Audience Portal</a>
-        <a href="/controller/">Controller Showpad</a>
+        <a href="/controller/">Sandbox Showpad (PIN: 1234)</a>
+        <a href="#calculator">Savings Calculator</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/itsrajaniket/CrowdLight" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+        <a href="https://linkedin.com/in/itsrajaniket" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="/qr.png" download="crowdlight-qr.png">Download Venue QR</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>Production Ready • Built with Node.js & Raw WebSockets</span>
+      <span>Built with ❤️ by Aniket Raj • Production Ready • High-Performance WebSockets</span>
     </div>
   </footer>
+
+  <!-- Toast notification for copy action -->
+  <div id="toast" class="toast">Email copied to clipboard!</div>
 
   <script src="landing.js"></script>
 </body>

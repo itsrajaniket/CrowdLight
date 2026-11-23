@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Attach button event listeners
+  // Attach simulator button event listeners
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       buttons.forEach(b => b.classList.remove('active'));
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      if (targetId === '#' || targetId === '') return;
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
         e.preventDefault();
@@ -212,6 +212,92 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --- Interactive Savings Calculator ---
+  const attendeeSlider = document.getElementById('attendee-slider');
+  const calcCountDisplay = document.getElementById('calc-attendee-count');
+  const calcCostSaved = document.getElementById('calc-cost-saved');
+  const calcWastePrevented = document.getElementById('calc-waste-prevented');
+  const calcHoursSaved = document.getElementById('calc-hours-saved');
+
+  function updateCalculator(val) {
+    const attendees = parseInt(val, 10);
+    if (isNaN(attendees)) return;
+
+    if (calcCountDisplay) {
+      calcCountDisplay.textContent = `${attendees.toLocaleString()} attendees`;
+    }
+    if (calcCostSaved) {
+      const saved = attendees * 5; // $5 per wristband
+      calcCostSaved.textContent = `$${saved.toLocaleString()}`;
+    }
+    if (calcWastePrevented) {
+      calcWastePrevented.textContent = `${attendees.toLocaleString()}`;
+    }
+    if (calcHoursSaved) {
+      const hours = Math.max(1, Math.round((attendees / 1000) * 1.5));
+      calcHoursSaved.textContent = `${hours} hrs`;
+    }
+  }
+
+  if (attendeeSlider) {
+    attendeeSlider.addEventListener('input', (e) => {
+      updateCalculator(e.target.value);
+    });
+  }
+
+  // --- Toast Notification Helper ---
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+
+  function showToast(message) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2500);
+  }
+
+  // --- Email Copy Button ---
+  const btnCopyEmail = document.getElementById('btn-copy-email');
+  if (btnCopyEmail) {
+    btnCopyEmail.addEventListener('click', () => {
+      const email = 'itsrajaniket@gmail.com';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(() => {
+          showToast('Email copied to clipboard!');
+        }).catch(() => {
+          prompt('Copy email:', email);
+        });
+      } else {
+        prompt('Copy email:', email);
+      }
+    });
+  }
+
+  // --- Inquiry Form Submission ---
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('contact-name')?.value || 'Guest';
+      const email = document.getElementById('contact-email')?.value || '';
+      const purpose = document.getElementById('contact-purpose')?.value || 'General Inquiry';
+      const message = document.getElementById('contact-message')?.value || '';
+
+      const subject = encodeURIComponent(`[CrowdLight Demo / Inquiry] ${purpose} - ${name}`);
+      const body = encodeURIComponent(
+        `Hi Aniket,\n\nName: ${name}\nContact / LinkedIn: ${email}\nInquiry Purpose: ${purpose}\n\nMessage / Requirements:\n${message}\n\nSent from CrowdLight Web Portal`
+      );
+
+      showToast('Opening your email client...');
+      window.location.href = `mailto:itsrajaniket@gmail.com?subject=${subject}&body=${body}`;
+    });
+  }
+
   // Initialize with initial active state
   applyColor('#ef4444');
+  if (attendeeSlider) updateCalculator(attendeeSlider.value);
 });
