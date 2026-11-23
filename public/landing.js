@@ -657,21 +657,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Sound Toggle Button ---
+  // --- Synchronized Sound Toggle (Stage Left Wing + More Drawer) ---
+  const btnStageSound = document.getElementById('btn-stage-sound');
+  const soundIcon = document.getElementById('sound-status-icon');
+  const soundText = document.getElementById('sound-status-text');
   const btnSoundToggle = document.getElementById('btn-sound-toggle');
-  if (btnSoundToggle) {
-    btnSoundToggle.addEventListener('click', () => {
-      soundEnabled = !soundEnabled;
-      if (soundEnabled) {
-        initAudio();
+
+  function toggleSoundState() {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+      initAudio();
+      if (soundIcon) soundIcon.textContent = '🔊';
+      if (soundText) soundText.textContent = 'Sound: On';
+      if (btnStageSound) btnStageSound.classList.add('sound-on');
+      if (btnSoundToggle) {
         btnSoundToggle.textContent = '🔊 Sound: On';
         btnSoundToggle.classList.add('sound-on');
-        playSynth(520, 'sine', 0.15, 0.3);
-      } else {
+      }
+      playSynth(520, 'sine', 0.15, 0.3);
+    } else {
+      if (soundIcon) soundIcon.textContent = '🔇';
+      if (soundText) soundText.textContent = 'Sound: Off';
+      if (btnStageSound) btnStageSound.classList.remove('sound-on');
+      if (btnSoundToggle) {
         btnSoundToggle.textContent = '🔇 Sound: Off';
         btnSoundToggle.classList.remove('sound-on');
       }
-    });
+    }
+  }
+
+  if (btnStageSound) {
+    btnStageSound.addEventListener('click', toggleSoundState);
+  }
+  if (btnSoundToggle) {
+    btnSoundToggle.addEventListener('click', toggleSoundState);
   }
 
   // --- Text Flash & Marquee Form Actions ---
