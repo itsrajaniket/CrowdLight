@@ -769,14 +769,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isNaN(attendees)) return;
 
     if (calcCountDisplay) {
-      calcCountDisplay.textContent = `${attendees.toLocaleString()} attendees`;
+      calcCountDisplay.textContent = `${attendees.toLocaleString('en-IN')} attendees`;
     }
     if (calcCostSaved) {
-      const saved = attendees * 5; // $5 per wristband
-      calcCostSaved.textContent = `$${saved.toLocaleString()}`;
+      const saved = attendees * 400; // ₹400 avg per imported wristband in INR
+      calcCostSaved.textContent = `₹${saved.toLocaleString('en-IN')}`;
     }
     if (calcWastePrevented) {
-      calcWastePrevented.textContent = `${attendees.toLocaleString()}`;
+      calcWastePrevented.textContent = `${attendees.toLocaleString('en-IN')}`;
     }
     if (calcHoursSaved) {
       const hours = Math.max(1, Math.round((attendees / 1000) * 1.5));

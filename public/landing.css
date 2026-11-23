@@ -2741,8 +2741,41 @@ body {
   margin-bottom: 24px;
 }
 
-.creator-bio p {
-  margin: 0 0 12px 0;
+.creator-quote {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1.55;
+  background: rgba(99, 102, 241, 0.08);
+  border-left: 3px solid #6366f1;
+  padding: 12px 18px;
+  border-radius: 0 10px 10px 0;
+  margin-bottom: 18px;
+}
+
+.creator-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.creator-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.creator-highlight-item strong {
+  color: #e2e8f0;
+}
+
+.highlight-bullet {
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .creator-skills-pills {
