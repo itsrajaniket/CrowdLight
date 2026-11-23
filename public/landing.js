@@ -14,9 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
-  const buttons = document.querySelectorAll('.sim-btn');
+  const allSimTriggers = document.querySelectorAll('[data-sim]');
   const activeCueLabel = document.getElementById('sim-active-cue-label');
   const tickerOffset = document.getElementById('sim-ticker-offset');
+
+  function clearActiveTriggers() {
+    document.querySelectorAll('[data-sim]').forEach(b => b.classList.remove('active'));
+  }
 
   // Animation & interval tracking
   let currentRaf = null;
@@ -24,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentTimers = [];
   let currentBpm = 128;
   let currentActiveSim = 'wave';
+  let isAmbientActive = true;
 
   // --- Web Audio Synthesizer (Optional sound effects) ---
   let audioCtx = null;
@@ -106,12 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Effect: Stadium Wave (Ripple traveling across 24 devices) ---
-  function applyWave() {
+  function applyWave(isSlow = false) {
     stopAllEffects();
     currentActiveSim = 'wave';
-    setCueLabel('STADIUM WAVE');
+    setCueLabel(isSlow ? 'AMBIENT WAVE (LIVE)' : 'STADIUM WAVE');
     const startTime = performance.now();
-    const wavePeriod = 2000; // 2.0s per stadium sweep
+    const wavePeriod = isSlow ? 3200 : 2000; // Slow ambient sweep (3.2s) or energetic stage sweep (2.0s)
 
     function loop(now) {
       const elapsed = now - startTime;
@@ -120,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!p.screenEl) return;
 
         // Wave travels from left (col 0) to right (col 8) with slight rear curve (row)
-        const delay = (p.col * 160) + (p.row * 60);
+        const delay = (p.col * (isSlow ? 220 : 160)) + (p.row * (isSlow ? 90 : 60));
         const phase = ((elapsed - delay) % wavePeriod + wavePeriod) % wavePeriod;
         const norm = phase / wavePeriod; // 0 to 1
 
@@ -267,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Effect: Live Text Flash across Stadium (Full word on every device) ---
   function applyTextFlash(rawText) {
-    const text = (rawText || 'COLDPLAY').trim().toUpperCase().slice(0, 12);
+    const text = (rawText || 'LIGHTS').trim().toUpperCase().slice(0, 12);
     stopAllEffects();
     currentActiveSim = 'text-flash';
     setCueLabel(`TEXT FLASH: "${text}"`);
@@ -301,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Effect: Stadium Ribbon Marquee ---
   function applyTextMarquee(rawText) {
-    const text = `   ${(rawText || 'COLDPLAY').trim().toUpperCase()}   `;
+    const text = `   ${(rawText || 'LIGHTS').trim().toUpperCase()}   `;
     stopAllEffects();
     currentActiveSim = 'marquee';
     setCueLabel(`MARQUEE: "${text.trim()}"`);
@@ -355,6 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
   crowdPhones.forEach(sourcePhone => {
     sourcePhone.phoneEl.addEventListener('click', (e) => {
       e.stopPropagation();
+      isAmbientActive = false;
       initAudio();
       playSynth(600, 'sine', 0.15, 0.3); // High touch ping
 
@@ -388,16 +394,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Attach Simulator Stage Trigger Buttons ---
-  buttons.forEach(btn => {
+  // --- Attach Simulator Stage Trigger Buttons, Swatches & Blackout ---
+  allSimTriggers.forEach(btn => {
     btn.addEventListener('click', () => {
+      isAmbientActive = false;
       initAudio();
-      buttons.forEach(b => b.classList.remove('active'));
+      clearActiveTriggers();
       btn.classList.add('active');
 
       const simType = btn.dataset.sim;
       if (simType === 'wave') {
-        applyWave();
+        applyWave(false);
       } else if (simType === 'rainbow') {
         applyRainbow();
       } else if (simType === 'pulse') {
@@ -410,11 +417,29 @@ document.addEventListener('DOMContentLoaded', () => {
         applyBlackout();
       } else if (simType === 'color') {
         const color = btn.dataset.color || '#ef4444';
-        const label = btn.textContent.trim();
+        const label = btn.title ? `SOLID ${btn.title.toUpperCase()}` : 'SOLID COLOR';
         applyColor(color, label);
       }
     });
   });
+
+  // --- Collapsible More Controls Drawer Toggle ---
+  const btnToggleMore = document.getElementById('btn-toggle-more');
+  const simMorePanel = document.getElementById('sim-more-panel');
+  if (btnToggleMore && simMorePanel) {
+    btnToggleMore.addEventListener('click', () => {
+      const isHidden = simMorePanel.hasAttribute('hidden');
+      if (isHidden) {
+        simMorePanel.removeAttribute('hidden');
+        btnToggleMore.classList.add('open');
+        btnToggleMore.setAttribute('aria-expanded', 'true');
+      } else {
+        simMorePanel.setAttribute('hidden', '');
+        btnToggleMore.classList.remove('open');
+        btnToggleMore.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
   // --- Tap Tempo Calculator ---
   const btnTapTempo = document.getElementById('btn-tap-tempo');
@@ -423,6 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnTapTempo) {
     btnTapTempo.addEventListener('click', () => {
+      isAmbientActive = false;
       initAudio();
       playSynth(440, 'triangle', 0.06, 0.25);
       const now = performance.now();
@@ -472,18 +498,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnFlashText) {
     btnFlashText.addEventListener('click', () => {
+      isAmbientActive = false;
       initAudio();
-      buttons.forEach(b => b.classList.remove('active'));
-      const text = textInput?.value || 'COLDPLAY';
+      clearActiveTriggers();
+      const text = textInput?.value || 'LIGHTS';
       applyTextFlash(text);
     });
   }
 
   if (btnMarqueeText) {
     btnMarqueeText.addEventListener('click', () => {
+      isAmbientActive = false;
       initAudio();
-      buttons.forEach(b => b.classList.remove('active'));
-      const text = textInput?.value || 'COLDPLAY';
+      clearActiveTriggers();
+      const text = textInput?.value || 'LIGHTS';
       applyTextMarquee(text);
     });
   }
@@ -491,10 +519,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Quick word chips
   document.querySelectorAll('.text-chip').forEach(chip => {
     chip.addEventListener('click', () => {
+      isAmbientActive = false;
       initAudio();
-      const word = chip.dataset.word || 'COLDPLAY';
+      const word = chip.dataset.word || 'LIGHTS';
       if (textInput) textInput.value = word;
-      buttons.forEach(b => b.classList.remove('active'));
+      clearActiveTriggers();
       applyTextFlash(word);
     });
   });
@@ -597,7 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initialize with Stadium Wave running immediately on load
-  applyWave();
+  // Start it alive: slow looping ambient wave on page load
+  applyWave(true);
   if (attendeeSlider) updateCalculator(attendeeSlider.value);
 });

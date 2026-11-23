@@ -153,45 +153,63 @@
       </div>
 
       <div class="simulator-box">
-        <!-- Row 1: Stage Triggers & Aux Controls -->
-        <div class="sim-deck-row">
-          <div class="sim-controls">
-            <span class="sim-controls-label">Triggers:</span>
-            <button class="sim-btn active" data-sim="wave">🌊 Stadium Wave</button>
-            <button class="sim-btn" data-sim="pulse">🥁 Beat Pulse (<span id="sim-bpm-val">128</span> BPM)</button>
-            <button class="sim-btn" data-sim="rainbow">🌈 Rainbow</button>
-            <button class="sim-btn" data-sim="strobe">⚡ Strobe</button>
-            <button class="sim-btn" data-sim="countdown">⏱️ Countdown</button>
-            <button class="sim-btn" data-sim="color" data-color="#ef4444">🔴 Red</button>
-            <button class="sim-btn" data-sim="color" data-color="#06b6d4">🔵 Cyan</button>
-            <button class="sim-btn" data-sim="color" data-color="#a855f7">🟣 Purple</button>
-            <button class="sim-btn blackout" data-sim="blackout">⬛ Blackout</button>
+        <!-- Main Show Control Bar (Clean 4 Big Buttons + Swatches + Blackout + More) -->
+        <div class="sim-main-bar">
+          <!-- 4 Big Feature Buttons -->
+          <div class="sim-show-buttons">
+            <button class="sim-main-btn active" data-sim="wave">🌊 Stadium Wave</button>
+            <button class="sim-main-btn" data-sim="pulse">🥁 Beat Pulse</button>
+            <button class="sim-main-btn" data-sim="rainbow">🌈 Rainbow</button>
+            <button class="sim-main-btn" data-sim="strobe">⚡ Strobe</button>
           </div>
 
-          <div class="sim-aux-bar">
-            <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set tempo">🥁 Tap Tempo</button>
-            <button class="sim-aux-btn" id="btn-sound-toggle" title="Toggle audio synthesizer">🔇 Sound: Off</button>
+          <!-- Color Swatches Strip -->
+          <div class="sim-swatches-strip" title="Solid Colors">
+            <span class="swatches-label">Colors:</span>
+            <button class="color-swatch" data-sim="color" data-color="#ef4444" style="--swatch-c:#ef4444;" title="Red"></button>
+            <button class="color-swatch" data-sim="color" data-color="#06b6d4" style="--swatch-c:#06b6d4;" title="Cyan"></button>
+            <button class="color-swatch" data-sim="color" data-color="#a855f7" style="--swatch-c:#a855f7;" title="Purple"></button>
+            <button class="color-swatch" data-sim="color" data-color="#f59e0b" style="--swatch-c:#f59e0b;" title="Amber"></button>
+            <button class="color-swatch" data-sim="color" data-color="#10b981" style="--swatch-c:#10b981;" title="Emerald"></button>
+            <button class="color-swatch" data-sim="color" data-color="#ffffff" style="--swatch-c:#ffffff;" title="White"></button>
           </div>
+
+          <!-- Blackout Button -->
+          <button class="sim-blackout-btn" data-sim="blackout" title="Instant Blackout Kill-Switch">⬛ Blackout</button>
+
+          <!-- Collapsible More Controls Toggle -->
+          <button class="sim-more-toggle" id="btn-toggle-more" type="button" aria-expanded="false" title="Show Pro Controls">
+            <span>⚙️ More</span>
+            <span class="more-chevron">▾</span>
+          </button>
         </div>
 
-        <!-- Row 2: Live Text Flash Bar & Quick Chips -->
-        <div class="sim-text-bar">
-          <div class="sim-text-input-wrap">
-            <span class="sim-text-icon">💬</span>
-            <input type="text" id="sim-text-input" placeholder="Type text to flash (e.g. COLDPLAY, DROP, GOOGLE)..." maxlength="12" value="COLDPLAY">
-            <button class="btn-text-action primary" id="btn-flash-text" title="Flash full text across every phone">⚡ Flash Text</button>
-          </div>
-          <div class="sim-text-chips">
-            <span class="chips-label">Quick:</span>
-            <button class="text-chip" data-word="COLDPLAY">COLDPLAY</button>
-            <button class="text-chip" data-word="DROP">DROP</button>
-            <button class="text-chip" data-word="LIGHTS">LIGHTS</button>
-            <button class="text-chip" data-word="ANIKET">ANIKET</button>
-            <button class="text-chip" data-word="FIRE">FIRE</button>
-          </div>
-          <div class="sim-hint-inline">
-            <span class="touch-dot"></span>
-            <span>Click any phone for shockwave!</span>
+        <!-- Collapsible More Drawer (Text Flash, Quick Chips, Tap Tempo, Sound) -->
+        <div id="sim-more-panel" class="sim-more-drawer" hidden>
+          <div class="sim-drawer-content">
+            <!-- Text Flash Form -->
+            <div class="sim-text-input-wrap">
+              <span class="sim-text-icon">💬</span>
+              <input type="text" id="sim-text-input" placeholder="Type text to flash (e.g. LIGHTS, DROP)..." maxlength="12" value="LIGHTS">
+              <button class="btn-text-action primary" id="btn-flash-text" title="Flash full text across every phone">⚡ Flash Text</button>
+            </div>
+
+            <!-- Neutral Quick Words -->
+            <div class="sim-text-chips">
+              <span class="chips-label">Quick:</span>
+              <button class="text-chip" data-word="LIGHTS">✨ LIGHTS</button>
+              <button class="text-chip" data-word="DROP">🔥 DROP</button>
+              <button class="text-chip" data-word="ANIKET">⚡ ANIKET</button>
+              <button class="text-chip" data-word="FIRE">💥 FIRE</button>
+              <button class="text-chip" data-word="HELLO">👋 HELLO</button>
+            </div>
+
+            <!-- Aux Controls (Tap Tempo, Countdown & Audio) -->
+            <div class="sim-aux-drawer-group">
+              <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set tempo">🥁 Tap Tempo (<span id="sim-bpm-val">128</span> BPM)</button>
+              <button class="sim-aux-btn" data-sim="countdown" title="Trigger 3-2-1 Countdown">⏱️ Countdown</button>
+              <button class="sim-aux-btn" id="btn-sound-toggle" title="Toggle audio synthesizer">🔇 Sound: Off</button>
+            </div>
           </div>
         </div>
 

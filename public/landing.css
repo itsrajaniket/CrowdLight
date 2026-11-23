@@ -602,8 +602,8 @@ body {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* Row 1: Stage Triggers & Aux Controls */
-.sim-deck-row {
+/* Main Show Control Bar (Uncluttered) */
+.sim-main-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -612,53 +612,166 @@ body {
   flex-wrap: wrap;
 }
 
-.sim-controls {
+/* 4 Big Main Feature Buttons */
+.sim-show-buttons {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
-.sim-controls-label {
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-right: 2px;
-}
-
-.sim-btn {
-  padding: 5px 10px;
+.sim-main-btn {
+  padding: 6px 14px;
   background: #171b29;
   border: 1px solid #283045;
   color: #cbd5e1;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.12s ease;
+  transition: all 0.15s ease;
   white-space: nowrap;
 }
 
-.sim-btn:hover {
+.sim-main-btn:hover {
   background: #232a3d;
   border-color: #6366f1;
   color: #ffffff;
 }
 
-.sim-btn.active {
+.sim-main-btn.active {
   background: rgba(99, 102, 241, 0.28);
   border-color: #6366f1;
   color: #ffffff;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
 }
 
-.sim-btn.blackout {
-  border-color: #ef4444;
+/* Color Swatches Strip */
+.sim-swatches-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0b0e18;
+  border: 1px solid #1f273b;
+  border-radius: 20px;
+  padding: 3px 10px;
 }
 
-.sim-aux-bar {
+.swatches-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-right: 2px;
+}
+
+.color-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--swatch-c);
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.color-swatch:hover {
+  transform: scale(1.25);
+  border-color: #ffffff;
+  z-index: 2;
+}
+
+.color-swatch.active {
+  transform: scale(1.22);
+  border-color: #ffffff;
+  box-shadow: 0 0 10px var(--swatch-c);
+}
+
+/* Blackout Button */
+.sim-blackout-btn {
+  padding: 5px 12px;
+  background: #141018;
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+  font-size: 0.74rem;
+  font-weight: 700;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+}
+
+.sim-blackout-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+/* Collapsible More Toggle */
+.sim-more-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  background: #151927;
+  border: 1px solid #283147;
+  color: #94a3b8;
+  font-size: 0.74rem;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.sim-more-toggle:hover {
+  color: #ffffff;
+  border-color: #6366f1;
+}
+
+.sim-more-toggle.open {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: #6366f1;
+  color: #ffffff;
+}
+
+.more-chevron {
+  font-size: 0.65rem;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.sim-more-toggle.open .more-chevron {
+  transform: rotate(180deg);
+}
+
+/* Collapsible Drawer */
+.sim-more-drawer {
+  background: #0d101a;
+  border: 1px solid #1f273b;
+  border-radius: 10px;
+  padding: 7px 12px;
+  margin-bottom: 8px;
+  animation: drawerSlide 0.2s ease;
+}
+
+@keyframes drawerSlide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sim-drawer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sim-aux-drawer-group {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -689,31 +802,18 @@ body {
   color: #6ee7b7;
 }
 
-/* Row 2: Live Text Flash Bar & Quick Chips */
-.sim-text-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  background: #0f121d;
-  border: 1px solid #20273a;
-  border-radius: 8px;
-  padding: 6px 12px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-}
-
+/* Text Flash Form Inside Drawer */
 .sim-text-input-wrap {
   display: flex;
   align-items: center;
   gap: 6px;
   flex: 1;
-  max-width: 380px;
-  min-width: 240px;
+  max-width: 320px;
+  min-width: 210px;
 }
 
 .sim-text-icon {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 #sim-text-input {
@@ -770,6 +870,7 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
+  flex-wrap: wrap;
 }
 
 .chips-label {
