@@ -177,44 +177,49 @@
           <!-- Blackout Button -->
           <button class="sim-blackout-btn" data-sim="blackout" title="Instant Blackout Kill-Switch">⬛ Blackout</button>
 
-          <!-- Collapsible More Controls Toggle -->
-          <button class="sim-more-toggle" id="btn-toggle-more" type="button" aria-expanded="false" title="Show Pro Controls">
-            <span>⚙️ More</span>
-            <span class="more-chevron">▾</span>
-          </button>
-        </div>
+          <!-- Floating More Controls Popover Toggle -->
+          <div class="sim-more-popover-wrap">
+            <button class="sim-more-toggle" id="btn-toggle-more" type="button" aria-expanded="false" title="Show Pro Controls">
+              <span>⚙️ More</span>
+              <span class="more-chevron">▾</span>
+            </button>
 
-        <!-- Collapsible More Drawer (Text Flash, Quick Chips, Tap Tempo, Sound) -->
-        <div id="sim-more-panel" class="sim-more-drawer" hidden>
-          <div class="sim-drawer-content">
-            <!-- Text Flash Form -->
-            <div class="sim-text-input-wrap">
-              <span class="sim-text-icon">💬</span>
-              <input type="text" id="sim-text-input" placeholder="Type text to flash (e.g. LIGHTS, DROP)..." maxlength="12" value="LIGHTS">
-              <button class="btn-text-action primary" id="btn-flash-text" title="Flash full text across every phone">⚡ Flash Text</button>
-            </div>
+            <!-- Floating Popover (Overlays without pushing down layout!) -->
+            <div id="sim-more-panel" class="sim-more-popover" hidden>
+              <div class="sim-drawer-content">
+                <!-- Text Flash Form -->
+                <div class="sim-text-input-wrap">
+                  <span class="sim-text-icon">💬</span>
+                  <input type="text" id="sim-text-input" placeholder="Text to flash..." maxlength="12" value="LIGHTS">
+                  <button class="btn-text-action primary" id="btn-flash-text" title="Flash full text across every phone">⚡ Flash</button>
+                </div>
 
-            <!-- Neutral Quick Words -->
-            <div class="sim-text-chips">
-              <span class="chips-label">Quick:</span>
-              <button class="text-chip" data-word="LIGHTS">✨ LIGHTS</button>
-              <button class="text-chip" data-word="DROP">🔥 DROP</button>
-              <button class="text-chip" data-word="ANIKET">⚡ ANIKET</button>
-              <button class="text-chip" data-word="FIRE">💥 FIRE</button>
-              <button class="text-chip" data-word="HELLO">👋 HELLO</button>
-            </div>
+                <!-- Neutral Quick Words -->
+                <div class="sim-text-chips">
+                  <span class="chips-label">Quick:</span>
+                  <button class="text-chip" data-word="LIGHTS">✨ LIGHTS</button>
+                  <button class="text-chip" data-word="DROP">🔥 DROP</button>
+                  <button class="text-chip" data-word="ANIKET">⚡ ANIKET</button>
+                  <button class="text-chip" data-word="FIRE">💥 FIRE</button>
+                  <button class="text-chip" data-word="HELLO">👋 HELLO</button>
+                </div>
 
-            <!-- Aux Controls (Tap Tempo, Countdown & Audio) -->
-            <div class="sim-aux-drawer-group">
-              <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set tempo">🥁 Tap Tempo (<span id="sim-bpm-val">128</span> BPM)</button>
-              <button class="sim-aux-btn" data-sim="countdown" title="Trigger 3-2-1 Countdown">⏱️ Countdown</button>
-              <button class="sim-aux-btn" id="btn-sound-toggle" title="Toggle audio synthesizer">🔇 Sound: Off</button>
+                <!-- Aux Controls (Tap Tempo, Countdown & Audio) -->
+                <div class="sim-aux-drawer-group">
+                  <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set tempo">🥁 Tap Tempo (<span id="sim-bpm-val">128</span> BPM)</button>
+                  <button class="sim-aux-btn" data-sim="countdown" title="Trigger 3-2-1 Countdown">⏱️ Countdown</button>
+                  <button class="sim-aux-btn" id="btn-sound-toggle" title="Toggle audio synthesizer">🔇 Sound: Off</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Arena Stage Deck: Centered 100-Phone Amphitheater + Corner Floating QR Card -->
         <div class="arena-stage-deck">
+          <!-- Atmospheric Crowd Light Haze -->
+          <div class="crowd-atmospheric-haze" id="crowd-haze"></div>
+
           <!-- Stadium Amphitheater Grid (100 Devices viewed from Stage) -->
           <div class="stadium-arena">
             <!-- Stage at Top of Stadium -->
@@ -239,120 +244,145 @@
             <div class="stadium-spotlight beam-center"></div>
             <div class="stadium-spotlight beam-right"></div>
 
-            <!-- Tier 1: 16 Phones -->
+            <!-- Tier 1: 16 Phones (8 Left + Center Aisle + 8 Right) -->
             <div class="stadium-tier tier-front" data-tier="1">
-              <div class="crowd-phone" data-id="0" data-row="0" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="1" data-row="0" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="2" data-row="0" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="3" data-row="0" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="4" data-row="0" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="5" data-row="0" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="6" data-row="0" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="7" data-row="0" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" id="phone-real-anchor" data-id="8" data-row="0" data-col="8"><div class="you-pin" id="you-pin"><span class="you-text">YOU</span><span class="you-arrow"></span></div><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="9" data-row="0" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="10" data-row="0" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="11" data-row="0" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="12" data-row="0" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="13" data-row="0" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="14" data-row="0" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="15" data-row="0" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="tier-section section-left">
+                <div class="crowd-phone" data-id="0" data-row="0" data-col="0" style="--arc-y:-10px; --arc-rot:-7.0deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="1" data-row="0" data-col="1" style="--arc-y:-8px; --arc-rot:-6.1deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="2" data-row="0" data-col="2" style="--arc-y:-5px; --arc-rot:-5.1deg; --jitter:0.99;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="3" data-row="0" data-col="3" style="--arc-y:-4px; --arc-rot:-4.2deg; --jitter:0.98;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="4" data-row="0" data-col="4" style="--arc-y:-2px; --arc-rot:-3.3deg; --jitter:0.97;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="5" data-row="0" data-col="5" style="--arc-y:-1px; --arc-rot:-2.3deg; --jitter:0.96;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="6" data-row="0" data-col="6" style="--arc-y:0px; --arc-rot:-1.4deg; --jitter:0.95;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="7" data-row="0" data-col="7" style="--arc-y:0px; --arc-rot:-0.5deg; --jitter:0.94;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
+              <div class="stadium-aisle" title="Center Aisle"><span class="aisle-guide-light"></span></div>
+              <div class="tier-section section-right">
+                <div class="crowd-phone" id="phone-real-anchor" data-id="8" data-row="0" data-col="8" style="--arc-y:0px; --arc-rot:0.5deg; --jitter:1.00;"><div class="you-pin" id="you-pin"><span class="you-text">YOU</span><span class="you-arrow"></span></div><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="9" data-row="0" data-col="9" style="--arc-y:0px; --arc-rot:1.4deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="10" data-row="0" data-col="10" style="--arc-y:-1px; --arc-rot:2.3deg; --jitter:0.91;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="11" data-row="0" data-col="11" style="--arc-y:-2px; --arc-rot:3.3deg; --jitter:0.90;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="12" data-row="0" data-col="12" style="--arc-y:-4px; --arc-rot:4.2deg; --jitter:0.89;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="13" data-row="0" data-col="13" style="--arc-y:-5px; --arc-rot:5.1deg; --jitter:0.88;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="14" data-row="0" data-col="14" style="--arc-y:-8px; --arc-rot:6.1deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="15" data-row="0" data-col="15" style="--arc-y:-10px; --arc-rot:7.0deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
             </div>
-            <!-- Tier 2: 18 Phones -->
+            <!-- Tier 2: 18 Phones (9 Left + Center Aisle + 9 Right) -->
             <div class="stadium-tier tier-mid-low" data-tier="2">
-              <div class="crowd-phone" data-id="16" data-row="1" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="17" data-row="1" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="18" data-row="1" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="19" data-row="1" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="20" data-row="1" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="21" data-row="1" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="22" data-row="1" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="23" data-row="1" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="24" data-row="1" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="25" data-row="1" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="26" data-row="1" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="27" data-row="1" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="28" data-row="1" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="29" data-row="1" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="30" data-row="1" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="31" data-row="1" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="32" data-row="1" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="33" data-row="1" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="tier-section section-left">
+                <div class="crowd-phone" data-id="16" data-row="1" data-col="0" style="--arc-y:-10px; --arc-rot:-7.0deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="17" data-row="1" data-col="1" style="--arc-y:-8px; --arc-rot:-6.2deg; --jitter:0.91;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="18" data-row="1" data-col="2" style="--arc-y:-6px; --arc-rot:-5.4deg; --jitter:0.90;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="19" data-row="1" data-col="3" style="--arc-y:-4px; --arc-rot:-4.5deg; --jitter:0.89;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="20" data-row="1" data-col="4" style="--arc-y:-3px; --arc-rot:-3.7deg; --jitter:0.88;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="21" data-row="1" data-col="5" style="--arc-y:-2px; --arc-rot:-2.9deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="22" data-row="1" data-col="6" style="--arc-y:-1px; --arc-rot:-2.1deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="23" data-row="1" data-col="7" style="--arc-y:0px; --arc-rot:-1.2deg; --jitter:0.99;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="24" data-row="1" data-col="8" style="--arc-y:0px; --arc-rot:-0.4deg; --jitter:0.98;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
+              <div class="stadium-aisle" title="Center Aisle"><span class="aisle-guide-light"></span></div>
+              <div class="tier-section section-right">
+                <div class="crowd-phone" data-id="25" data-row="1" data-col="9" style="--arc-y:0px; --arc-rot:0.4deg; --jitter:0.97;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="26" data-row="1" data-col="10" style="--arc-y:0px; --arc-rot:1.2deg; --jitter:0.96;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="27" data-row="1" data-col="11" style="--arc-y:-1px; --arc-rot:2.1deg; --jitter:0.95;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="28" data-row="1" data-col="12" style="--arc-y:-2px; --arc-rot:2.9deg; --jitter:0.94;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="29" data-row="1" data-col="13" style="--arc-y:-3px; --arc-rot:3.7deg; --jitter:0.93;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="30" data-row="1" data-col="14" style="--arc-y:-4px; --arc-rot:4.5deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="31" data-row="1" data-col="15" style="--arc-y:-6px; --arc-rot:5.4deg; --jitter:0.91;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="32" data-row="1" data-col="16" style="--arc-y:-8px; --arc-rot:6.2deg; --jitter:0.90;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="33" data-row="1" data-col="17" style="--arc-y:-10px; --arc-rot:7.0deg; --jitter:0.89;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
             </div>
-            <!-- Tier 3: 20 Phones -->
+            <!-- Tier 3: 20 Phones (10 Left + Center Aisle + 10 Right) -->
             <div class="stadium-tier tier-mid" data-tier="3">
-              <div class="crowd-phone" data-id="34" data-row="2" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="35" data-row="2" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="36" data-row="2" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="37" data-row="2" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="38" data-row="2" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="39" data-row="2" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="40" data-row="2" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="41" data-row="2" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="42" data-row="2" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="43" data-row="2" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="44" data-row="2" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="45" data-row="2" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="46" data-row="2" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="47" data-row="2" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="48" data-row="2" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="49" data-row="2" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="50" data-row="2" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="51" data-row="2" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="52" data-row="2" data-col="18"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="53" data-row="2" data-col="19"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="tier-section section-left">
+                <div class="crowd-phone" data-id="34" data-row="2" data-col="0" style="--arc-y:-10px; --arc-rot:-7.0deg; --jitter:0.97;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="35" data-row="2" data-col="1" style="--arc-y:-8px; --arc-rot:-6.3deg; --jitter:0.96;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="36" data-row="2" data-col="2" style="--arc-y:-6px; --arc-rot:-5.5deg; --jitter:0.95;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="37" data-row="2" data-col="3" style="--arc-y:-5px; --arc-rot:-4.8deg; --jitter:0.94;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="38" data-row="2" data-col="4" style="--arc-y:-3px; --arc-rot:-4.1deg; --jitter:0.93;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="39" data-row="2" data-col="5" style="--arc-y:-2px; --arc-rot:-3.3deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="40" data-row="2" data-col="6" style="--arc-y:-1px; --arc-rot:-2.6deg; --jitter:0.91;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="41" data-row="2" data-col="7" style="--arc-y:-1px; --arc-rot:-1.8deg; --jitter:0.90;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="42" data-row="2" data-col="8" style="--arc-y:0px; --arc-rot:-1.1deg; --jitter:0.89;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="43" data-row="2" data-col="9" style="--arc-y:0px; --arc-rot:-0.4deg; --jitter:0.88;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
+              <div class="stadium-aisle" title="Center Aisle"><span class="aisle-guide-light"></span></div>
+              <div class="tier-section section-right">
+                <div class="crowd-phone" data-id="44" data-row="2" data-col="10" style="--arc-y:0px; --arc-rot:0.4deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="45" data-row="2" data-col="11" style="--arc-y:0px; --arc-rot:1.1deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="46" data-row="2" data-col="12" style="--arc-y:-1px; --arc-rot:1.8deg; --jitter:0.99;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="47" data-row="2" data-col="13" style="--arc-y:-1px; --arc-rot:2.6deg; --jitter:0.98;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="48" data-row="2" data-col="14" style="--arc-y:-2px; --arc-rot:3.3deg; --jitter:0.97;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="49" data-row="2" data-col="15" style="--arc-y:-3px; --arc-rot:4.1deg; --jitter:0.96;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="50" data-row="2" data-col="16" style="--arc-y:-5px; --arc-rot:4.8deg; --jitter:0.95;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="51" data-row="2" data-col="17" style="--arc-y:-6px; --arc-rot:5.5deg; --jitter:0.94;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="52" data-row="2" data-col="18" style="--arc-y:-8px; --arc-rot:6.3deg; --jitter:0.93;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="53" data-row="2" data-col="19" style="--arc-y:-10px; --arc-rot:7.0deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
             </div>
-            <!-- Tier 4: 22 Phones -->
+            <!-- Tier 4: 22 Phones (11 Left + Center Aisle + 11 Right) -->
             <div class="stadium-tier tier-mid-high" data-tier="4">
-              <div class="crowd-phone" data-id="54" data-row="3" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="55" data-row="3" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="56" data-row="3" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="57" data-row="3" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="58" data-row="3" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="59" data-row="3" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="60" data-row="3" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="61" data-row="3" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="62" data-row="3" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="63" data-row="3" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="64" data-row="3" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="65" data-row="3" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="66" data-row="3" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="67" data-row="3" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="68" data-row="3" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="69" data-row="3" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="70" data-row="3" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="71" data-row="3" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="72" data-row="3" data-col="18"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="73" data-row="3" data-col="19"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="74" data-row="3" data-col="20"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="75" data-row="3" data-col="21"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="tier-section section-left">
+                <div class="crowd-phone" data-id="54" data-row="3" data-col="0" style="--arc-y:-10px; --arc-rot:-7.0deg; --jitter:0.88;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="55" data-row="3" data-col="1" style="--arc-y:-8px; --arc-rot:-6.3deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="56" data-row="3" data-col="2" style="--arc-y:-7px; --arc-rot:-5.7deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="57" data-row="3" data-col="3" style="--arc-y:-5px; --arc-rot:-5.0deg; --jitter:0.99;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="58" data-row="3" data-col="4" style="--arc-y:-4px; --arc-rot:-4.3deg; --jitter:0.98;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="59" data-row="3" data-col="5" style="--arc-y:-3px; --arc-rot:-3.7deg; --jitter:0.97;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="60" data-row="3" data-col="6" style="--arc-y:-2px; --arc-rot:-3.0deg; --jitter:0.96;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="61" data-row="3" data-col="7" style="--arc-y:-1px; --arc-rot:-2.3deg; --jitter:0.95;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="62" data-row="3" data-col="8" style="--arc-y:-1px; --arc-rot:-1.7deg; --jitter:0.94;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="63" data-row="3" data-col="9" style="--arc-y:0px; --arc-rot:-1.0deg; --jitter:0.93;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="64" data-row="3" data-col="10" style="--arc-y:0px; --arc-rot:-0.3deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
+              <div class="stadium-aisle" title="Center Aisle"><span class="aisle-guide-light"></span></div>
+              <div class="tier-section section-right">
+                <div class="crowd-phone" data-id="65" data-row="3" data-col="11" style="--arc-y:0px; --arc-rot:0.3deg; --jitter:0.91;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="66" data-row="3" data-col="12" style="--arc-y:0px; --arc-rot:1.0deg; --jitter:0.90;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="67" data-row="3" data-col="13" style="--arc-y:-1px; --arc-rot:1.7deg; --jitter:0.89;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="68" data-row="3" data-col="14" style="--arc-y:-1px; --arc-rot:2.3deg; --jitter:0.88;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="69" data-row="3" data-col="15" style="--arc-y:-2px; --arc-rot:3.0deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="70" data-row="3" data-col="16" style="--arc-y:-3px; --arc-rot:3.7deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="71" data-row="3" data-col="17" style="--arc-y:-4px; --arc-rot:4.3deg; --jitter:0.99;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="72" data-row="3" data-col="18" style="--arc-y:-5px; --arc-rot:5.0deg; --jitter:0.98;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="73" data-row="3" data-col="19" style="--arc-y:-7px; --arc-rot:5.7deg; --jitter:0.97;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="74" data-row="3" data-col="20" style="--arc-y:-8px; --arc-rot:6.3deg; --jitter:0.96;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="75" data-row="3" data-col="21" style="--arc-y:-10px; --arc-rot:7.0deg; --jitter:0.95;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
             </div>
-            <!-- Tier 5: 24 Phones -->
+            <!-- Tier 5: 24 Phones (12 Left + Center Aisle + 12 Right) -->
             <div class="stadium-tier tier-upper" data-tier="5">
-              <div class="crowd-phone" data-id="76" data-row="4" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="77" data-row="4" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="78" data-row="4" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="79" data-row="4" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="80" data-row="4" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="81" data-row="4" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="82" data-row="4" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="83" data-row="4" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="84" data-row="4" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="85" data-row="4" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="86" data-row="4" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="87" data-row="4" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="88" data-row="4" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="89" data-row="4" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="90" data-row="4" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="91" data-row="4" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="92" data-row="4" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="93" data-row="4" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="94" data-row="4" data-col="18"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="95" data-row="4" data-col="19"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="96" data-row="4" data-col="20"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="97" data-row="4" data-col="21"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="98" data-row="4" data-col="22"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="99" data-row="4" data-col="23"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="tier-section section-left">
+                <div class="crowd-phone" data-id="76" data-row="4" data-col="0" style="--arc-y:-10px; --arc-rot:-7.0deg; --jitter:0.93;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="77" data-row="4" data-col="1" style="--arc-y:-8px; --arc-rot:-6.4deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="78" data-row="4" data-col="2" style="--arc-y:-7px; --arc-rot:-5.8deg; --jitter:0.91;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="79" data-row="4" data-col="3" style="--arc-y:-5px; --arc-rot:-5.2deg; --jitter:0.90;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="80" data-row="4" data-col="4" style="--arc-y:-4px; --arc-rot:-4.6deg; --jitter:0.89;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="81" data-row="4" data-col="5" style="--arc-y:-3px; --arc-rot:-4.0deg; --jitter:0.88;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="82" data-row="4" data-col="6" style="--arc-y:-2px; --arc-rot:-3.3deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="83" data-row="4" data-col="7" style="--arc-y:-2px; --arc-rot:-2.7deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="84" data-row="4" data-col="8" style="--arc-y:-1px; --arc-rot:-2.1deg; --jitter:0.99;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="85" data-row="4" data-col="9" style="--arc-y:0px; --arc-rot:-1.5deg; --jitter:0.98;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="86" data-row="4" data-col="10" style="--arc-y:0px; --arc-rot:-0.9deg; --jitter:0.97;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="87" data-row="4" data-col="11" style="--arc-y:0px; --arc-rot:-0.3deg; --jitter:0.96;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
+              <div class="stadium-aisle" title="Center Aisle"><span class="aisle-guide-light"></span></div>
+              <div class="tier-section section-right">
+                <div class="crowd-phone" data-id="88" data-row="4" data-col="12" style="--arc-y:0px; --arc-rot:0.3deg; --jitter:0.95;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="89" data-row="4" data-col="13" style="--arc-y:0px; --arc-rot:0.9deg; --jitter:0.94;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="90" data-row="4" data-col="14" style="--arc-y:0px; --arc-rot:1.5deg; --jitter:0.93;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="91" data-row="4" data-col="15" style="--arc-y:-1px; --arc-rot:2.1deg; --jitter:0.92;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="92" data-row="4" data-col="16" style="--arc-y:-2px; --arc-rot:2.7deg; --jitter:0.91;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="93" data-row="4" data-col="17" style="--arc-y:-2px; --arc-rot:3.3deg; --jitter:0.90;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="94" data-row="4" data-col="18" style="--arc-y:-3px; --arc-rot:4.0deg; --jitter:0.89;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="95" data-row="4" data-col="19" style="--arc-y:-4px; --arc-rot:4.6deg; --jitter:0.88;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="96" data-row="4" data-col="20" style="--arc-y:-5px; --arc-rot:5.2deg; --jitter:0.87;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="97" data-row="4" data-col="21" style="--arc-y:-7px; --arc-rot:5.8deg; --jitter:1.00;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="98" data-row="4" data-col="22" style="--arc-y:-8px; --arc-rot:6.4deg; --jitter:0.99;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+                <div class="crowd-phone" data-id="99" data-row="4" data-col="23" style="--arc-y:-10px; --arc-rot:7.0deg; --jitter:0.98;"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              </div>
             </div>
           </div>
 

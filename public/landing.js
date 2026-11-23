@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const allSimTriggers = document.querySelectorAll('[data-sim]');
   const activeCueLabel = document.getElementById('sim-active-cue-label');
   const tickerOffset = document.getElementById('sim-ticker-offset');
+  const crowdHaze = document.getElementById('crowd-haze');
 
   function clearActiveTriggers() {
     document.querySelectorAll('[data-sim]').forEach(b => b.classList.remove('active'));
@@ -102,10 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
     setCueLabel(name);
     playSynth(320, 'sine', 0.1, 0.15);
 
+    if (crowdHaze) {
+      crowdHaze.style.setProperty('--haze-c', `${hex}33`);
+    }
+
     crowdPhones.forEach(p => {
       if (p.screenEl) {
+        p.screenEl.style.setProperty('--screen-c', hex);
         p.screenEl.style.backgroundColor = hex;
-        p.screenEl.style.boxShadow = `0 0 12px ${hex}88`;
+        p.screenEl.style.boxShadow = `0 0 6px ${hex}, 0 0 16px ${hex}88`;
       }
     });
   }
@@ -117,6 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setCueLabel(isSlow ? 'AMBIENT WAVE (LIVE)' : 'STADIUM WAVE');
     const startTime = performance.now();
     const wavePeriod = isSlow ? 3600 : 2200; // Slow ambient sweep (3.6s) or energetic stage sweep (2.2s)
+
+    if (crowdHaze) {
+      crowdHaze.style.setProperty('--haze-c', 'rgba(6, 182, 212, 0.22)');
+    }
 
     function loop(now) {
       const elapsed = now - startTime;
@@ -136,11 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         p.screenEl.style.transition = 'none';
         p.screenEl.style.backgroundColor = `hsl(${hue}, 95%, ${lightness}%)`;
-        p.screenEl.style.boxShadow = crest > 0.25 ? `0 0 ${Math.round(crest * 18)}px hsl(${hue}, 95%, 65%)` : 'none';
+        p.screenEl.style.boxShadow = crest > 0.2
+          ? `0 0 ${Math.round(crest * 10 + 4)}px hsl(${hue}, 95%, 65%), 0 0 ${Math.round(crest * 22)}px hsl(${hue}, 95%, 45%)`
+          : `0 0 4px hsl(${hue}, 80%, 25%)`;
 
         // Subtle jump effect like fans standing in stadium wave
         const lift = crest * -5;
-        p.phoneEl.style.transform = `translateY(${lift}px)`;
+        p.phoneEl.style.transform = `translateY(calc(var(--arc-y, 0px) + ${lift}px)) rotate(var(--arc-rot, 0deg))`;
       });
 
       currentRaf = requestAnimationFrame(loop);
@@ -156,6 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setCueLabel('RAINBOW AURORA');
     const startTime = performance.now();
 
+    if (crowdHaze) {
+      crowdHaze.style.setProperty('--haze-c', 'rgba(168, 85, 247, 0.22)');
+    }
+
     function loop(now) {
       const elapsed = now - startTime;
 
@@ -164,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hue = Math.round((p.col * 14 + p.row * 24 + elapsed * 0.14) % 360);
         p.screenEl.style.transition = 'none';
         p.screenEl.style.backgroundColor = `hsl(${hue}, 95%, 52%)`;
-        p.screenEl.style.boxShadow = `0 0 10px hsl(${hue}, 95%, 52%)`;
+        p.screenEl.style.boxShadow = `0 0 6px hsl(${hue}, 95%, 60%), 0 0 16px hsl(${hue}, 95%, 45%)`;
       });
 
       currentRaf = requestAnimationFrame(loop);
@@ -184,8 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function beat() {
       isPeak = !isPeak;
       const bg = isPeak ? '#ec4899' : '#140c1c';
-      const shadow = isPeak ? '0 0 16px rgba(236, 72, 153, 0.85)' : 'none';
-      const scale = isPeak ? 'scale(1.06)' : 'scale(1.0)';
+      const shadow = isPeak ? '0 0 8px #ec4899, 0 0 22px rgba(236, 72, 153, 0.7)' : 'none';
+      const scale = isPeak ? '1.08' : '1.0';
+
+      if (crowdHaze) {
+        crowdHaze.style.setProperty('--haze-c', isPeak ? 'rgba(236, 72, 153, 0.35)' : 'rgba(236, 72, 153, 0.05)');
+      }
 
       if (isPeak) {
         playSynth(130, 'triangle', 0.16, 0.35); // 808 sub kick
@@ -196,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         p.screenEl.style.transition = isPeak ? 'background-color 0.04s ease-out' : 'background-color 0.35s ease-in';
         p.screenEl.style.backgroundColor = bg;
         p.screenEl.style.boxShadow = shadow;
-        p.phoneEl.style.transform = scale;
+        p.phoneEl.style.transform = `translateY(var(--arc-y, 0px)) rotate(var(--arc-rot, 0deg)) scale(${scale})`;
       });
     }
 
@@ -214,7 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
     currentInterval = setInterval(() => {
       state = !state;
       const color = state ? '#ffffff' : '#000000';
-      const shadow = state ? '0 0 20px rgba(255, 255, 255, 0.95)' : 'none';
+      const shadow = state ? '0 0 12px #ffffff, 0 0 28px rgba(255, 255, 255, 0.85)' : 'none';
+
+      if (crowdHaze) {
+        crowdHaze.style.setProperty('--haze-c', state ? 'rgba(255, 255, 255, 0.35)' : 'transparent');
+      }
 
       if (state) playSynth(800, 'square', 0.02, 0.08);
 
@@ -346,6 +370,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setCueLabel('BLACKOUT (KILL-SWITCH)');
     playSynth(100, 'sine', 0.08, 0.2);
 
+    if (crowdHaze) {
+      crowdHaze.style.setProperty('--haze-c', 'transparent');
+    }
+
     crowdPhones.forEach(p => {
       if (p.screenEl) {
         p.screenEl.style.transition = 'background-color 0.05s ease';
@@ -430,11 +458,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Collapsible More Controls Drawer Toggle ---
+  // --- Floating More Controls Popover Toggle ---
   const btnToggleMore = document.getElementById('btn-toggle-more');
   const simMorePanel = document.getElementById('sim-more-panel');
   if (btnToggleMore && simMorePanel) {
-    btnToggleMore.addEventListener('click', () => {
+    btnToggleMore.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isHidden = simMorePanel.hasAttribute('hidden');
       if (isHidden) {
         simMorePanel.removeAttribute('hidden');
@@ -444,6 +473,17 @@ document.addEventListener('DOMContentLoaded', () => {
         simMorePanel.setAttribute('hidden', '');
         btnToggleMore.classList.remove('open');
         btnToggleMore.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Dismiss popover when clicking anywhere outside
+    document.addEventListener('click', (e) => {
+      if (!simMorePanel.hasAttribute('hidden')) {
+        if (!simMorePanel.contains(e.target) && !btnToggleMore.contains(e.target)) {
+          simMorePanel.setAttribute('hidden', '');
+          btnToggleMore.classList.remove('open');
+          btnToggleMore.setAttribute('aria-expanded', 'false');
+        }
       }
     });
   }
