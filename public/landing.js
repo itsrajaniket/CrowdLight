@@ -110,13 +110,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Effect: Stadium Wave (Ripple traveling across 24 devices) ---
+  // --- Effect: Stadium Wave (Ripple traveling across 100 devices) ---
   function applyWave(isSlow = false) {
     stopAllEffects();
     currentActiveSim = 'wave';
     setCueLabel(isSlow ? 'AMBIENT WAVE (LIVE)' : 'STADIUM WAVE');
     const startTime = performance.now();
-    const wavePeriod = isSlow ? 3200 : 2000; // Slow ambient sweep (3.2s) or energetic stage sweep (2.0s)
+    const wavePeriod = isSlow ? 3600 : 2200; // Slow ambient sweep (3.6s) or energetic stage sweep (2.2s)
 
     function loop(now) {
       const elapsed = now - startTime;
@@ -124,8 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
       crowdPhones.forEach(p => {
         if (!p.screenEl) return;
 
-        // Wave travels from left (col 0) to right (col 8) with slight rear curve (row)
-        const delay = (p.col * (isSlow ? 220 : 160)) + (p.row * (isSlow ? 90 : 60));
+        // Wave travels across 100 devices from left to right with slight rear curve (row)
+        const delay = (p.col * (isSlow ? 110 : 70)) + (p.row * (isSlow ? 80 : 50));
         const phase = ((elapsed - delay) % wavePeriod + wavePeriod) % wavePeriod;
         const norm = phase / wavePeriod; // 0 to 1
 
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       crowdPhones.forEach(p => {
         if (!p.screenEl) return;
-        const hue = Math.round((p.col * 36 + p.row * 16 + elapsed * 0.14) % 360);
+        const hue = Math.round((p.col * 14 + p.row * 24 + elapsed * 0.14) % 360);
         p.screenEl.style.transition = 'none';
         p.screenEl.style.backgroundColor = `hsl(${hue}, 95%, 52%)`;
         p.screenEl.style.boxShadow = `0 0 10px hsl(${hue}, 95%, 52%)`;
@@ -368,10 +368,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const c0 = sourcePhone.col;
 
       crowdPhones.forEach(p => {
-        const dx = p.col - c0;
+        const dx = (p.col - c0) * 0.8;
         const dy = (p.row - r0) * 1.5;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const delayMs = dist * 75;
+        const delayMs = dist * 45;
 
         setTimeout(() => {
           if (!p.screenEl) return;
@@ -702,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateRealPhonePresence(count) {
     realPhoneCount = Math.max(0, parseInt(count, 10) || 0);
-    const phoneAnchor = document.getElementById('phone-real-anchor');
+    const phoneAnchor = document.getElementById('phone-real-anchor') || document.getElementById('phone-you');
     const realPill = document.getElementById('arena-real-pill');
     const realLabel = document.getElementById('real-phones-label');
     const virtualLabel = document.getElementById('arena-count-label');
@@ -719,16 +719,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (dockSub) dockSub.textContent = `Your real phone is receiving all stadium cues in live lockstep!`;
       if (realPill) realPill.classList.add('active');
       if (realLabel) realLabel.textContent = `${realPhoneCount} REAL PHONE${realPhoneCount > 1 ? 'S' : ''} CONNECTED (LIVE)`;
-      if (virtualLabel) virtualLabel.textContent = `24 SIMULATED + ${realPhoneCount} REAL`;
+      if (virtualLabel) virtualLabel.textContent = `100 SIMULATED + ${realPhoneCount} REAL`;
     } else {
       if (phoneAnchor) phoneAnchor.classList.remove('real-device-active');
       if (liveDock) liveDock.classList.remove('connected');
       if (dockDot) dockDot.classList.remove('active');
       if (dockTitle) dockTitle.textContent = 'Connect Real Phone';
-      if (dockSub) dockSub.textContent = 'Scan with your phone to light up as a real device in this matrix!';
+      if (dockSub) dockSub.textContent = 'Scan with phone to light up as a real device in this matrix!';
       if (realPill) realPill.classList.remove('active');
       if (realLabel) realLabel.textContent = '0 REAL PHONES CONNECTED';
-      if (virtualLabel) virtualLabel.textContent = '24 SIMULATED PHONES';
+      if (virtualLabel) virtualLabel.textContent = '100 SIMULATED PHONES';
     }
   }
 

@@ -149,7 +149,7 @@
       <div class="section-header-compact">
         <span class="section-badge">Live Arena Simulator</span>
         <h2 class="section-title">See the Crowd Matrix in Action</h2>
-        <p class="section-desc">Test real-time lighting cues and text broadcasts across a 24-phone stadium amphitheater seen from the stage.</p>
+        <p class="section-desc">Test real-time lighting cues and text broadcasts across a 100-phone stadium amphitheater seen from the stage.</p>
       </div>
 
       <div class="simulator-box">
@@ -213,63 +213,151 @@
           </div>
         </div>
 
-        <!-- Arena Stage Deck: Amphitheater + Live Phone QR Dock -->
+        <!-- Arena Stage Deck: Centered 100-Phone Amphitheater + Corner Floating QR Card -->
         <div class="arena-stage-deck">
-          <!-- Stadium Amphitheater Grid (24 Devices viewed from Stage) -->
+          <!-- Stadium Amphitheater Grid (100 Devices viewed from Stage) -->
           <div class="stadium-arena">
+            <!-- Stage at Top of Stadium -->
+            <div class="stadium-stage-top">
+              <div class="stage-platform">
+                <span class="stage-star">★</span>
+                <span class="stage-label">MAIN STAGE</span>
+                <span class="stage-star">★</span>
+              </div>
+              <div class="stage-spotlight-rig">
+                <span class="rig-light"></span>
+                <span class="rig-light"></span>
+                <span class="rig-light"></span>
+                <span class="rig-light"></span>
+                <span class="rig-light"></span>
+              </div>
+              <div class="stage-glow-beam"></div>
+            </div>
+
+            <!-- Sweeping Stadium Stage Spotlights -->
             <div class="stadium-spotlight beam-left"></div>
+            <div class="stadium-spotlight beam-center"></div>
             <div class="stadium-spotlight beam-right"></div>
 
-            <!-- Tier 3: Upper Bowl (9 Phones) -->
-            <div class="stadium-tier tier-upper">
-              <div class="crowd-phone" data-id="0" data-row="2" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="1" data-row="2" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="2" data-row="2" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="3" data-row="2" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="4" data-row="2" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="5" data-row="2" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="6" data-row="2" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="7" data-row="2" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="8" data-row="2" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <!-- Tier 1: 16 Phones -->
+            <div class="stadium-tier tier-front" data-tier="1">
+              <div class="crowd-phone" data-id="0" data-row="0" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="1" data-row="0" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="2" data-row="0" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="3" data-row="0" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="4" data-row="0" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="5" data-row="0" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="6" data-row="0" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="7" data-row="0" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" id="phone-real-anchor" data-id="8" data-row="0" data-col="8"><div class="you-pin" id="you-pin"><span class="you-text">YOU</span><span class="you-arrow"></span></div><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="9" data-row="0" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="10" data-row="0" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="11" data-row="0" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="12" data-row="0" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="13" data-row="0" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="14" data-row="0" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="15" data-row="0" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
             </div>
-
-            <!-- Tier 2: Mid Bowl (8 Phones) -->
-            <div class="stadium-tier tier-mid">
-              <div class="crowd-phone" data-id="9" data-row="1" data-col="0.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="10" data-row="1" data-col="1.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="11" data-row="1" data-col="2.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="12" data-row="1" data-col="3.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="13" data-row="1" data-col="4.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="14" data-row="1" data-col="5.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="15" data-row="1" data-col="6.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="16" data-row="1" data-col="7.5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <!-- Tier 2: 18 Phones -->
+            <div class="stadium-tier tier-mid-low" data-tier="2">
+              <div class="crowd-phone" data-id="16" data-row="1" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="17" data-row="1" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="18" data-row="1" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="19" data-row="1" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="20" data-row="1" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="21" data-row="1" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="22" data-row="1" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="23" data-row="1" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="24" data-row="1" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="25" data-row="1" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="26" data-row="1" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="27" data-row="1" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="28" data-row="1" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="29" data-row="1" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="30" data-row="1" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="31" data-row="1" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="32" data-row="1" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="33" data-row="1" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
             </div>
-
-            <!-- Tier 1: Floor / Stage Front (7 Phones) -->
-            <div class="stadium-tier tier-floor">
-              <div class="crowd-phone" data-id="17" data-row="0" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="18" data-row="0" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="19" data-row="0" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" id="phone-real-anchor" data-id="20" data-row="0" data-col="4">
-                <div class="crowd-notch"></div>
-                <div class="crowd-screen">
-                  <span class="crowd-text"></span>
-                  <span class="real-device-badge">LIVE PHONE</span>
-                </div>
-              </div>
-              <div class="crowd-phone" data-id="21" data-row="0" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="22" data-row="0" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
-              <div class="crowd-phone" data-id="23" data-row="0" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            <!-- Tier 3: 20 Phones -->
+            <div class="stadium-tier tier-mid" data-tier="3">
+              <div class="crowd-phone" data-id="34" data-row="2" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="35" data-row="2" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="36" data-row="2" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="37" data-row="2" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="38" data-row="2" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="39" data-row="2" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="40" data-row="2" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="41" data-row="2" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="42" data-row="2" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="43" data-row="2" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="44" data-row="2" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="45" data-row="2" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="46" data-row="2" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="47" data-row="2" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="48" data-row="2" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="49" data-row="2" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="50" data-row="2" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="51" data-row="2" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="52" data-row="2" data-col="18"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="53" data-row="2" data-col="19"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
             </div>
-
-            <!-- Stage View Apron -->
-            <div class="stadium-stage-apron">
-              <div class="stage-spotlight-beam"></div>
+            <!-- Tier 4: 22 Phones -->
+            <div class="stadium-tier tier-mid-high" data-tier="4">
+              <div class="crowd-phone" data-id="54" data-row="3" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="55" data-row="3" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="56" data-row="3" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="57" data-row="3" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="58" data-row="3" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="59" data-row="3" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="60" data-row="3" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="61" data-row="3" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="62" data-row="3" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="63" data-row="3" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="64" data-row="3" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="65" data-row="3" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="66" data-row="3" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="67" data-row="3" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="68" data-row="3" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="69" data-row="3" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="70" data-row="3" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="71" data-row="3" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="72" data-row="3" data-col="18"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="73" data-row="3" data-col="19"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="74" data-row="3" data-col="20"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="75" data-row="3" data-col="21"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+            </div>
+            <!-- Tier 5: 24 Phones -->
+            <div class="stadium-tier tier-upper" data-tier="5">
+              <div class="crowd-phone" data-id="76" data-row="4" data-col="0"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="77" data-row="4" data-col="1"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="78" data-row="4" data-col="2"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="79" data-row="4" data-col="3"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="80" data-row="4" data-col="4"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="81" data-row="4" data-col="5"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="82" data-row="4" data-col="6"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="83" data-row="4" data-col="7"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="84" data-row="4" data-col="8"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="85" data-row="4" data-col="9"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="86" data-row="4" data-col="10"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="87" data-row="4" data-col="11"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="88" data-row="4" data-col="12"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="89" data-row="4" data-col="13"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="90" data-row="4" data-col="14"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="91" data-row="4" data-col="15"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="92" data-row="4" data-col="16"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="93" data-row="4" data-col="17"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="94" data-row="4" data-col="18"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="95" data-row="4" data-col="19"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="96" data-row="4" data-col="20"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="97" data-row="4" data-col="21"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="98" data-row="4" data-col="22"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
+              <div class="crowd-phone" data-id="99" data-row="4" data-col="23"><div class="crowd-notch"></div><div class="crowd-screen"><span class="crowd-text"></span></div></div>
             </div>
           </div>
 
-          <!-- Live Phone Connector Dock -->
-          <div class="live-phone-dock" id="live-phone-dock">
+          <!-- Floating QR Join Card in Corner -->
+          <div class="floating-qr-card" id="live-phone-dock">
             <div class="dock-header">
               <span class="dock-live-dot" id="dock-status-dot"></span>
               <span class="dock-title" id="dock-status-title">Connect Real Phone</span>
@@ -277,7 +365,7 @@
             <div class="dock-qr-frame">
               <img src="/qr.png" alt="Scan QR to Join Arena" class="dock-qr-img">
             </div>
-            <div class="dock-status-sub" id="dock-status-sub">Scan with your phone to light up as a real device in this matrix!</div>
+            <div class="dock-status-sub" id="dock-status-sub">Scan with phone to light up as a real device in this matrix!</div>
             <a href="/audience/" target="_blank" rel="noopener noreferrer" class="dock-mobile-link" title="Open audience screen in a new tab">
               <span>Open on this device</span> <span>↗</span>
             </a>
@@ -288,7 +376,7 @@
         <div class="arena-footer-bar">
           <div class="arena-status-pill" id="arena-virtual-pill">
             <span class="ticker-dot live"></span>
-            <span id="arena-count-label">24 SIMULATED PHONES</span>
+            <span id="arena-count-label">100 SIMULATED PHONES</span>
           </div>
           <div class="arena-status-pill real-live" id="arena-real-pill">
             <span class="real-pulse-dot"></span>
