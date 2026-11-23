@@ -177,45 +177,43 @@
           <!-- Blackout Button -->
           <button class="sim-blackout-btn" data-sim="blackout" title="Instant Blackout Kill-Switch">⬛ Blackout</button>
 
-          <!-- Floating More Controls Popover Toggle -->
-          <div class="sim-more-popover-wrap">
-            <button class="sim-more-toggle" id="btn-toggle-more" type="button" aria-expanded="false" title="Show Pro Controls">
-              <span>⚙️ More</span>
-              <span class="more-chevron">▾</span>
-            </button>
+          <!-- More Controls Toggle Button -->
+          <button class="sim-more-toggle" id="btn-toggle-more" type="button" aria-expanded="false" title="Show Pro Controls">
+            <span>⚙️ More</span>
+            <span class="more-chevron">▾</span>
+          </button>
+        </div>
 
-            <!-- Floating Popover (Overlays without pushing down layout!) -->
-            <div id="sim-more-panel" class="sim-more-popover" hidden>
-              <div class="sim-drawer-content">
-                <!-- Text Flash Form -->
-                <div class="sim-text-input-wrap">
-                  <span class="sim-text-icon">💬</span>
-                  <input type="text" id="sim-text-input" placeholder="Text to flash..." maxlength="12" value="LIGHTS">
-                  <button class="btn-text-action primary" id="btn-flash-text" title="Flash full text across every phone">⚡ Flash</button>
-                </div>
+        <!-- Inline Expandable Pro Controls Drawer (Never covers Stage or Crowd) -->
+        <div id="sim-more-panel" class="sim-more-inline-drawer" hidden>
+          <div class="sim-drawer-content">
+            <!-- Text Flash Form -->
+            <div class="sim-text-input-wrap">
+              <span class="sim-text-icon">💬</span>
+              <input type="text" id="sim-text-input" placeholder="Type text..." maxlength="12" value="LIGHTS">
+              <button class="btn-text-action primary" id="btn-flash-text" title="Flash full text across every phone">⚡ Flash</button>
+            </div>
 
-                <!-- Neutral Quick Words -->
-                <div class="sim-text-chips">
-                  <span class="chips-label">Quick:</span>
-                  <button class="text-chip" data-word="LIGHTS">✨ LIGHTS</button>
-                  <button class="text-chip" data-word="DROP">🔥 DROP</button>
-                  <button class="text-chip" data-word="ANIKET">⚡ ANIKET</button>
-                  <button class="text-chip" data-word="FIRE">💥 FIRE</button>
-                  <button class="text-chip" data-word="HELLO">👋 HELLO</button>
-                </div>
+            <!-- Neutral Quick Words -->
+            <div class="sim-text-chips">
+              <span class="chips-label">Quick:</span>
+              <button class="text-chip" data-word="LIGHTS">✨ LIGHTS</button>
+              <button class="text-chip" data-word="DROP">🔥 DROP</button>
+              <button class="text-chip" data-word="ANIKET">⚡ ANIKET</button>
+              <button class="text-chip" data-word="FIRE">💥 FIRE</button>
+              <button class="text-chip" data-word="HELLO">👋 HELLO</button>
+            </div>
 
-                <!-- Aux Controls (Tap Tempo, Countdown & Audio) -->
-                <div class="sim-aux-drawer-group">
-                  <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set tempo">🥁 Tap Tempo (<span id="sim-bpm-val">128</span> BPM)</button>
-                  <button class="sim-aux-btn" data-sim="countdown" title="Trigger 3-2-1 Countdown">⏱️ Countdown</button>
-                  <button class="sim-aux-btn" id="btn-sound-toggle" title="Toggle audio synthesizer">🔇 Sound: Off</button>
-                </div>
-              </div>
+            <!-- Aux Controls (Tap Tempo, Countdown & Audio) -->
+            <div class="sim-aux-drawer-group">
+              <button class="sim-aux-btn" id="btn-tap-tempo" title="Tap repeatedly to set tempo">🥁 Tap Tempo (<span id="sim-bpm-val">128</span> BPM)</button>
+              <button class="sim-aux-btn" data-sim="countdown" title="Trigger 3-2-1 Countdown">⏱️ Countdown</button>
+              <button class="sim-aux-btn" id="btn-sound-toggle" title="Toggle audio synthesizer">🔇 Sound: Off</button>
             </div>
           </div>
         </div>
 
-        <!-- Arena Stage Deck: Centered 100-Phone Amphitheater + Corner Floating QR Card -->
+        <!-- Arena Stage Deck: Centered 100-Phone Amphitheater -->
         <div class="arena-stage-deck">
           <!-- Atmospheric Crowd Light Haze -->
           <div class="crowd-atmospheric-haze" id="crowd-haze"></div>
@@ -405,38 +403,43 @@
               </div>
             </div>
           </div>
-
-          <!-- Floating QR Join Card in Corner -->
-          <div class="floating-qr-card" id="live-phone-dock">
-            <div class="dock-header">
-              <span class="dock-live-dot" id="dock-status-dot"></span>
-              <span class="dock-title" id="dock-status-title">Connect Real Phone</span>
-            </div>
-            <div class="dock-qr-frame">
-              <img src="/qr.png" alt="Scan QR to Join Arena" class="dock-qr-img">
-            </div>
-            <div class="dock-status-sub" id="dock-status-sub">Scan with phone to light up as a real device in this matrix!</div>
-            <a href="/audience/" target="_blank" rel="noopener noreferrer" class="dock-mobile-link" title="Open audience screen in a new tab">
-              <span>Open on this device</span> <span>↗</span>
-            </a>
-          </div>
         </div>
 
-        <!-- Compact Bottom Arena Status Bar -->
-        <div class="arena-footer-bar">
-          <div class="arena-status-pill" id="arena-virtual-pill">
-            <span class="ticker-dot live"></span>
-            <span id="arena-count-label">100 SIMULATED PHONES</span>
+        <!-- Arena Bottom Control & Status Deck (Cleanly Below Crowd, Zero Overlap) -->
+        <div class="arena-bottom-deck">
+          <!-- Status Telemetry Pills -->
+          <div class="arena-footer-bar">
+            <div class="arena-status-pill" id="arena-virtual-pill">
+              <span class="ticker-dot live"></span>
+              <span id="arena-count-label">100 SIMULATED PHONES</span>
+            </div>
+            <div class="arena-status-pill real-live" id="arena-real-pill">
+              <span class="real-pulse-dot"></span>
+              <span id="real-phones-label">0 REAL PHONES CONNECTED</span>
+            </div>
+            <div class="arena-status-pill">
+              <span>NTP OFFSET: <strong id="sim-ticker-offset">0.18 ms</strong></span>
+            </div>
+            <div class="arena-status-pill highlight">
+              <span>CUE: <strong id="sim-active-cue-label">STADIUM WAVE</strong></span>
+            </div>
           </div>
-          <div class="arena-status-pill real-live" id="arena-real-pill">
-            <span class="real-pulse-dot"></span>
-            <span id="real-phones-label">0 REAL PHONES CONNECTED</span>
-          </div>
-          <div class="arena-status-pill">
-            <span>NTP OFFSET: <strong id="sim-ticker-offset">0.18 ms</strong></span>
-          </div>
-          <div class="arena-status-pill highlight">
-            <span>CUE: <strong id="sim-active-cue-label">STADIUM WAVE</strong></span>
+
+          <!-- Real Phone Live Connect Dock (Horizontal Concert Pass Card, Below Crowd) -->
+          <div class="live-phone-pass" id="live-phone-dock">
+            <div class="pass-qr-frame">
+              <img src="/qr.png" alt="Scan QR to Join Arena" class="dock-qr-img">
+            </div>
+            <div class="pass-content">
+              <div class="pass-header">
+                <span class="dock-live-dot" id="dock-status-dot"></span>
+                <span class="dock-title" id="dock-status-title">Connect Real Phone</span>
+              </div>
+              <p class="pass-desc" id="dock-status-sub">Scan QR to light up as a real glowing device in this stadium matrix!</p>
+              <a href="/audience/" target="_blank" rel="noopener noreferrer" class="dock-mobile-link" title="Open audience screen in a new tab">
+                <span>Open on this device</span> <span>↗</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

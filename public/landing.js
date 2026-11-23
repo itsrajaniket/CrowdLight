@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Floating More Controls Popover Toggle ---
+  // --- Inline Pro More Controls Toggle ---
   const btnToggleMore = document.getElementById('btn-toggle-more');
   const simMorePanel = document.getElementById('sim-more-panel');
   if (btnToggleMore && simMorePanel) {
@@ -579,17 +579,6 @@ document.addEventListener('DOMContentLoaded', () => {
         simMorePanel.setAttribute('hidden', '');
         btnToggleMore.classList.remove('open');
         btnToggleMore.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Dismiss popover when clicking anywhere outside
-    document.addEventListener('click', (e) => {
-      if (!simMorePanel.hasAttribute('hidden')) {
-        if (!simMorePanel.contains(e.target) && !btnToggleMore.contains(e.target)) {
-          simMorePanel.setAttribute('hidden', '');
-          btnToggleMore.classList.remove('open');
-          btnToggleMore.setAttribute('aria-expanded', 'false');
-        }
       }
     });
   }
