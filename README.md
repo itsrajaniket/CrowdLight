@@ -58,7 +58,7 @@ CrowdLight solves arrival jitter using a lightweight **Network Time Protocol (NT
 | :--- | :--- | :--- |
 | **🏟️ Pro AV Landing & 100-Phone Simulator** | [https://crowdlight-4u52.onrender.com/](https://crowdlight-4u52.onrender.com/) | Live interactive 100-phone arena simulator with Web Audio synthesis & two-way WebSocket sync |
 | **📱 Audience Client Node** | [https://crowdlight-4u52.onrender.com/audience/](https://crowdlight-4u52.onrender.com/audience/) | Ultra-lightweight audience display node (< 25 KB bundle) |
-| **🎛️ Director Lighting Console** | [https://crowdlight-4u52.onrender.com/controller/](https://crowdlight-4u52.onrender.com/controller/) | PIN-protected showpad with live headcounts & cue controls *(Default PIN: `1234`)* |
+| **🎛️ Director Lighting Console** | [https://crowdlight-4u52.onrender.com/controller/](https://crowdlight-4u52.onrender.com/controller/) | PIN-protected showpad with live headcounts & cue controls *(Restricted operator access)* |
 | **📺 Venue Projection QR Code** | [https://crowdlight-4u52.onrender.com/qr.png](https://crowdlight-4u52.onrender.com/qr.png) | High-resolution QR code asset for stage Jumbotron screens |
 
 ---

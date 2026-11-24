@@ -85,7 +85,7 @@ function broadcastStatsToControllers() {
   });
 
   wss.clients.forEach((client) => {
-    if (client.readyState === 1 && client.role === 'controller' && client.authenticated) {
+    if (client.readyState === 1 && ((client.role === 'controller' && client.authenticated) || client.role === 'simulator')) {
       client.send(payload);
     }
   });
@@ -278,6 +278,28 @@ wss.on('connection', (ws, req) => {
 
         // Update controllers with new audience count
         broadcastStatsToControllers();
+      } else if (msg.role === 'simulator') {
+        ws.role = 'simulator';
+        ws.authenticated = true;
+        console.log(`[Simulator Hub] Client #${clientId} registered for demo sync.`);
+
+        // Send welcome
+        ws.send(JSON.stringify({
+          type: 'welcome',
+          id: clientId
+        }));
+
+        // Send live audience stats
+        ws.send(JSON.stringify({
+          type: 'stats',
+          count: getAudienceCount()
+        }));
+
+        // Send current show state
+        ws.send(JSON.stringify({
+          type: 'state',
+          cmd: state.getCurrentState().cmd
+        }));
       } else if (msg.role === 'controller') {
         ws.role = 'controller';
 
@@ -315,9 +337,10 @@ wss.on('connection', (ws, req) => {
       return;
     }
 
-    // 3. Command execution request (Phase 4 Security: Only authenticated controllers)
+    // 3. Command execution request (Phase 4 Security: Authenticated controllers or simulator)
     if (msg.type === 'cmd') {
-      if (ws.role !== 'controller' || !ws.authenticated) {
+      const isAuthorized = (ws.role === 'controller' && ws.authenticated) || (ws.role === 'simulator' && ws.authenticated);
+      if (!isAuthorized) {
         console.warn(`[Security] Client #${clientId} (role: ${ws.role}) unauthorized attempt to send cmd "${msg.name}". Ignored.`);
         ws.send(JSON.stringify({
           type: 'error',

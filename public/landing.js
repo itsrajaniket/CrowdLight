@@ -861,11 +861,10 @@ document.addEventListener('DOMContentLoaded', () => {
       socket = new WebSocket(`${wsProtocol}//${wsHost}`);
 
       socket.addEventListener('open', () => {
-        console.log('[Simulator Hub] Connected. Authenticating with sandbox PIN...');
+        console.log('[Simulator Hub] Connected to live show network...');
         socket.send(JSON.stringify({
           type: 'hello',
-          role: 'controller',
-          pin: '1234'
+          role: 'simulator'
         }));
       });
 
