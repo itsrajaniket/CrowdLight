@@ -14,7 +14,7 @@ const STATS_FILE = path.join(__dirname, 'stats.json');
 
 // Real-time visitor tracking
 let stats = {
-  totalVisits: 1420,
+  totalVisits: 1000,
   lastUpdated: Date.now()
 };
 
@@ -24,7 +24,7 @@ try {
     const raw = fs.readFileSync(STATS_FILE, 'utf8');
     const parsed = JSON.parse(raw);
     if (typeof parsed.totalVisits === 'number') {
-      stats.totalVisits = Math.max(1420, parsed.totalVisits);
+      stats.totalVisits = Math.max(1000, parsed.totalVisits);
     }
   }
 } catch (e) {
