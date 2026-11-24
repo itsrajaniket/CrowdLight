@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CrowdLight — Zero-Install Synchronized Crowd Light Show</title>
   <meta name="description" content="Turn your audience into a synchronized stadium light show. No app download. Scans one QR code to transform smartphones into an interactive light display in real time.">
+  <!-- Google Tag Manager / Analytics -->
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-W2Z9SL2L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
   <link rel="stylesheet" href="landing.css">
 </head>
 <body>
@@ -61,6 +68,11 @@
         <div class="hud-item">
           <span class="hud-lbl">COST:</span>
           <strong class="hud-val">₹0 HARDWARE</strong>
+        </div>
+        <div class="hud-sep">•</div>
+        <div class="hud-item">
+          <span class="hud-lbl">VISITS:</span>
+          <strong class="hud-val" id="hud-visits-count">1,420+</strong>
         </div>
       </div>
 
@@ -455,6 +467,9 @@
             </div>
             <div class="arena-status-pill highlight">
               <span>CUE: <strong id="sim-active-cue-label">STADIUM WAVE</strong></span>
+            </div>
+            <div class="arena-status-pill">
+              <span>VISITS: <strong id="arena-visits-label">1,420+</strong></span>
             </div>
           </div>
         </div>

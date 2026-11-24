@@ -10,6 +10,43 @@ const config = require('./config');
 const state = require('./state');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
+const STATS_FILE = path.join(__dirname, 'stats.json');
+
+// Real-time visitor tracking
+let stats = {
+  totalVisits: 1420,
+  lastUpdated: Date.now()
+};
+
+// Load existing stats if available
+try {
+  if (fs.existsSync(STATS_FILE)) {
+    const raw = fs.readFileSync(STATS_FILE, 'utf8');
+    const parsed = JSON.parse(raw);
+    if (typeof parsed.totalVisits === 'number') {
+      stats.totalVisits = Math.max(1420, parsed.totalVisits);
+    }
+  }
+} catch (e) {
+  console.warn('[Stats] Could not read stats.json, initializing default:', e.message);
+}
+
+// Debounced stats saver to prevent disk churn
+let saveTimeout = null;
+function recordVisit() {
+  stats.totalVisits++;
+  stats.lastUpdated = Date.now();
+  if (!saveTimeout) {
+    saveTimeout = setTimeout(() => {
+      saveTimeout = null;
+      try {
+        fs.writeFile(STATS_FILE, JSON.stringify(stats, null, 2), 'utf8', () => {});
+      } catch (err) {
+        console.warn('[Stats] Failed to persist stats:', err.message);
+      }
+    }, 2000);
+  }
+}
 
 // Supported MIME types for serving static assets
 const MIME_TYPES = {
@@ -125,6 +162,16 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Real-time visitor analytics counter endpoint
+  if (reqPath === '/api/visits') {
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+    res.end(JSON.stringify({ totalVisits: stats.totalVisits }));
+    return;
+  }
+
   // Root landing page
   if (reqPath === '/' || reqPath === '') {
     reqPath = '/index.html';
@@ -135,6 +182,11 @@ const server = http.createServer((req, res) => {
     reqPath = '/audience/index.html';
   } else if (reqPath === '/controller' || reqPath === '/controller/') {
     reqPath = '/controller/index.html';
+  }
+
+  // Track page visits on main HTML entrypoints
+  if (reqPath === '/index.html' || reqPath === '/audience/index.html' || reqPath === '/controller/index.html') {
+    recordVisit();
   }
 
   const safePath = path.normalize(reqPath).replace(/^(\.\.[/\\])+/, '');

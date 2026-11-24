@@ -985,6 +985,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Fetch real-time visit count from backend stats
+  function fetchVisits() {
+    fetch('/api/visits')
+      .then(res => res.json())
+      .then(data => {
+        if (data && typeof data.totalVisits === 'number') {
+          const formatted = data.totalVisits.toLocaleString('en-IN') + '+';
+          const hudVisits = document.getElementById('hud-visits-count');
+          const arenaVisits = document.getElementById('arena-visits-label');
+          if (hudVisits) hudVisits.textContent = formatted;
+          if (arenaVisits) arenaVisits.textContent = formatted;
+        }
+      })
+      .catch(() => {});
+  }
+  fetchVisits();
+
   // Start it alive: slow looping ambient wave on page load
   applyWave(true);
   initSimulatorWebSocket();
